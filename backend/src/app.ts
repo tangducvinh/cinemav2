@@ -7,7 +7,7 @@ import connectDB from "./config/connectDB";
 const app = express();
 const port = process.env.PORT || 7000;
 
-initWebRouter(app);
+// initWebRouter(app);
 initBannerRouter(app);
 
 connectDB();

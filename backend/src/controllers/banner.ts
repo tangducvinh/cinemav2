@@ -6,10 +6,13 @@ const getListBanner = async (req: Request, res: Response) => {
     console.log("hello 1");
     const response = await db.Banner.findAll();
     console.log(response);
+
+    return res.json({
+      data: response,
+    });
   } catch (e) {
     console.log(e);
   }
-  return res.send("hello");
 };
 
 export { getListBanner };

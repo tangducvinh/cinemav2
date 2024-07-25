@@ -12,7 +12,7 @@ let initWebRouter = (app: Application) => {
     return res.send("hello");
   });
 
-  return app.use("/", router);
+  return app.use("/api", router);
 };
 
 export default initWebRouter;
