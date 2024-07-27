@@ -12,22 +12,22 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      genreId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Genres",
-          key: "id",
-        },
-      },
+      // genreId: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: "Genres",
+      //     key: "id",
+      //   },
+      // },
       overview: {
         type: Sequelize.TEXT,
       },
       poster: {
         type: Sequelize.TEXT,
       },
-      backdrop: {
-        type: Sequelize.TEXT,
-      },
+      // backdrop: {
+      //   type: Sequelize.TEXT,
+      // },
       release: {
         type: Sequelize.DATE,
       },
@@ -38,6 +38,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       video: {
+        type: Sequelize.TEXT,
+      },
+      country: {
         type: Sequelize.TEXT,
       },
       createdAt: {

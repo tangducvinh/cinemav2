@@ -22,7 +22,23 @@ const config: Config = {
       },
       colors: {
         normal: "#4A4A4A",
-        main: "rgb(242 107 56/var(--tw-text-opacity))",
+        main: "#f5811f",
+        overlay: "#333333",
+        forcus: "#034EA2",
+        "bg-overlay": "rgba(0, 0, 0, 0.5)",
+        "overlay-main": "rgba(251, 148, 64, .8);",
+      },
+      width: {
+        main: "1280px",
+      },
+      animation: {
+        wiggle: "wiggle 0.2s linear",
+      },
+      keyframes: {
+        wiggle: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
     },
   },

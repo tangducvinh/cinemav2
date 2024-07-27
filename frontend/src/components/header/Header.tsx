@@ -6,8 +6,8 @@ import Profile from "./Profile";
 
 const Header = () => {
   return (
-    <header className="w-[1280px] flex items-center py-5">
-      <div className="flex-2 ml-6 flex">
+    <header className="w-main flex items-center py-5">
+      <div className="flex-2 flex">
         <Image className="w-[75px] h-[75px]" src={logo} alt="logo"></Image>
       </div>
 

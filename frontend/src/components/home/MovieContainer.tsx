@@ -1,0 +1,26 @@
+import { IMovie } from "@/app/types/frontend";
+
+import MovieItem from "./MovieItem";
+
+interface IProps {
+  data: IMovie[] | [];
+}
+
+const MovieContainer = (props: IProps) => {
+  const { data } = props;
+
+  return (
+    <div className="grid grid-cols-4 gap-8">
+      {data.map((item, index) => (
+        <MovieItem
+          key={item.id}
+          name={item.name}
+          poster={item.poster}
+          keyVideo={item.video}
+        ></MovieItem>
+      ))}
+    </div>
+  );
+};
+
+export default MovieContainer;
