@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import Slide from "../components/slide/Slide";
 import Navbar from "../components/home/Navbar";
-import MovieContainer from "../components/home/MovieContainer";
+import IntroduceText from "@/components/home/IntroduceText";
 
 export default async function Home() {
   const response = await fetch("http://localhost:7000/api/banner", {
@@ -16,8 +16,10 @@ export default async function Home() {
 
       <div className="w-main m-auto my-[50px]">
         <Navbar />
+      </div>
 
-        {/* <MovieContainer /> */}
+      <div className="w-main mx-auto my-[50px]">
+        <IntroduceText />
       </div>
     </div>
   );

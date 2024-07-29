@@ -30,6 +30,7 @@ const config: Config = {
       },
       width: {
         main: "1280px",
+        "main-lg": "400px",
       },
       animation: {
         wiggle: "wiggle 0.2s linear",

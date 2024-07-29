@@ -4,6 +4,7 @@ import "./globals.css";
 import clsx from "clsx";
 
 import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
 const inter = Nunito_Sans({ subsets: ["latin"] });
 
@@ -24,6 +25,9 @@ export default function RootLayout({
           <Header />
         </div>
         {children}
+        <div className="flex py-[30px] bg-[#333333] justify-center">
+          <Footer />
+        </div>
       </body>
     </html>
   );

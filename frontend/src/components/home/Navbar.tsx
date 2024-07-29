@@ -7,6 +7,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IMovie } from "@/app/types/frontend";
 
 import MovieContainer from "./MovieContainer";
+import MenuTitle from "./MenuTitle";
 
 // const titleList = ["Đang chiếu", "Sắp chiếu", "Phim IMAX"];
 
@@ -55,9 +56,7 @@ const NavBar = () => {
   return (
     <>
       <div className="flex items-center mb-[30px]">
-        <h1 className="border-l-[5px] border-forcus px-3 leading-6 mr-8 text-normal font-bold text-[22px]">
-          PHIM
-        </h1>
+        <MenuTitle title={"PHIM"} />
 
         <ul className="flex items-center gap-8">
           {titleList.map((item) => (
