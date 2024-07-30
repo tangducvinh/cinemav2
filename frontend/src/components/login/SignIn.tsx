@@ -1,44 +1,75 @@
 "use client";
 
 import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, UseFormRegister, Path } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 
 import logo from "../../assets/logo.png";
 import InputLogin from "./InputLogin";
+// import { isBoolean } from "util";
+import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
 
-interface Inputs {
-  //   example: string;
-  //   exampleRequired: string;
+interface IDataForm {
+  label: string;
+  type: string;
+  placeholder: string;
+  required: boolean;
+  name: Path<IFormSignIn>;
+  maxLength: number;
+  regex: RegExp;
+  textLength: string;
+  textRegex: string;
 }
 
-const dataForm = [
+const dataForm: IDataForm[] = [
   {
     label: "Email",
+    type: "text",
     placeholder: "Nhập Email",
+    required: true,
+    name: "email",
+    maxLength: 200,
+    regex: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i,
+    textLength: "Số lượng kí tự không quá 200",
+    textRegex: "Vui lòng nhập đúng định dạng email",
   },
   {
     label: "Mật khẩu",
+    type: "password",
     placeholder: "Nhập Mật Khẩu",
+    required: true,
+    name: "password",
+    maxLength: 20,
+    regex: /^/,
+    textLength: "Số lượng kí tự không quá 20",
+    textRegex: "",
   },
 ];
 
-const SignIn = () => {
+interface IProps {
+  onCloseLogin: (x: boolean) => void;
+}
+
+const SignIn = (props: IProps) => {
+  const { onCloseLogin } = props;
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<IFormSignIn>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<IFormSignIn> = (data) => {
     console.log(data);
   };
 
   return (
     <section className="w-screen flex items-center justify-center h-screen inset-0 z-40 fixed bg-bg-overlay">
       <div className="w-main-lg bg-white px-[24px] py-[40px] rounded-md relative">
-        <button className="absolute top-[12px] right-[12px] opacity-70 hover:opacity-90">
+        <button
+          onClick={() => onCloseLogin(false)}
+          className="absolute top-[12px] right-[12px] opacity-70 hover:opacity-90"
+        >
           <IoMdCloseCircle size="30" color="gray" />
         </button>
         <Image
@@ -52,20 +83,26 @@ const SignIn = () => {
         </p>
 
         <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
-          {/* register your input into the hook by invoking the "register" function */}
-          {/* <input defaultValue="test" {...register("example")} /> */}
+          {dataForm.map((item, index) => (
+            <InputLogin
+              register={register}
+              label={item.label}
+              type={item.type}
+              placeholder={item.placeholder}
+              required={item.required}
+              name={item.name}
+              errors={errors}
+              maxLength={item.maxLength}
+              regex={item.regex}
+              textLength={item.textLength}
+              textRegex={item.textRegex}
+            />
+          ))}
 
-          {/* include validation with required or other standard HTML validation rules */}
-          {/* <input {...register("exampleRequired", { required: true })} /> */}
-          {/* errors will return when field validation fails  */}
-          {/* {errors.exampleRequired && <span>This field is required</span>} */}
-
-          {/* <input type="submit" /> */}
-
-          <InputLogin />
-          <InputLogin />
-
-          <button className="w-full text-white bg-[#F05A27] transition-all hover:bg-main text-[15px] py-[10px] font-semibold rounded-md mt-4">
+          <button
+            type="submit"
+            className="w-full text-white bg-[#F05A27] transition-all hover:bg-main text-[15px] py-[10px] font-semibold rounded-md mt-4"
+          >
             ĐĂNG NHẬP
           </button>
 

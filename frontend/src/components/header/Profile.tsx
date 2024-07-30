@@ -21,7 +21,7 @@ const Profile = () => {
         Đăng nhập
       </button>
 
-      {showLogin && <SignIn />}
+      {showLogin && <SignIn onCloseLogin={setShowLogin} />}
     </div>
   );
 };

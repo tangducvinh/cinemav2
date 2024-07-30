@@ -9,3 +9,14 @@ export interface IMovie {
   video: string;
   country: string;
 }
+
+export interface IFormSignIn {
+  email: string;
+  password: string;
+}
+
+export interface IFormSignUp {
+  email: string;
+  password: string;
+  phone: string;
+}
