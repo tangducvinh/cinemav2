@@ -7,7 +7,7 @@ import SignUp from "../login/SignUp";
 import SignIn from "../login/SignIn";
 
 const Profile = () => {
-  const [showLogin, setShowLogin] = useState<boolean>(false);
+  const [showLogin, setShowLogin] = useState<string>("null");
   return (
     <div className="flex gap-6 relative">
       <button>
@@ -15,13 +15,13 @@ const Profile = () => {
       </button>
 
       <button
-        onClick={() => setShowLogin(true)}
+        onClick={() => setShowLogin("signin")}
         className="text-[#777777] hover:text-main transition-all cursor-pointer"
       >
         Đăng nhập
       </button>
 
-      {showLogin && <SignIn onCloseLogin={setShowLogin} />}
+      {showLogin !== "null" && <SignIn statusLogin={showLogin} onCloseLogin={setShowLogin} />}
     </div>
   );
 };

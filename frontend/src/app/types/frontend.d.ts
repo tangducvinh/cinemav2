@@ -19,4 +19,6 @@ export interface IFormSignUp {
   email: string;
   password: string;
   phone: string;
+  fullName: string;
+  passwordAgain: string;
 }
