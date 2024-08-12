@@ -1,16 +1,17 @@
 "use client";
 
 import clsx from "clsx";
-import { useForm, SubmitHandler, UseFormRegister, Path } from "react-hook-form";
+import { useForm, SubmitHandler, Path } from "react-hook-form";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { IoMdClose, IoIosCalendar } from "react-icons/io";
+import { ClipLoader } from "react-spinners";
 
+import { signUp, signIn } from "../../apis/user";
 import InputLogin from "./InputLogin";
 import InputRadio from "./InputRadio";
-// import { isBoolean } from "util";
 import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
 import HeaderLogin from "./HeaderLogin";
 
@@ -136,7 +137,7 @@ const SignIn = (props: IProps) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IFormSignIn>();
+  } = useForm<IFormSignUp | IFormSignIn>();
 
   const [dataForm, setDataForm] = useState<IDataForm[]>(dataSignIn);
   const [accept, setAccept] = useState<boolean>(false);
@@ -144,8 +145,11 @@ const SignIn = (props: IProps) => {
   const [dateValue, setDateValue] = useState<Value>(null);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const [checkFillDate, setCheckFillDate] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setMessage("");
     if (statusLogin == "signin") {
       setDataForm(dataSignIn);
     } else {
@@ -153,17 +157,47 @@ const SignIn = (props: IProps) => {
     }
   }, [statusLogin]);
 
-  const onSubmit: SubmitHandler<IFormSignIn> = (data) => {
+  useEffect(() => {
+    if (dateValue === null) {
+      setCheckFillDate(true);
+      return;
+    } else {
+      setCheckFillDate(false);
+    }
+  }, [dateValue]);
+
+  const onSubmit: SubmitHandler<IFormSignUp | IFormSignIn> = async (
+    data: any
+  ) => {
     if (statusLogin === "signup") {
-      if (dateValue === null) {
-        setCheckFillDate(true);
-        return;
+      if (data.password === data.passwordAgain) {
+        const newData = { ...data };
+        newData.sex = sex;
+        newData.birthday = moment(dateValue?.toString()).format("yyyy/MM/DD");
+
+        setLoading(true);
+        const response = await signUp(newData);
+        setLoading(false);
+
+        if (!response.success) {
+          setMessage(response.message);
+        } else {
+          onCloseLogin("signin");
+        }
       } else {
-        setCheckFillDate(false);
+        setMessage("Mật khẩu không khớp");
+      }
+    } else {
+      setLoading(true);
+      const response = await signIn(data);
+      setLoading(false);
+
+      if (!response.success) {
+        setMessage(response.message);
+      } else {
+        onCloseLogin("null");
       }
     }
-
-    console.log(data);
   };
 
   const handleStatusLogin = () => {
@@ -181,6 +215,8 @@ const SignIn = (props: IProps) => {
         className="w-main-lg bg-white px-[24px] py-[40px] rounded-md relative"
       >
         <HeaderLogin onCloseLogin={onCloseLogin} />
+
+        <p className="text-center text-red-500 mt-1">{message}</p>
 
         <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
           {dataForm.map((item, index) => (
@@ -275,12 +311,27 @@ const SignIn = (props: IProps) => {
             type="submit"
             disabled={statusLogin === "signup" && !accept ? true : false}
             className={clsx(
-              "w-full text-white bg-[#F05A27] uppercase hover:cursor-pointer transition-all text-[15px] py-[10px] font-semibold rounded-md mt-4",
+              "w-full text-white bg-[#F05A27] uppercase hover:cursor-pointer transition-all text-[15px] h-[45px] font-semibold rounded-md mt-4",
               { "opacity-70": accept === false && statusLogin === "signup" },
               { "hover:bg-main": accept === true || statusLogin === "signin" }
             )}
           >
-            {statusLogin === "signin" ? "Đăng nhập" : "Hoàn thành"}
+            {loading ? (
+              <div className="flex items-center w-full h-full justify-center">
+                <ClipLoader
+                  color="#ffffff"
+                  loading={true}
+                  // cssOverride={override}
+                  size={30}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
+            ) : statusLogin === "signin" ? (
+              "Đăng nhập"
+            ) : (
+              "Hoàn thành"
+            )}
           </button>
 
           {statusLogin === "signin" && (

@@ -4,6 +4,7 @@ import cors from "cors";
 import initWebRouter from "./route/web";
 import initBannerRouter from "./route/banner";
 import initMovieRouter from "./route/movie";
+import initUserRouter from "./route/user";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -17,9 +18,13 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // initWebRouter(app);
 initBannerRouter(app);
 initMovieRouter(app);
+initUserRouter(app);
 
 connectDB();
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 
-import SignUp from "../login/SignUp";
+// import SignUp from "../login/SignUp";
 import SignIn from "../login/SignIn";
 
 const Profile = () => {
@@ -21,7 +21,9 @@ const Profile = () => {
         Đăng nhập
       </button>
 
-      {showLogin !== "null" && <SignIn statusLogin={showLogin} onCloseLogin={setShowLogin} />}
+      {showLogin !== "null" && (
+        <SignIn statusLogin={showLogin} onCloseLogin={setShowLogin} />
+      )}
     </div>
   );
 };

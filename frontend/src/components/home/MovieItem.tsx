@@ -13,8 +13,6 @@ interface IProps {
 const MovieItem = (props: IProps) => {
   const { name, poster, keyVideo } = props;
 
-  console.log(keyVideo);
-
   const [isHover, setIsHover] = useState<boolean>(false);
   const [watchTrailer, setWatchTrailer] = useState<boolean>(false);
 

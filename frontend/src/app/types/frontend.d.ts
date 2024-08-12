@@ -21,4 +21,6 @@ export interface IFormSignUp {
   phone: string;
   fullName: string;
   passwordAgain: string;
+  sex: string;
+  birthday: string;
 }
