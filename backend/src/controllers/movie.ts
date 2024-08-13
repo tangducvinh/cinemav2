@@ -21,4 +21,28 @@ const getListMovie = async (req: Request, res: Response) => {
   }
 };
 
-export { getListMovie };
+const getDetailMovie = async (req: Request, res: Response) => {
+  try {
+    const { slug } = req.query;
+
+    const movie = await db.Movie.findOne({
+      where: {
+        slug,
+      },
+    });
+
+    console.log(movie.dataValues.id);
+
+    const genre = await db.Movie_Genre.findAll({
+      where: {
+        movieId: movie.dataValues.id,
+      },
+    });
+
+    return res.json(genre);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+};
+
+export { getListMovie, getDetailMovie };
