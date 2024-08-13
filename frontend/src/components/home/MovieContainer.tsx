@@ -17,6 +17,7 @@ const MovieContainer = (props: IProps) => {
           name={item.name}
           poster={item.poster}
           keyVideo={item.video}
+          slug={item.slug}
         ></MovieItem>
       ))}
     </div>

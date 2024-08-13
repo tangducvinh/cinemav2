@@ -17,18 +17,23 @@ const data = [
     subTitle: [
       {
         name: "Thể loại phim",
+        value: "",
       },
       {
         name: "Diễn viên",
+        value: "",
       },
       {
         name: "Đạo diễn",
+        value: "",
       },
       {
         name: "Bình luận phim",
+        value: "",
       },
       {
         name: "Blog Điện ảnh",
+        value: "",
       },
     ],
   },
@@ -37,9 +42,11 @@ const data = [
     subTitle: [
       {
         name: "Ưu Đãi",
+        value: "",
       },
       {
         name: "Phim Hay Tháng",
+        value: "",
       },
     ],
   },

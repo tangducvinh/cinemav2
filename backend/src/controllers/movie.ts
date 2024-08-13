@@ -4,21 +4,20 @@ import db from "../models";
 const getListMovie = async (req: Request, res: Response) => {
   const { status } = req.query;
 
-  console.log(status);
-
   try {
     const response = await db.Movie.findAll({
       where: {
         status,
       },
     });
-    console.log(response);
 
     return res.json({
-      data: response,
+      success: response ? true : false,
+      message: response ? "Thành công" : "Thất bại",
+      data: response ? response : "no data",
     });
   } catch (e) {
-    console.log(e);
+    res.status(500).json(e);
   }
 };
 

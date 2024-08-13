@@ -21,6 +21,7 @@ export const signIn = async (data: IFormSignIn) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    credentials: 'include',
   });
 
   return response.json();

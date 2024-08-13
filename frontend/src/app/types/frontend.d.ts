@@ -8,6 +8,8 @@ export interface IMovie {
   status: string;
   video: string;
   country: string;
+  slug: string;
+  backdrop: string;
 }
 
 export interface IFormSignIn {

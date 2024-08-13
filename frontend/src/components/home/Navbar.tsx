@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IMovie } from "@/app/types/frontend";
 
+import { getMovieByStatus } from "../../apis/movie";
 import MovieContainer from "./MovieContainer";
 import MenuTitle from "./MenuTitle";
 
@@ -26,10 +27,6 @@ const titleList = [
   },
 ];
 
-interface IItem {
-  value: string;
-}
-
 const NavBar = () => {
   const [currentStatus, setCurrentStatus] = useState<string>(
     titleList[0].value
@@ -38,15 +35,21 @@ const NavBar = () => {
   const [movieData, setMovieData] = useState<IMovie[] | []>([]);
 
   const fetchDataMovie = async () => {
-    const response = await fetch(
-      `http://localhost:7000/api/movie?status=${currentStatus}`,
-      {
-        method: "GET",
-      }
-    );
+    // const response = await fetch(
+    //   `http://localhost:7000/api/movie?status=${currentStatus}`,
+    //   {
+    //     method: "GET",
+    //   }
+    // );
 
-    const data = await response.json();
-    setMovieData(data.data);
+    // const data = await response.json();
+    const response = await getMovieByStatus(currentStatus);
+
+    console.log(response);
+
+    if (response.success) {
+      setMovieData(response.data);
+    }
   };
 
   useEffect(() => {

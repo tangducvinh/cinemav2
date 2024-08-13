@@ -59,8 +59,6 @@ const signIn = async (req: Request, res: Response) => {
         .status(404)
         .json({ success: false, message: "Tài khoản không tồn tại" });
 
-    console.log({ password, user: user.password });
-
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (validPassword) {
@@ -70,6 +68,7 @@ const signIn = async (req: Request, res: Response) => {
       const refreshToken = generateRefreshToken(user.id, user.role);
       // gan refreshToken vao cookie
       res.cookie("refreshToken", refreshToken, { httpOnly: true });
+      // res.cookie("name", user.fullName, { httpOnly: true });
 
       const { phone, password, role, ...newData } = user.dataValues;
       newData.accessToken = accessToken;
@@ -79,7 +78,10 @@ const signIn = async (req: Request, res: Response) => {
         data: user ? newData : "no data",
       });
     } else {
-      return res.status(500).json("Login is fail");
+      return res.status(500).json({
+        success: false,
+        message: "Tên đăng nhập hoặc mật khẩu không đúng",
+      });
     }
   } catch (e) {
     res.status(500).json({ error: e });

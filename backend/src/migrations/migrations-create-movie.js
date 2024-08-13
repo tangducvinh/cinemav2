@@ -25,9 +25,12 @@ module.exports = {
       poster: {
         type: Sequelize.TEXT,
       },
-      // backdrop: {
-      //   type: Sequelize.TEXT,
-      // },
+      slug: {
+        type: Sequelize.STRING,
+      },
+      backdrop: {
+        type: Sequelize.STRING,
+      },
       release: {
         type: Sequelize.DATE,
       },

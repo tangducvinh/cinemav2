@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       release: DataTypes.DATE,
       runtime: DataTypes.INTEGER,
       status: DataTypes.STRING,
+      slug: DataTypes.STRING,
+      backdrop: DataTypes.STRING,
       video: DataTypes.TEXT,
       country: DataTypes.STRING,
     },

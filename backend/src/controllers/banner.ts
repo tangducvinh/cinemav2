@@ -3,12 +3,12 @@ import db from "../models";
 
 const getListBanner = async (req: Request, res: Response) => {
   try {
-    console.log("hello 1");
     const response = await db.Banner.findAll();
-    console.log(response);
 
-    return res.json({
-      data: response,
+    return res.status(200).json({
+      success: response ? true : false,
+      message: response ? "Thành công" : "Thất bại",
+      data: response ? response : "no data",
     });
   } catch (e) {
     console.log(e);

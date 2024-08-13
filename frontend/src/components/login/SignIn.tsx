@@ -8,6 +8,7 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { IoMdClose, IoIosCalendar } from "react-icons/io";
 import { ClipLoader } from "react-spinners";
+import { setCookie } from "cookies-next";
 
 import { signUp, signIn } from "../../apis/user";
 import InputLogin from "./InputLogin";
@@ -170,6 +171,7 @@ const SignIn = (props: IProps) => {
     data: any
   ) => {
     if (statusLogin === "signup") {
+      // handle signup
       if (data.password === data.passwordAgain) {
         const newData = { ...data };
         newData.sex = sex;
@@ -188,6 +190,7 @@ const SignIn = (props: IProps) => {
         setMessage("Mật khẩu không khớp");
       }
     } else {
+      // handle signin
       setLoading(true);
       const response = await signIn(data);
       setLoading(false);
@@ -196,6 +199,10 @@ const SignIn = (props: IProps) => {
         setMessage(response.message);
       } else {
         onCloseLogin("null");
+        const name = response.data.fullName;
+        const token = response.data.accessToken;
+        setCookie('token', token)
+        setCookie("name", name);
       }
     }
   };
@@ -221,6 +228,7 @@ const SignIn = (props: IProps) => {
         <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
           {dataForm.map((item, index) => (
             <InputLogin
+              key={item.label}
               register={register}
               label={item.label}
               type={item.type}

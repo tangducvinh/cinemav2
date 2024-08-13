@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
-import initWebRouter from "./route/web";
 import initBannerRouter from "./route/banner";
 import initMovieRouter from "./route/movie";
 import initUserRouter from "./route/user";
@@ -18,6 +18,7 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

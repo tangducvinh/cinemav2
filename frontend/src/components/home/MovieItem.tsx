@@ -2,16 +2,19 @@
 import { useCallback, useState } from "react";
 import { IoTicketOutline } from "react-icons/io5";
 import { IoPlayCircleSharp } from "react-icons/io5";
+import Link from "next/link";
+
 import Trailer from "../common/Trailer";
 
 interface IProps {
   name: string;
   poster: string;
   keyVideo: string;
+  slug: string;
 }
 
 const MovieItem = (props: IProps) => {
-  const { name, poster, keyVideo } = props;
+  const { name, poster, keyVideo, slug } = props;
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [watchTrailer, setWatchTrailer] = useState<boolean>(false);
@@ -21,7 +24,7 @@ const MovieItem = (props: IProps) => {
   }, []);
 
   return (
-    <div>
+    <Link href={`/book/${slug}`}>
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
@@ -51,7 +54,7 @@ const MovieItem = (props: IProps) => {
       {watchTrailer && (
         <Trailer keyVideo={keyVideo} setShow={handleShowTrailer} />
       )}
-    </div>
+    </Link>
   );
 };
 
