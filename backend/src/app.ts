@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import initBannerRouter from "./route/banner";
 import initMovieRouter from "./route/movie";
 import initUserRouter from "./route/user";
+import initShowRouter from "./route/show";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 initBannerRouter(app);
 initMovieRouter(app);
 initUserRouter(app);
+initShowRouter(app);
 
 connectDB();
 
