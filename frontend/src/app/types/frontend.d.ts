@@ -12,6 +12,32 @@ export interface IMovie {
   backdrop: string;
 }
 
+export interface IDirector {
+  id: number;
+  name: string;
+  slug: string;
+  avatar: string;
+  birthday: Date;
+  nation: string;
+  description: string;
+}
+
+export interface IDetailMovie {
+  id: number;
+  name: string;
+  overview: string;
+  poster: string;
+  release: Date;
+  runtime: string;
+  status: string;
+  backdrop: string;
+  video: string;
+  country: string;
+  genres: { id: number; name: string; slug: string }[];
+  directors: IDirector[];
+  actors: IDirector[];
+}
+
 export interface IFormSignIn {
   email: string;
   password: string;

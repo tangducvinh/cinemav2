@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 interface IProps {
   keyVideo: string;
   setShow: () => void;
@@ -8,7 +10,10 @@ const Trailer = (props: IProps) => {
 
   return (
     <div
-      onClick={() => setShow()}
+      onClick={(e) => {
+        setShow();
+        e.stopPropagation();
+      }}
       className="w-screen h-screen fixed z-50 bg-bg-overlay flex item-center justify-center inset-0"
     >
       <iframe
@@ -21,4 +26,4 @@ const Trailer = (props: IProps) => {
   );
 };
 
-export default Trailer;
+export default memo(Trailer);

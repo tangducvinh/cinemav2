@@ -1,10 +1,10 @@
 "use client";
 import { useCallback, useState } from "react";
-import { IoTicketOutline } from "react-icons/io5";
 import { IoPlayCircleSharp } from "react-icons/io5";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import Trailer from "../common/Trailer";
+import ButtonBuy from "../common/ButtonBuy";
 
 interface IProps {
   name: string;
@@ -14,6 +14,7 @@ interface IProps {
 }
 
 const MovieItem = (props: IProps) => {
+  const router = useRouter();
   const { name, poster, keyVideo, slug } = props;
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const MovieItem = (props: IProps) => {
   }, []);
 
   return (
-    <Link href={`/book/${slug}`}>
+    <div onClick={() => router.push(`/book/${slug}`)}>
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
@@ -34,12 +35,12 @@ const MovieItem = (props: IProps) => {
         <div className="absolute inset-0 flex items-center justify-center hover:bg-bg-overlay transition-all">
           {isHover && (
             <div>
-              <button className="flex animate-wiggle items-center gap-2 py-2 w-[120px] border-[1px] border-transparent justify-center transition-all rounded-[3px] bg-[#F05A27] hover:bg-main">
-                <IoTicketOutline size="20" color="white" />
-                <span className="text-white">Mua vé</span>
-              </button>
+              <ButtonBuy />
               <button
-                onClick={() => setWatchTrailer(true)}
+                onClick={(e) => {
+                  setWatchTrailer(true);
+                  e.stopPropagation();
+                }}
                 className="flex animate-wiggle items-center gap-2 mt-4 py-2 w-[120px] hover:border-overlay-main hover:bg-overlay-main transition-all justify-center rounded-[3px] border-[1px] border-white"
               >
                 <IoPlayCircleSharp size="20" color="white" />
@@ -54,7 +55,7 @@ const MovieItem = (props: IProps) => {
       {watchTrailer && (
         <Trailer keyVideo={keyVideo} setShow={handleShowTrailer} />
       )}
-    </Link>
+    </div>
   );
 };
 
