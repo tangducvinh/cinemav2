@@ -29,8 +29,8 @@ const Slide = (props: IProps) => {
         navigation={true}
         modules={[Pagination, Navigation, Autoplay]}
       >
-        {data?.map((item, index) => (
-          <SwiperSlide>
+        {data?.map((item) => (
+          <SwiperSlide key={item.id}>
             <div className="flex justify-center">
               <img
                 className="w-[1512px] object-cover text-center"

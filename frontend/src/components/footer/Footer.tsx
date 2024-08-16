@@ -44,13 +44,15 @@ const Footer = () => {
     <section className="w-main">
       <div className="grid-cols-4 grid border-b-[3px] pb-4">
         {dataFooter.map((item) => (
-          <div>
+          <div key={item.title}>
             <h3 className="uppercase mb-7 text-white text-[16px] font-bold">
               {item.title}
             </h3>
             <ul>
-              {item.subTitle.map((data) => (
-                <li className="text-[16px] text-[#D0D0D0] mb-3">{data}</li>
+              {item.subTitle.map((data, index) => (
+                <li key={index} className="text-[16px] text-[#D0D0D0] mb-3">
+                  {data}
+                </li>
               ))}
             </ul>
           </div>

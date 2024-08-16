@@ -1,23 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ItemDate from "./ItemDate";
+import { convertDay } from "@/ultis/convertDay";
 
-const data = [
-  {
-    title: "Thứ Sáu",
-    date: "16/08",
-  },
-  {
-    title: "Thứ Bảy",
-    date: "17/08",
-  },
-  {
-    title: "Chủ Nhật",
-    date: "18/08",
-  },
-];
+interface IDataDate {
+  title?: string;
+  date: string;
+}
 
 const dataCitys = [
   {
@@ -55,15 +46,39 @@ const dataCinemas = [
 
 const NavBarDate = () => {
   const [dateChoose, setDateChoose] = useState<number>(0);
+  const [dataDate, setDataDate] = useState<IDataDate[]>([]);
+
+  useEffect(() => {
+    const array: IDataDate[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      const now = new Date();
+      const current = new Date(now.setDate(now.getDate() + i));
+      array.push({
+        title: convertDay(current.getDay()),
+        date: `${
+          current.getDate().toString().length == 1
+            ? "0" + current.getDate()
+            : current.getDate()
+        }:${
+          (current.getMonth() + 1).toString().length === 1
+            ? "0" + (current.getMonth() + 1)
+            : current.getMonth() + 1
+        }`,
+      });
+    }
+
+    setDataDate(array);
+  }, []);
 
   return (
     <div className="flex mt-6 items-center justify-between border-b-[3px] pb-4 border-b-forcus">
       <div className="px-[44px] flex items-center gap-4">
-        {data.map((item, index) => (
+        {dataDate?.map((item, index) => (
           <ItemDate
             index={index}
             key={index}
-            title={item.title}
+            title={item.title || ""}
             date={item.date}
             dateChoose={dateChoose}
             onDateChoose={setDateChoose}
@@ -76,7 +91,9 @@ const NavBarDate = () => {
           className="border hover:cursor-pointer border-gray-300 outline-none text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[170px]"
         >
           {dataCitys.map((item) => (
-            <option value={item.value}>{item.title}</option>
+            <option key={item.value} value={item.value}>
+              {item.title}
+            </option>
           ))}
         </select>
 
@@ -85,7 +102,9 @@ const NavBarDate = () => {
           className="border hover:cursor-pointer border-gray-300 outline-none text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[170px]"
         >
           {dataCinemas.map((item) => (
-            <option value={item.value}>{item.title}</option>
+            <option key={item.value} value={item.value}>
+              {item.title}
+            </option>
           ))}
         </select>
       </div>

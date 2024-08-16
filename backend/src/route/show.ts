@@ -1,12 +1,13 @@
 import express from "express";
 import { Application } from "express";
 
-import { getListShow } from "../controllers/show";
+import { getListDate, getListShow } from "../controllers/show";
 
 const router = express.Router();
 
 const initShowRouter = (app: Application) => {
   router.get("/list-show", getListShow);
+  router.get("/list-date", getListDate);
 
   return app.use("/api/show", router);
 };

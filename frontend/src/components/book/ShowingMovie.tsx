@@ -13,6 +13,7 @@ const ShowingMovie: React.FC<IProps> = ({ data }) => {
 
       {data.map((item) => (
         <MovieItemBig
+          key={item.id}
           backdrop={item.backdrop}
           slug={item.slug}
           name={item.name}

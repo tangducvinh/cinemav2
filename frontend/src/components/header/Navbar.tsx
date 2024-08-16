@@ -66,7 +66,10 @@ const NavBar = () => {
       </button>
 
       {data.map((item, index) => (
-        <div className="flex items-center gap-1 hover:text-main transition-all cursor-pointer">
+        <div
+          key={item.title}
+          className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
+        >
           <p onMouseLeave={() => setShowChild(-1)} className="relative">
             <span onMouseEnter={() => setShowChild(index)}>{item.title}</span>
 
