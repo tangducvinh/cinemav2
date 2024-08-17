@@ -15,6 +15,7 @@ import InputLogin from "./InputLogin";
 import InputRadio from "./InputRadio";
 import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
 import HeaderLogin from "./HeaderLogin";
+import { useAppContext } from "@/me/AppProvider";
 
 interface IDataForm {
   label: string;
@@ -167,6 +168,8 @@ const SignIn = (props: IProps) => {
     }
   }, [dateValue]);
 
+  const { setToken } = useAppContext();
+
   const onSubmit: SubmitHandler<IFormSignUp | IFormSignIn> = async (
     data: any
   ) => {
@@ -201,8 +204,18 @@ const SignIn = (props: IProps) => {
         onCloseLogin("null");
         const name = response.data.fullName;
         const token = response.data.accessToken;
-        setCookie('token', token)
+        // setCookie('token', token)
         setCookie("name", name);
+
+        // set token into cookie client next
+        fetch("/api/user", {
+          method: "POST",
+          body: JSON.stringify(response),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setToken(response.data.accessToken);
       }
     }
   };
