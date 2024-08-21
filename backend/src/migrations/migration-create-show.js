@@ -23,6 +23,13 @@ module.exports = {
           key: "id",
         },
       },
+      cityId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Cities",
+          key: "id",
+        },
+      },
       timeStart: {
         type: Sequelize.DATE,
       },

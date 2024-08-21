@@ -9,12 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Show.hasOne(db.Cinema);
+      Show.belongsTo(models.Cinema, {
+        foreignKey: "cinemaId",
+        targetKey: "id",
+        as: "cinema",
+      });
     }
   }
   Show.init(
     {
       movieId: DataTypes.INTEGER,
       cinemaId: DataTypes.INTEGER,
+      cityId: DataTypes.INTEGER,
       timeStart: DataTypes.DATE,
       roomId: DataTypes.INTEGER,
       timeEnd: DataTypes.DATE,

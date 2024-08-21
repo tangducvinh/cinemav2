@@ -6,6 +6,8 @@ import initBannerRouter from "./route/banner";
 import initMovieRouter from "./route/movie";
 import initUserRouter from "./route/user";
 import initShowRouter from "./route/show";
+import initCityRouter from "./route/city";
+import initCinemaRouter from "./route/cinema";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -28,6 +30,8 @@ initBannerRouter(app);
 initMovieRouter(app);
 initUserRouter(app);
 initShowRouter(app);
+initCityRouter(app);
+initCinemaRouter(app);
 
 connectDB();
 
