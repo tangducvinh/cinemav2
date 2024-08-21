@@ -2,7 +2,7 @@ import WatchTrailer from "@/components/book/WatchTrailer";
 import InforMovie from "@/components/book/InforMovie";
 import ShowingMovie from "@/components/book/ShowingMovie";
 import ContentMovie from "@/components/book/ContentMovie";
-import { getDetailMovie, getMovieByStatus } from "@/apis/movie";
+import apiMovie from "@/apis/movie";
 import Show from "@/components/book/Show";
 
 interface IProps {
@@ -12,9 +12,8 @@ interface IProps {
 
 const Book = async (props: IProps) => {
   const { params } = props;
-  const detailMovie = await getDetailMovie(params.slug);
-
-  const movieShowings = await getMovieByStatus("showing");
+  const detailMovie = await apiMovie.getDetailMovie(params.slug);
+  const movieShowings = await apiMovie.getMovieByStatus("showing");
 
   return (
     <>
@@ -29,7 +28,7 @@ const Book = async (props: IProps) => {
 
           <ContentMovie overview={detailMovie.overview} />
 
-          <Show />
+          <Show movieId={detailMovie.id} />
         </div>
         <div className="flex-3">
           <ShowingMovie data={movieShowings.data} />

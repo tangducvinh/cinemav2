@@ -52,3 +52,22 @@ export interface IFormSignUp {
   sex: string;
   birthday: string;
 }
+
+export interface ICity {
+  id: number;
+  name: string;
+}
+
+export interface ICinema {
+  id: number;
+  name: string;
+  address: string;
+  cityId: number;
+}
+
+export interface IShowSearch {
+  movieId: number;
+  date: string;
+  cinemaId: number;
+  cityId: number;
+}

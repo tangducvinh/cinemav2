@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IMovie } from "@/app/types/frontend";
 
-import { getMovieByStatus } from "../../apis/movie";
+import apiMovie from "@/apis/movie";
 import MovieContainer from "./MovieContainer";
 import MenuTitle from "./MenuTitle";
 
@@ -35,7 +35,7 @@ const NavBar = () => {
   const [movieData, setMovieData] = useState<IMovie[] | []>([]);
 
   const fetchDataMovie = async () => {
-    const response = await getMovieByStatus(currentStatus);
+    const response = await apiMovie.getMovieByStatus(currentStatus);
 
     if (response.success) {
       setMovieData(response.data);

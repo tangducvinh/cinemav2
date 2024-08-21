@@ -10,7 +10,7 @@ import { IoMdClose, IoIosCalendar } from "react-icons/io";
 import { ClipLoader } from "react-spinners";
 import { setCookie } from "cookies-next";
 
-import { signUp, signIn } from "../../apis/user";
+import apiUser from "../../apis/user";
 import InputLogin from "./InputLogin";
 import InputRadio from "./InputRadio";
 import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
@@ -181,7 +181,7 @@ const SignIn = (props: IProps) => {
         newData.birthday = moment(dateValue?.toString()).format("yyyy/MM/DD");
 
         setLoading(true);
-        const response = await signUp(newData);
+        const response = await apiUser.signUp(newData);
         setLoading(false);
 
         if (!response.success) {
@@ -195,7 +195,7 @@ const SignIn = (props: IProps) => {
     } else {
       // handle signin
       setLoading(true);
-      const response = await signIn(data);
+      const response = await apiUser.signIn(data);
       setLoading(false);
 
       if (!response.success) {

@@ -27,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(inter.className, "no-scrollbar")}>
-        <div className="flex justify-center">
-          <Header />
-        </div>
-        <AppProvider initToken={token?.value}>{children}</AppProvider>
+        <AppProvider initToken={token?.value}>
+          <div className="flex justify-center">
+            <Header />
+          </div>
+          {children}
+        </AppProvider>
         <div className="flex py-[30px] bg-[#333333] justify-center">
           <Footer />
         </div>
