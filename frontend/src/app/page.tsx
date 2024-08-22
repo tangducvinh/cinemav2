@@ -7,6 +7,7 @@ import IntroduceText from "@/components/home/IntroduceText";
 export default async function Home() {
   const response = await fetch("http://localhost:7000/api/banner", {
     method: "GET",
+    cache: "no-store",
   });
   const slideData = await response.json();
 

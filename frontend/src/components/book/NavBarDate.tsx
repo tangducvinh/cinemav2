@@ -26,6 +26,7 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
   const [currentCity, setCurrentCity] = useState<number>(0);
   const [listCinemas, setListCinemas] = useState<ICinema[]>([]);
   const [currentCinema, setCurrentCinema] = useState<number>(0);
+  const [dataSchedule, setDataSchedule] = useState<[][]>([]);
 
   useEffect(() => {
     const array: IDataDate[] = [];
@@ -53,11 +54,29 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
     fetchListCinema();
   }, [currentCity]);
 
+  console.log(listCinemas);
+
   // handle search show follow condition
   const fetchListShow = async (data: IShowSearch) => {
     const response = await apiShow.getListShow(data);
 
-    console.log(response);
+    let newArray: number[] = [];
+
+    response.forEach((item: { cinemaId: number }) => {
+      if (!newArray?.some((check) => check === item.cinemaId)) {
+        newArray.push(item.cinemaId);
+      }
+    });
+
+    let newData: [][] = [];
+    newArray.forEach((item) => {
+      let a = response.filter(
+        (value: { cinemaId: number }) => value.cinemaId === item
+      );
+      newData.push(a);
+    });
+
+    setDataSchedule(newData);
   };
 
   useEffect(() => {
@@ -95,7 +114,7 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
             className="border hover:cursor-pointer border-gray-300 outline-none text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[170px]"
           >
             <option value={0}>Toàn quốc</option>
-            {listCities.map((item) => (
+            {listCities?.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -108,7 +127,7 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
             onChange={(e) => setCurrentCinema(Number(e.target.value))}
           >
             <option value={0}>Tất cả các rạp</option>
-            {listCinemas.map((item) => (
+            {listCinemas?.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -117,7 +136,17 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
         </div>
       </div>
 
-      <Schedule />
+      {dataSchedule.length === 0 ? (
+        <div className="h-[300px] mt-8 flex items-center justify-center">
+          Không có suất chiếu nào!
+        </div>
+      ) : (
+        <div className="min-h-[300px]">
+          {dataSchedule?.map((item) => (
+            <Schedule data={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

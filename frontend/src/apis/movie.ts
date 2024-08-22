@@ -15,6 +15,7 @@ const apiMovie = {
       `http://localhost:7000/api/movie/detail-movie?slug=${slug}`,
       {
         method: "GET",
+        cache: "no-store",
       }
     );
 

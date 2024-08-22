@@ -4,6 +4,7 @@ const apiCinema = {
       `http://localhost:7000/api/cinema?cityId=${cityId}`,
       {
         method: "GET",
+        cache: "no-store",
       }
     );
 

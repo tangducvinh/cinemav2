@@ -19,8 +19,9 @@ const getListShow = async (req: Request, res: Response) => {
           cinemaId || "" !== "" ? { cinemaId } : {},
         ],
       },
+      order: [["cinemaId", "asc"]],
       attributes: {
-        exclude: ["cinemaId"],
+        // exclude: ["cinemaId"],
       },
       include: [
         {

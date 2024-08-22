@@ -35,77 +35,24 @@ const getDetailMovie = async (req: Request, res: Response) => {
       where: {
         slug,
       },
-    });
-
-    // handle genre
-    const genreIds = await Movie_Genre.findAll({
-      attributes: ["id"],
-      where: {
-        movieId: movie.dataValues.id,
-      },
-    });
-    const newGenreIds = genreIds.map((item) => item.dataValues.id);
-    const genres = await Genre.findAll({
-      attributes: ["id", "name", "slug"],
-      where: {
-        id: {
-          [Op.in]: newGenreIds,
+      include: [
+        {
+          model: db.Genre,
+          as: "genres",
+          attributes: ["id", "name", "slug"],
         },
-      },
-    });
-    movie.dataValues.genres = genres;
-
-    //handle director
-    const directorIds = await db.Movie_Director.findAll({
-      attributes: ["id"],
-      where: {
-        movieId: movie.dataValues.id,
-      },
-    });
-    const newDirectorIds = directorIds.map((item) => item.dataValues.id);
-    const directors = await db.Director.findAll({
-      attributes: [
-        "id",
-        "name",
-        "slug",
-        "avatar",
-        "birthday",
-        "nation",
-        "description",
+        {
+          model: db.Actor,
+          as: "actors",
+          attributes: ["id", "name", "slug"],
+        },
+        {
+          model: db.Director,
+          as: "directors",
+          attributes: ["id", "name", "slug"],
+        },
       ],
-      where: {
-        id: {
-          [Op.in]: newDirectorIds,
-        },
-      },
     });
-    movie.dataValues.directors = directors;
-
-    //handle actor
-    const actorIds = await db.Movie_Actor.findAll({
-      attributes: ["id"],
-      where: {
-        movieId: movie.dataValues.id,
-      },
-    });
-    const newActorIds = actorIds.map((item) => item.dataValues.id);
-    const actors = await db.Actor.findAll({
-      attributes: [
-        "id",
-        "name",
-        "slug",
-        "avatar",
-        "birthday",
-        "nation",
-        "description",
-      ],
-      where: {
-        id: {
-          [Op.in]: newActorIds,
-        },
-      },
-    });
-    movie.dataValues.actors = actors;
 
     return res.json(movie);
   } catch (e) {

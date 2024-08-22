@@ -9,16 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Movie.belongsToMany(models.Genre, {
+        through: models.Movie_Genre,
+        as: "genres",
+      }),
+        Movie.belongsToMany(models.Actor, {
+          through: models.Movie_Actor,
+          as: "actors",
+        }),
+        Movie.belongsToMany(models.Director, {
+          through: models.Movie_Director,
+          as: "directors",
+        });
     }
   }
   Movie.init(
     {
-      //   id: DataTypes.INTEGER,
-      // genreId: DataTypes.INTEGER,
       name: DataTypes.STRING,
       overview: DataTypes.TEXT,
       poster: DataTypes.TEXT,
-      // backdrop: DataTypes.TEXT,
       release: DataTypes.DATE,
       runtime: DataTypes.INTEGER,
       status: DataTypes.STRING,
