@@ -32,10 +32,10 @@ export default function RootLayout({
             <Header />
           </div>
           {children}
+          <div className="flex py-[30px] bg-[#333333] justify-center">
+            <Footer />
+          </div>
         </AppProvider>
-        <div className="flex py-[30px] bg-[#333333] justify-center">
-          <Footer />
-        </div>
       </body>
     </html>
   );

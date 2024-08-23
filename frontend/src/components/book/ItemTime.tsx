@@ -1,6 +1,6 @@
 interface IProps {
   title: string;
-  slug: string;
+  slug?: string;
 }
 
 const ItemTime: React.FC<IProps> = ({ title, slug }) => {
