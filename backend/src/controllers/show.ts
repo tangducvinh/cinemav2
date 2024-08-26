@@ -42,23 +42,33 @@ const getListShow = async (req: Request, res: Response) => {
   }
 };
 
-const getListDate = async (req: Request, res: Response) => {
+const getDetailShow = async (req: Request, res: Response) => {
   try {
-    const { slug } = req.query;
+    const { showId } = req.query;
 
-    const movieId = await db.Movie.findOne({
+    const response = await db.Show.findOne({
       where: {
-        slug,
+        id: showId,
       },
-    });
-
-    // console.log(movieId.dataValues.id)
-
-    const response = await db.Show.findAll({
-      attributes: ["timeStart"],
-      distinct: true,
-      where: {
-        movieId: movieId.dataValues.id,
+      include: [
+        {
+          model: db.Movie,
+          as: "movie",
+          attributes: ["name", "poster"],
+        },
+        {
+          model: db.Cinema,
+          as: "cinema",
+          attributes: ["name"],
+        },
+        {
+          model: db.Room,
+          as: "room",
+          attributes: ["name", "width", "height"],
+        },
+      ],
+      attributes: {
+        exclude: ["createAt", "updateAt"],
       },
     });
 
@@ -72,4 +82,4 @@ const getListDate = async (req: Request, res: Response) => {
   }
 };
 
-export { getListShow, getListDate };
+export { getListShow, getDetailShow };

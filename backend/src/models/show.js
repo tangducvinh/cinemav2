@@ -15,6 +15,16 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "cinema",
       });
+      Show.belongsTo(models.Movie, {
+        foreignKey: "movieId",
+        targetKey: "id",
+        as: "movie",
+      });
+      Show.belongsTo(models.Room, {
+        foreignKey: "roomId",
+        targetKey: "id",
+        as: "room",
+      });
     }
   }
   Show.init(

@@ -8,6 +8,7 @@ import initUserRouter from "./route/user";
 import initShowRouter from "./route/show";
 import initCityRouter from "./route/city";
 import initCinemaRouter from "./route/cinema";
+import initSeatRouter from "./route/seat";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -32,6 +33,7 @@ initUserRouter(app);
 initShowRouter(app);
 initCityRouter(app);
 initCinemaRouter(app);
+initSeatRouter(app);
 
 connectDB();
 

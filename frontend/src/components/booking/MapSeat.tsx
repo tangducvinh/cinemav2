@@ -1,140 +1,90 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const data = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+import apiSeat from "@/apis/seat";
 
-const dataSeat = [
-  {
-    number: "1",
-    row: "0",
-    column: "0",
-  },
-  {
-    number: "2",
-    row: "0",
-    column: "1",
-  },
-  {
-    number: "3",
-    row: "0",
-    column: "2",
-  },
-  {
-    number: "4",
-    row: "0",
-    column: "3",
-  },
-  {
-    number: "5",
-    row: "0",
-    column: "4",
-  },
-  {
-    number: "6",
-    row: "0",
-    column: "5",
-  },
-  {
-    number: "7",
-    row: "0",
-    column: "6",
-  },
-  {
-    number: "8",
-    row: "0",
-    column: "7",
-  },
-  {
-    number: "9",
-    row: "0",
-    column: "8",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
+const data = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
 
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
+interface IProps {
+  roomId: number;
+  maxColumn: number;
+  maxRow: number;
+}
 
-  {
-    number: "10",
-    row: "0",
-    column: "9",
-  },
-];
+interface ISeat {
+  id: number;
+  name: string;
+  number: number;
+  row: number;
+  column: number;
+  status: number;
+  ticketPrice: number;
+}
 
-const row = 2;
-// const column = 17;
+const MapSeat: React.FC<IProps> = ({ roomId, maxColumn, maxRow }) => {
+  // const [column, setColumn] = useState<number>(14);
+  // const [row, setRow] = useState<number>(10);
+  const [dataListSeat, setDateListSeat] = useState<ISeat[]>([]);
 
-const MapSeat = () => {
-  const [column, setColumn] = useState<number>(15);
+  useEffect(() => {
+    const fetchListSeat = async () => {
+      const response = await apiSeat.getListSeat(roomId);
+
+      console.log(maxColumn);
+
+      setDateListSeat(response);
+      // setColumn(maxColumn);
+      // setRow(maxRow);
+    };
+
+    fetchListSeat();
+  }, [roomId]);
 
   return (
-    <div className="bg-white p-3 relative flex justify-center">
-      <div className="absolute w-[20px] left-[10px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
-        {data.slice(0, row).map((item) => (
-          <p className="w-full text-center">{item}</p>
-        ))}
+    <div className="bg-white p-4 min-h-[600px]">
+      <div className="flex justify-between">
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
+          {data.slice(0, maxRow).map((item) => (
+            <p className="w-full text-center">{item}</p>
+          ))}
+        </div>
+
+        {maxColumn && (
+          <div className="flex-auto flex justify-center">
+            <div className={`grid grid-cols-${maxColumn.toString()} mx-[30px]`}>
+              {dataListSeat.reverse().map((item) => (
+                <button className="w-[25px] h-[25px] ml-2 mb-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]">
+                  {item.number}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
+          {data.slice(0, maxRow).map((item) => (
+            <p className="w-full text-center">{item}</p>
+          ))}
+        </div>
       </div>
 
-      <div className={`grid ${"grid-cols-" + column} mx-[30px]`}>
-        {dataSeat.reverse().map((item) => (
-          <button className="w-[25px] ml-2 mb-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]">
-            {item.number}
-          </button>
-        ))}
-      </div>
+      <div className="mt-[40px]">
+        <p className="text-center text-gray-300 text-semibold mb-2">Màn hình</p>
 
-      <div className="absolute right-[15px] w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
-        {data.slice(0, row).map((item) => (
-          <p className="w-full text-center">{item}</p>
-        ))}
+        <div className="border-t-[4px] border-t-main">
+          <div className="flex items-center gap-6 h-[90px]">
+            <div className="flex items-center gap-2">
+              <div className="w-[25px] h-[25px] rounded-sm bg-gray-400"></div>
+              <p className="text-normal text-[16px]">Ghế đã bán</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="w-[25px] h-[25px] rounded-sm bg-main"></div>
+              <p className="text-normal text-[16px]">Ghế đang chọn</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

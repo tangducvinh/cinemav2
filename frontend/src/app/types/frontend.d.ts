@@ -68,6 +68,6 @@ export interface ICinema {
 export interface IShowSearch {
   movieId: number;
   date: string;
-  cinemaId: number;
-  cityId: number;
+  cinemaId?: number;
+  cityId?: number;
 }
