@@ -1,7 +1,6 @@
 import HeaderBooking from "@/components/booking/HeaderBooking";
-import ChangeShow from "@/components/booking/ChangeShow";
-import DetailShow from "@/components/booking/DetailShow";
-import MapSeat from "@/components/booking/MapSeat";
+
+import ContentShow from "@/components/booking/ContentShow";
 import apiShow from "@/apis/show";
 
 const Booking = async ({ params }: { params: { slug: string } }) => {
@@ -11,41 +10,7 @@ const Booking = async ({ params }: { params: { slug: string } }) => {
     <div className="bg-[#F9F9F9]">
       <HeaderBooking currentIndex={1} />
 
-      <div className="w-main mx-auto flex gap-3 pb-[70px]">
-        <div className="flex-7">
-          <ChangeShow
-            timeStart={detailShow.timeStart}
-            movieId={detailShow.movieId}
-            cinemaId={detailShow.cinemaId}
-          />
-
-          <MapSeat
-            roomId={detailShow.roomId}
-            maxColumn={detailShow.room.width}
-            maxRow={detailShow.room.height}
-          />
-        </div>
-
-        <div className="flex-3">
-          <DetailShow
-            name={detailShow.movie.name}
-            cinemaName={detailShow.cinema.name}
-            timeStart={detailShow.timeStart}
-            roomName={detailShow.room.name}
-            poster={detailShow.movie.poster}
-          />
-
-          <div className="flex mt-8">
-            <button className="text-[18px] flex-1 py-2 text-main">
-              Quay lại
-            </button>
-
-            <button className="text-[18px] text-white flex-1 rounded-md py-2 bg-main hover:opacity-85">
-              Tiếp tục
-            </button>
-          </div>
-        </div>
-      </div>
+      <ContentShow detailShow={detailShow} slug={Number(params.slug)} />
     </div>
   );
 };

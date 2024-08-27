@@ -3,6 +3,8 @@
 import moment from "moment";
 
 import { convertDay } from "@/ultis/convertDay";
+import { ISeatSelected } from "@/app/types/frontend";
+import { convertToVND } from "@/ultis/convertToVND";
 
 interface IProps {
   poster: string;
@@ -10,6 +12,7 @@ interface IProps {
   cinemaName: string;
   roomName: string;
   timeStart: Date;
+  selectSeats: ISeatSelected[];
 }
 
 const DetailShow: React.FC<IProps> = ({
@@ -18,6 +21,7 @@ const DetailShow: React.FC<IProps> = ({
   cinemaName,
   roomName,
   timeStart,
+  selectSeats,
 }) => {
   return (
     <div className="mt-10 bg-white rounded-md border-t-[8px] p-4 border-t-main">
@@ -50,7 +54,14 @@ const DetailShow: React.FC<IProps> = ({
 
       <div className="flex items-center text-normal py-5 justify-between text-[18px] mt-4 border-t-gray-400 border-dashed border-t-2">
         <p className="font-bold">Tổng cộng</p>
-        <p className="font-bold text-main">0 đ</p>
+        <p className="font-bold text-main">
+          {convertToVND(
+            selectSeats.reduce(
+              (total, current) => current.ticketPrice + total,
+              0
+            )
+          )}
+        </p>
       </div>
     </div>
   );

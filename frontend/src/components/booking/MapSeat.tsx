@@ -1,41 +1,56 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
+import clsx from "clsx";
 
 import apiSeat from "@/apis/seat";
+import { ISeatSelected } from "@/app/types/frontend";
 
-const data = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
+const listRows = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+];
 
 interface IProps {
   roomId: number;
   maxColumn: number;
   maxRow: number;
+  selectSeats: ISeatSelected[];
+  handleSelectSeat: (x: any) => void;
 }
 
-interface ISeat {
-  id: number;
-  name: string;
-  number: number;
-  row: number;
-  column: number;
-  status: number;
-  ticketPrice: number;
-}
-
-const MapSeat: React.FC<IProps> = ({ roomId, maxColumn, maxRow }) => {
-  // const [column, setColumn] = useState<number>(14);
-  // const [row, setRow] = useState<number>(10);
-  const [dataListSeat, setDateListSeat] = useState<ISeat[]>([]);
+const MapSeat: React.FC<IProps> = ({
+  roomId,
+  maxColumn,
+  maxRow,
+  selectSeats,
+  handleSelectSeat,
+}) => {
+  const [dataListSeat, setDateListSeat] = useState<any>([]);
 
   useEffect(() => {
     const fetchListSeat = async () => {
       const response = await apiSeat.getListSeat(roomId);
 
-      console.log(maxColumn);
+      const newData = [];
 
-      setDateListSeat(response);
-      // setColumn(maxColumn);
-      // setRow(maxRow);
+      for (let i = 0; i < maxRow; i++) {
+        const rows = response.filter((item: { row: number }) => item.row === i);
+        newData.push(rows);
+      }
+
+      setDateListSeat(newData);
     };
 
     fetchListSeat();
@@ -45,25 +60,40 @@ const MapSeat: React.FC<IProps> = ({ roomId, maxColumn, maxRow }) => {
     <div className="bg-white p-4 min-h-[600px]">
       <div className="flex justify-between">
         <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
-          {data.slice(0, maxRow).map((item) => (
-            <p className="w-full text-center">{item}</p>
+          {listRows.slice(0, maxRow).map((item) => (
+            <p key={item} className="w-full text-center">
+              {item}
+            </p>
           ))}
         </div>
 
         {maxColumn && (
           <div className="flex-auto flex justify-center">
-            <div className={`grid grid-cols-${maxColumn.toString()} mx-[30px]`}>
-              {dataListSeat.reverse().map((item) => (
-                <button className="w-[25px] h-[25px] ml-2 mb-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]">
-                  {item.number}
-                </button>
+            <div>
+              {dataListSeat?.map((item: any) => (
+                <div className="flex items-center">
+                  {item?.map((subItem: any) => (
+                    <button
+                      onClick={() => handleSelectSeat(subItem)}
+                      className={clsx(
+                        "w-[25px] h-[25px] ml-2 mb-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
+                        {
+                          "bg-main text-white hover:text-white":
+                            selectSeats.some((item) => item.id === subItem.id),
+                        }
+                      )}
+                    >
+                      {subItem.name}
+                    </button>
+                  ))}
+                </div>
               ))}
             </div>
           </div>
         )}
 
         <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
-          {data.slice(0, maxRow).map((item) => (
+          {listRows.slice(0, maxRow).map((item) => (
             <p className="w-full text-center">{item}</p>
           ))}
         </div>
@@ -90,4 +120,4 @@ const MapSeat: React.FC<IProps> = ({ roomId, maxColumn, maxRow }) => {
   );
 };
 
-export default MapSeat;
+export default memo(MapSeat);

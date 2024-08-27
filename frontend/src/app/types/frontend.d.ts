@@ -71,3 +71,10 @@ export interface IShowSearch {
   cinemaId?: number;
   cityId?: number;
 }
+
+interface ISeatSelected {
+  id: number;
+  ticketPrice: number;
+  name: string;
+  showId: number;
+}
