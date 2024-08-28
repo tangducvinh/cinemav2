@@ -57,9 +57,9 @@ const MapSeat: React.FC<IProps> = ({
   }, [roomId]);
 
   return (
-    <div className="bg-white p-4 min-h-[600px]">
+    <div className="bg-white p-4 ">
       <div className="flex justify-between">
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
           {listRows.slice(0, maxRow).map((item) => (
             <p key={item} className="w-full text-center">
               {item}
@@ -69,14 +69,14 @@ const MapSeat: React.FC<IProps> = ({
 
         {maxColumn && (
           <div className="flex-auto flex justify-center">
-            <div>
+            <div className="flex flex-col-reverse">
               {dataListSeat?.map((item: any) => (
-                <div className="flex items-center">
+                <div className="flex items-center flex-row-reverse">
                   {item?.map((subItem: any) => (
                     <button
                       onClick={() => handleSelectSeat(subItem)}
                       className={clsx(
-                        "w-[25px] h-[25px] ml-2 mb-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
+                        "w-[25px] h-[25px] ml-2 mt-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
                         {
                           "bg-main text-white hover:text-white":
                             selectSeats.some((item) => item.id === subItem.id),
@@ -92,7 +92,7 @@ const MapSeat: React.FC<IProps> = ({
           </div>
         )}
 
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-3">
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
           {listRows.slice(0, maxRow).map((item) => (
             <p className="w-full text-center">{item}</p>
           ))}

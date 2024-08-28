@@ -46,6 +46,13 @@ const NavBar = () => {
     fetchDataMovie();
   }, [currentStatus]);
 
+  // delete data localStorage of booking page
+  useEffect(() => {
+    localStorage.setItem("selectedFood", "");
+    localStorage.setItem("buyStatus", "");
+    localStorage.setItem("seatSelected", "");
+  }, []);
+
   return (
     <>
       <div className="flex items-center mb-[30px]">

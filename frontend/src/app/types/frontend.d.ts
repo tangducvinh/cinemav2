@@ -72,9 +72,34 @@ export interface IShowSearch {
   cityId?: number;
 }
 
-interface ISeatSelected {
+export interface ISeatSelected {
   id: number;
   ticketPrice: number;
   name: string;
+  showId: number;
+}
+
+export interface IFood {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+}
+
+export interface ISelectedFood {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  status: string;
+  showId: number;
+}
+
+export interface ISelectedFoods {
+  name: string;
+  id: number;
+  price: number;
+  quantity: number;
   showId: number;
 }

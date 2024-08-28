@@ -9,6 +9,7 @@ import initShowRouter from "./route/show";
 import initCityRouter from "./route/city";
 import initCinemaRouter from "./route/cinema";
 import initSeatRouter from "./route/seat";
+import initFoodRouter from "./route/food";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -34,6 +35,7 @@ initShowRouter(app);
 initCityRouter(app);
 initCinemaRouter(app);
 initSeatRouter(app);
+initFoodRouter(app);
 
 connectDB();
 

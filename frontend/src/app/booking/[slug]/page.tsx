@@ -2,16 +2,20 @@ import HeaderBooking from "@/components/booking/HeaderBooking";
 
 import ContentShow from "@/components/booking/ContentShow";
 import apiShow from "@/apis/show";
+import apiFood from "@/apis/food";
 
 const Booking = async ({ params }: { params: { slug: string } }) => {
   const detailShow = await apiShow.getDetailShow(Number(params.slug));
+  const comboFoods = await apiFood.getListFood();
 
   return (
-    <div className="bg-[#F9F9F9]">
-      <HeaderBooking currentIndex={1} />
-
-      <ContentShow detailShow={detailShow} slug={Number(params.slug)} />
-    </div>
+    <>
+      <ContentShow
+        detailShow={detailShow}
+        slug={Number(params.slug)}
+        dataFood={comboFoods}
+      />
+    </>
   );
 };
 
