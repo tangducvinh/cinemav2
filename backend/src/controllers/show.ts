@@ -29,6 +29,11 @@ const getListShow = async (req: Request, res: Response) => {
           as: "cinema",
           attributes: ["name"],
         },
+        {
+          model: db.Movie,
+          as: "movie",
+          attributes: ["slug"],
+        },
       ],
     });
 
