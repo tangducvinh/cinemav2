@@ -10,17 +10,10 @@ import { ISeatSelected } from "@/app/types/frontend";
 import ComboFood from "./ComboFood";
 import { IFood } from "@/app/types/frontend";
 import { ISelectedFood, ISelectedFoods } from "@/app/types/frontend";
+import Loading from "../common/Loading";
+import apiShow from "@/apis/show";
 
 interface IProps {
-  detailShow: {
-    timeStart: Date;
-    movieId: number;
-    cinemaId: number;
-    roomId: number;
-    room: { roomId: number; width: number; height: number; name: string };
-    movie: { name: string; poster: string };
-    cinema: { name: string };
-  };
   slug: number;
   dataFood: IFood[];
 }
@@ -30,6 +23,18 @@ interface ISeat {
   ticketPrice: number;
   number: number;
   row: number;
+}
+
+interface IDataDetailShow {
+  // dataDetailShow: {
+  timeStart: Date;
+  movieId: number;
+  cinemaId: number;
+  roomId: number;
+  room: { roomId: number; width: number; height: number; name: string };
+  movie: { name: string; poster: string };
+  cinema: { name: string };
+  // };
 }
 
 const listRows = [
@@ -48,10 +53,23 @@ const listRows = [
   "M",
 ];
 
-const ContentShow: React.FC<IProps> = ({ detailShow, slug, dataFood }) => {
+const ContentShow: React.FC<IProps> = ({ slug, dataFood }) => {
   const [selectSeats, setSelectSeats] = useState<ISeatSelected[]>([]);
   const [selectedFood, setSelectedFood] = useState<ISelectedFoods[]>([]);
   const [buyStatus, setBuyStatus] = useState<number>(1);
+  const [dataDetailShow, setDataDetailShow] = useState<IDataDetailShow>();
+  const [currentShowId, setCurrentShowId] = useState<number>()
+
+  // fetch data detail show
+  useEffect(() => {
+    const fetchDataDetailShow = async() => {
+      const response = await apiShow.getDetailShow(Number(currentShowId))
+
+      setDataDetailShow(response)
+    }
+
+    fetchDataDetailShow()
+  }, [currentShowId]);
 
   // get data from localStorage
   useEffect(() => {
@@ -76,6 +94,11 @@ const ContentShow: React.FC<IProps> = ({ detailShow, slug, dataFood }) => {
     //get status buy from localStorage
     const statusBuy = localStorage.getItem("buyStatus");
     setBuyStatus(JSON?.parse(statusBuy || "1") || 1);
+
+    // get current show id from localStorage
+    let showId = localStorage.getItem("currentShow");
+    showId = JSON.parse(showId || "");
+    setCurrentShowId(Number(showId))
   }, []);
 
   // handle selected seat
@@ -197,6 +220,11 @@ const ContentShow: React.FC<IProps> = ({ detailShow, slug, dataFood }) => {
     localStorage.setItem("buyStatus", JSON.stringify(buyStatus + 1));
   };
 
+  // handle btn back
+  const handleBtnBack = () => {};
+
+  if (!dataDetailShow) return <Loading />;
+
   return (
     <>
       <HeaderBooking currentIndex={buyStatus} />
@@ -206,15 +234,17 @@ const ContentShow: React.FC<IProps> = ({ detailShow, slug, dataFood }) => {
           {buyStatus === 1 ? (
             <>
               <ChangeShow
-                timeStart={detailShow.timeStart}
-                movieId={detailShow.movieId}
-                cinemaId={detailShow.cinemaId}
+                timeStart={dataDetailShow?.timeStart}
+                movieId={dataDetailShow?.movieId}
+                cinemaId={dataDetailShow?.cinemaId}
+                currentShowId={currentShowId}
+                onSetCurrentShowId={setCurrentShowId}
               />
 
               <MapSeat
-                roomId={detailShow.roomId}
-                maxColumn={detailShow.room.width}
-                maxRow={detailShow.room.height}
+                roomId={dataDetailShow?.roomId}
+                maxColumn={dataDetailShow?.room.width}
+                maxRow={dataDetailShow?.room.height}
                 selectSeats={selectSeats}
                 handleSelectSeat={handleSelectSeat}
               />
@@ -230,17 +260,20 @@ const ContentShow: React.FC<IProps> = ({ detailShow, slug, dataFood }) => {
 
         <div className="flex-3">
           <DetailShow
-            name={detailShow.movie.name}
-            cinemaName={detailShow.cinema.name}
-            timeStart={detailShow.timeStart}
-            roomName={detailShow.room.name}
-            poster={detailShow.movie.poster}
+            name={dataDetailShow?.movie.name}
+            cinemaName={dataDetailShow?.cinema.name}
+            timeStart={dataDetailShow?.timeStart}
+            roomName={dataDetailShow?.room.name}
+            poster={dataDetailShow?.movie.poster}
             selectSeats={selectSeats}
             selectedFood={selectedFood}
           />
 
           <div className="flex mt-8">
-            <button className="text-[18px] flex-1 py-2 text-main">
+            <button
+              className="text-[18px] flex-1 py-2 text-main"
+              onClick={handleBtnBack}
+            >
               Quay lại
             </button>
 

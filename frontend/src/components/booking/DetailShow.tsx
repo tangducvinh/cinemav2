@@ -87,7 +87,10 @@ const DetailShow: React.FC<IProps> = ({
           {selectedFood.map(
             (item) =>
               item.quantity !== 0 && (
-                <div className="flex items-center justify-between">
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between"
+                >
                   <p>
                     <span className="font-bold">{`${item.quantity}x`}</span>{" "}
                     {item.name}

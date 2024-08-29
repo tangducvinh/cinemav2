@@ -2,14 +2,25 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 
 import ItemTime from "./ItemTime";
-import { IoTerminalSharp } from "react-icons/io5";
+
+interface IItemShow {
+  cinema: { name: string };
+  timeStart: Date;
+  id: number;
+  movie: { slug: string };
+}
 
 interface IProps {
-  data: { cinema: { name: string }; timeStart: Date; id: number }[];
+  data: IItemShow[];
 }
 
 const Schedule: React.FC<IProps> = ({ data }) => {
   const router = useRouter();
+
+  const handleOnClick = (item: IItemShow) => {
+    router.push(`/booking/${item.movie.slug}`);
+    localStorage.setItem('currentShow', JSON.stringify(item.id))
+  };
 
   return (
     <div className="mt-8 mb-8">
@@ -23,7 +34,7 @@ const Schedule: React.FC<IProps> = ({ data }) => {
         <div className="flex gap-3 items-center">
           {data.map((item) => (
             <ItemTime
-              onClick={() => router.push(`/booking/${item.id}`)}
+              onClick={() => handleOnClick(item)}
               title={moment(item.timeStart).format("HH:mm")}
               key={item.id}
               slug={""}

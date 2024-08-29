@@ -5,6 +5,7 @@ import clsx from "clsx";
 
 import apiSeat from "@/apis/seat";
 import { ISeatSelected } from "@/app/types/frontend";
+import Loading from "../common/Loading";
 
 const listRows = [
   "A",
@@ -54,7 +55,9 @@ const MapSeat: React.FC<IProps> = ({
     };
 
     fetchListSeat();
-  }, [roomId]);
+  }, [roomId, maxRow]);
+
+  if (!dataListSeat) return <Loading />;
 
   return (
     <div className="bg-white p-4 ">
@@ -70,10 +73,11 @@ const MapSeat: React.FC<IProps> = ({
         {maxColumn && (
           <div className="flex-auto flex justify-center">
             <div className="flex flex-col-reverse">
-              {dataListSeat?.map((item: any) => (
-                <div className="flex items-center flex-row-reverse">
+              {dataListSeat?.map((item: any, index: number) => (
+                <div key={index} className="flex items-center flex-row-reverse">
                   {item?.map((subItem: any) => (
                     <button
+                      key={subItem.id}
                       onClick={() => handleSelectSeat(subItem)}
                       className={clsx(
                         "w-[25px] h-[25px] ml-2 mt-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
@@ -94,7 +98,9 @@ const MapSeat: React.FC<IProps> = ({
 
         <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
           {listRows.slice(0, maxRow).map((item) => (
-            <p className="w-full text-center">{item}</p>
+            <p key={item} className="w-full text-center">
+              {item}
+            </p>
           ))}
         </div>
       </div>

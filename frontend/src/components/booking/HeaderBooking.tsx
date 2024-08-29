@@ -19,6 +19,7 @@ const HeaderBooking: React.FC<IProps> = ({ currentIndex }) => {
       <ul className="mx-auto flex items-center">
         {data.map((item, index) => (
           <p
+            key={index}
             className={clsx(
               "text-[18px] font-semibold px-4 border-b-[3px] py-2",
               {

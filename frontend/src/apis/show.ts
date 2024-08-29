@@ -33,6 +33,8 @@ const apiShow = {
 
     if (result.success) {
       return result.data;
+    } else {
+      return null;
     }
   },
 };

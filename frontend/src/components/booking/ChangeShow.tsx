@@ -8,9 +8,11 @@ import ItemTime from "../book/ItemTime";
 import apiShow from "@/apis/show";
 
 interface IProps {
-  cinemaId: number;
+  cinemaId?: number;
   movieId: number;
-  timeStart: Date;
+  timeStart?: Date;
+  currentShowId: number | undefined;
+  onSetCurrentShowId: (x: number) => void;
 }
 
 interface IShow {
@@ -18,7 +20,13 @@ interface IShow {
   id: number;
 }
 
-const ChangeShow: React.FC<IProps> = ({ cinemaId, movieId, timeStart }) => {
+const ChangeShow: React.FC<IProps> = ({
+  cinemaId,
+  movieId,
+  timeStart,
+  onSetCurrentShowId,
+  currentShowId,
+}) => {
   const [dataListShow, setDataListShow] = useState<IShow[]>([]);
   const router = useRouter();
   const params = useParams();
@@ -38,6 +46,13 @@ const ChangeShow: React.FC<IProps> = ({ cinemaId, movieId, timeStart }) => {
     fetchListShow();
   }, [cinemaId, movieId, timeStart]);
 
+  const handleOnClick = (item: { id: number }) => {
+    onSetCurrentShowId(item.id);
+    // update localStorage
+    localStorage.setItem("currentShow", JSON.stringify(item.id));
+    // router.push(`/booking/${item.id}`)
+  };
+
   return (
     <div className="bg-white h-[71px] rounded-sm my-[30px] flex items-center gap-[70px] px-[25px]">
       <h4 className="text-normal font-semibold text-[18px]">Đổi xuất chiếu</h4>
@@ -45,9 +60,10 @@ const ChangeShow: React.FC<IProps> = ({ cinemaId, movieId, timeStart }) => {
       <div className="flex items-center gap-4">
         {dataListShow.map((item) => (
           <ItemTime
-            onClick={() => router.push(`/booking/${item.id}`)}
+            key={item.id}
+            onClick={() => handleOnClick(item)}
             title={moment(item.timeStart).format("HH:mm")}
-            checked={item.id.toString() === params.slug ? true : false}
+            checked={item.id === currentShowId ? true : false}
           />
         ))}
       </div>

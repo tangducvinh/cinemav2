@@ -28,6 +28,7 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
   const [currentCinema, setCurrentCinema] = useState<number>(0);
   const [dataSchedule, setDataSchedule] = useState<[][]>([]);
 
+  // generate 3 days next
   useEffect(() => {
     const array: IDataDate[] = [];
 
@@ -90,6 +91,8 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
     fetchListShow(data);
   }, [dateChoose, movieId, currentCity, currentCinema]);
 
+  console.log(dataSchedule);
+
   return (
     <div>
       <div className="flex mt-6 items-center justify-between border-b-[3px] pb-4 border-b-forcus">
@@ -140,8 +143,8 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
         </div>
       ) : (
         <div className="min-h-[300px]">
-          {dataSchedule?.map((item) => (
-            <Schedule data={item} />
+          {dataSchedule?.map((item, index) => (
+            <Schedule data={item} key={index} />
           ))}
         </div>
       )}
