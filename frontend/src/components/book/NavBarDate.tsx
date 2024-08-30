@@ -91,8 +91,6 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
     fetchListShow(data);
   }, [dateChoose, movieId, currentCity, currentCinema]);
 
-  console.log(dataSchedule);
-
   return (
     <div>
       <div className="flex mt-6 items-center justify-between border-b-[3px] pb-4 border-b-forcus">

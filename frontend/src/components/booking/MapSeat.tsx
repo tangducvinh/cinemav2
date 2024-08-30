@@ -57,10 +57,15 @@ const MapSeat: React.FC<IProps> = ({
     fetchListSeat();
   }, [roomId, maxRow]);
 
-  if (!dataListSeat) return <Loading />;
+  if (dataListSeat.length === 0)
+    return (
+      <div className="h-[600px]">
+        <Loading />
+      </div>
+    );
 
   return (
-    <div className="bg-white p-4 ">
+    <div className="bg-white p-4">
       <div className="flex justify-between">
         <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
           {listRows.slice(0, maxRow).map((item) => (

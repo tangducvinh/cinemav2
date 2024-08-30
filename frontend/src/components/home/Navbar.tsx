@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import clsx from "clsx";
-import Link from "next/link";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IMovie } from "@/app/types/frontend";
 
 import apiMovie from "@/apis/movie";
@@ -51,6 +49,7 @@ const NavBar = () => {
     localStorage.setItem("selectedFood", "");
     localStorage.setItem("buyStatus", "");
     localStorage.setItem("seatSelected", "");
+    localStorage.setItem("currentShow", "");
   }, []);
 
   return (
@@ -80,7 +79,9 @@ const NavBar = () => {
         </ul>
       </div>
 
+      {/* <Suspense fallback={<Loading />}> */}
       <MovieContainer data={movieData} />
+      {/* </Suspense> */}
     </>
   );
 };

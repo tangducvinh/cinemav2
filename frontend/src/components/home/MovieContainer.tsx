@@ -1,6 +1,8 @@
 import { IMovie } from "@/app/types/frontend";
 
 import MovieItem from "./MovieItem";
+import Loading from "../common/Loading";
+import { DiDatabase } from "react-icons/di";
 
 interface IProps {
   data: IMovie[] | [];
@@ -8,6 +10,8 @@ interface IProps {
 
 const MovieContainer = (props: IProps) => {
   const { data } = props;
+
+  if (data.length === 0) return <Loading />;
 
   return (
     <div className="grid grid-cols-4 gap-8">

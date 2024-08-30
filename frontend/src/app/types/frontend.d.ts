@@ -76,7 +76,7 @@ export interface ISeatSelected {
   id: number;
   ticketPrice: number;
   name: string;
-  showId: number;
+  showId: number | undefined;
 }
 
 export interface IFood {
@@ -101,5 +101,5 @@ export interface ISelectedFoods {
   id: number;
   price: number;
   quantity: number;
-  showId: number;
+  showId: number | undefined;
 }

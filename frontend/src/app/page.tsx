@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import Slide from "../components/slide/Slide";
 import Navbar from "../components/home/Navbar";
 import IntroduceText from "@/components/home/IntroduceText";
