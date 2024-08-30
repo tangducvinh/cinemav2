@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import { IMovie } from "@/app/types/frontend";
 
-import apiMovie from "@/apis/movie";
 import MovieContainer from "./MovieContainer";
 import MenuTitle from "./MenuTitle";
-
-// const titleList = ["Đang chiếu", "Sắp chiếu", "Phim IMAX"];
 
 const titleList = [
   {
@@ -25,24 +22,14 @@ const titleList = [
   },
 ];
 
-const NavBar = () => {
+interface IProps {
+  movies: IMovie[];
+}
+
+const NavBar: React.FC<IProps> = ({ movies }) => {
   const [currentStatus, setCurrentStatus] = useState<string>(
     titleList[0].value
   );
-
-  const [movieData, setMovieData] = useState<IMovie[] | []>([]);
-
-  const fetchDataMovie = async () => {
-    const response = await apiMovie.getMovieByStatus(currentStatus);
-
-    if (response.success) {
-      setMovieData(response.data);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataMovie();
-  }, [currentStatus]);
 
   // delete data localStorage of booking page
   useEffect(() => {
@@ -79,9 +66,9 @@ const NavBar = () => {
         </ul>
       </div>
 
-      {/* <Suspense fallback={<Loading />}> */}
-      <MovieContainer data={movieData} />
-      {/* </Suspense> */}
+      <MovieContainer
+        data={movies.filter((item) => item.status === currentStatus)}
+      />
     </>
   );
 };

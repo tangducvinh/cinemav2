@@ -11,11 +11,16 @@ const getListMovie = async (req: Request, res: Response) => {
   const { status } = req.query;
 
   try {
-    const response = await db.Movie.findAll({
-      where: {
-        status,
-      },
-    });
+    let response;
+    if (status) {
+      response = await db.Movie.findAll({
+        where: {
+          status,
+        },
+      });
+    } else {
+      response = await db.Movie.findAll();
+    }
 
     return res.json({
       success: response ? true : false,

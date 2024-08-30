@@ -27,7 +27,6 @@ interface ISeat {
 }
 
 interface IDataDetailShow {
-  // dataDetailShow: {
   timeStart: Date;
   movieId: number;
   cinemaId: number;
@@ -35,7 +34,6 @@ interface IDataDetailShow {
   room: { roomId: number; width: number; height: number; name: string };
   movie: { name: string; poster: string };
   cinema: { name: string };
-  // };
 }
 
 const listRows = [

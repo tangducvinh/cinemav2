@@ -10,28 +10,38 @@ interface IProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
+export async function generateStaticParams() {
+  const movies = await apiMovie.getListMovie();
+
+  return movies.map((movie: { slug: string }) => ({
+    slug: movie.slug,
+  }));
+}
+
 const Book = async (props: IProps) => {
   const { params } = props;
-  const detailMovie = await apiMovie.getDetailMovie(params.slug);
-  const movieShowings = await apiMovie.getMovieByStatus("showing");
+  const movieData = await apiMovie.getDetailMovie(params.slug);
+  const moviesShowingData = await apiMovie.getListMovie("showing");
+
+  const [movie, moviesShowing] = await Promise.all([
+    movieData,
+    moviesShowingData,
+  ]);
 
   return (
     <>
-      <WatchTrailer
-        backdrop={detailMovie.backdrop}
-        keyVideo={detailMovie.video}
-      />
+      <WatchTrailer backdrop={movie.backdrop} keyVideo={movie.video} />
 
       <div className="flex mx-auto w-main gap-6">
         <div className="flex-7">
-          <InforMovie data={detailMovie} />
+          <InforMovie data={movie} />
 
-          <ContentMovie overview={detailMovie.overview} />
+          <ContentMovie overview={movie.overview} />
 
-          <Show movieId={detailMovie.id} />
+          <Show movieId={movie.id} />
         </div>
         <div className="flex-3">
-          <ShowingMovie data={movieShowings.data} />
+          <ShowingMovie data={moviesShowing} />
         </div>
       </div>
     </>
