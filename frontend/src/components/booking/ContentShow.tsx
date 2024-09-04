@@ -14,6 +14,7 @@ import Loading from "../common/Loading";
 import apiShow from "@/apis/show";
 import { useRouter } from "next/navigation";
 import Warning from "../common/Notice";
+import Payment from "./Payment";
 
 interface IProps {
   dataFood: IFood[];
@@ -61,6 +62,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   const [dataDetailShow, setDataDetailShow] = useState<IDataDetailShow>();
   const [currentShowId, setCurrentShowId] = useState<number>();
   const [showWarning, setShowWarning] = useState<boolean>(false);
+  const [methodPayment, setMethodPayment] = useState<string>();
 
   // fetch data detail show
   useEffect(() => {
@@ -224,11 +226,45 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
   // set status buy
   const handleStatusBuy = useCallback(() => {
-    console.log(selectSeats);
     if (buyStatus === 1 && selectSeats.length === 0) {
       setShowWarning(true);
 
       return;
+    } else if (buyStatus === 3) {
+      if (methodPayment === "vnpay") {
+        let dataPass: any = {};
+        console.log(selectSeats);
+        console.log(selectedFood);
+
+        let total =
+          selectSeats.reduce(
+            (total, current) => total + current.ticketPrice,
+            0
+          ) +
+          selectedFood.reduce(
+            (total, current) => total + current.quantity * current.price,
+            0
+          );
+
+        dataPass.amount = total;
+        dataPass.userId = 1;
+        dataPass.showId = currentShowId;
+        dataPass.listSeats = selectSeats.map((item) => ({
+          id: item.id,
+          showId: item.showId,
+        }));
+        dataPass.listFoods = selectedFood.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+        }));
+
+        console.log(dataPass);
+
+        //////
+        return;
+      } else {
+        return;
+      }
     }
 
     setBuyStatus((prev) => prev + 1);
@@ -252,10 +288,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   }, []);
 
   // show loading
-  if (!dataDetailShow)
-    return (
-        <Loading fullScreen={true} />
-    );
+  if (!dataDetailShow) return <Loading fullScreen={true} />;
 
   return (
     <div className="bg-gray-100">
@@ -293,7 +326,12 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
             />
           )}
 
-          {buyStatus === 3 && <div>thanh toan </div>}
+          {buyStatus === 3 && (
+            <Payment
+              methodPayment={methodPayment}
+              onSetMethodPayment={setMethodPayment}
+            />
+          )}
         </div>
 
         <div className="flex-3">

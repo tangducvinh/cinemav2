@@ -10,6 +10,7 @@ import initCityRouter from "./route/city";
 import initCinemaRouter from "./route/cinema";
 import initSeatRouter from "./route/seat";
 import initFoodRouter from "./route/food";
+import initPaymentRouter from "./route/payment";
 import connectDB from "./config/connectDB";
 
 const app = express();
@@ -36,6 +37,7 @@ initCityRouter(app);
 initCinemaRouter(app);
 initSeatRouter(app);
 initFoodRouter(app);
+initPaymentRouter(app);
 
 connectDB();
 
