@@ -105,9 +105,16 @@ export interface ISelectedFoods {
 }
 
 export interface IDataOrder {
-  amount: number;
   userId: number;
   showId: number;
-  listSeats: { seatId: number; showId: number }[];
-  listFoods: { foodId: number; quantity: number }[];
+  listSeats: { seatId: number; showId: number; status: number }[];
+}
+
+export interface IDataOrderFood {
+  listFoods: { foodId: number; quantity: number; orderId: number }[];
+}
+
+export interface IDataPayment {
+  amount: number;
+  orderId: number;
 }

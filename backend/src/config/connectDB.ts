@@ -4,7 +4,7 @@ const sequelize = new Sequelize("cinema", "root", null, {
   host: "localhost",
   dialect: "mysql",
   logging: false,
-  // timezone: "+07:00",
+  timezone: "+07:00",
 });
 
 let connectDB = async () => {

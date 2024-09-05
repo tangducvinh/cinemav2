@@ -6,7 +6,7 @@ import HeaderBooking from "./HeaderBooking";
 import ChangeShow from "@/components/booking/ChangeShow";
 import DetailShow from "@/components/booking/DetailShow";
 import MapSeat from "@/components/booking/MapSeat";
-import { ISeatSelected } from "@/app/types/frontend";
+import { IDataOrder, ISeatSelected } from "@/app/types/frontend";
 import ComboFood from "./ComboFood";
 import { IFood } from "@/app/types/frontend";
 import { ISelectedFood, ISelectedFoods } from "@/app/types/frontend";
@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Warning from "../common/Notice";
 import Payment from "./Payment";
 import apisPayment from "@/apis/payment";
+import apisOrder from "@/apis/order";
 
 interface IProps {
   dataFood: IFood[];
@@ -64,6 +65,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   const [currentShowId, setCurrentShowId] = useState<number>();
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [methodPayment, setMethodPayment] = useState<string>();
+  const [currentOrder, setCurrentOrder] = useState<number>();
 
   // fetch data detail show
   useEffect(() => {
@@ -227,15 +229,40 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
   // set status buy
   const handleStatusBuy = useCallback(async () => {
-    if (buyStatus === 1 && selectSeats.length === 0) {
-      setShowWarning(true);
+    if (buyStatus === 1) {
+      if (selectSeats.length === 0) {
+        setShowWarning(true);
+        return;
+      }
 
-      return;
+      let dataPass: any = {};
+
+      dataPass.userId = 1;
+      dataPass.showId = currentShowId;
+      dataPass.listSeats = selectSeats.map((item) => ({
+        seatId: item.id,
+        showId: item.showId,
+        status: 0,
+      }));
+
+      const response = await apisOrder.createOrder(dataPass);
+
+      setCurrentOrder(response.id);
+    } else if (buyStatus === 2) {
+      let dataPass: any = {};
+
+      dataPass.listFoods = selectedFood.map((item) => ({
+        foodId: item.id,
+        quantity: item.quantity,
+        orderId: currentOrder,
+      }));
+
+      const response = await apisOrder.createOrderFood(dataPass);
+
+      console.log(response);
     } else if (buyStatus === 3) {
       if (methodPayment === "vnpay") {
         let dataPass: any = {};
-        console.log(selectSeats);
-        console.log(selectedFood);
 
         let total =
           selectSeats.reduce(
@@ -248,20 +275,9 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
           );
 
         dataPass.amount = total;
-        dataPass.userId = 1;
-        dataPass.showId = currentShowId;
-        dataPass.listSeats = selectSeats.map((item) => ({
-          seatId: item.id,
-          showId: item.showId,
-        }));
-        dataPass.listFoods = selectedFood.map((item) => ({
-          foodId: item.id,
-          quantity: item.quantity,
-        }));
+        dataPass.orderId = currentOrder;
 
-        console.log(dataPass);
-
-        const response = await apisPayment.payWiteVNPay(dataPass);
+        const response = await apisPayment.payWithVNPay(dataPass);
 
         if (response?.paymentUrl) {
           router.push(response.paymentUrl);
@@ -277,7 +293,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
     // update status buy into localStorage
     localStorage.setItem("buyStatus", JSON.stringify(buyStatus + 1));
-  }, [buyStatus, selectSeats, selectedFood, methodPayment]);
+  }, [buyStatus, selectSeats, selectedFood, methodPayment, currentOrder]);
 
   // handle btn back
   const handleBtnBack = useCallback(() => {

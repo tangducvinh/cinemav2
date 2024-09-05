@@ -28,28 +28,7 @@ const vnpay = new VNPay({
 // const OrderedSeat = db.Order.hasMany(db.OrderedSeat, { as: "orderedSeats" });
 
 const paymentVPN = async (req, res) => {
-  const { amount, userId, showId, listSeats, listFoods } = req.body;
-
-  const order = await db.Order.create(
-    {
-      userId,
-      showId,
-      orderedSeats: listSeats,
-      orderedFoods: listFoods,
-    },
-    {
-      include: [
-        {
-          model: db.OrderedSeat,
-          as: "orderedSeats",
-        },
-        {
-          model: db.OrderedFood,
-          as: "orderedFoods",
-        },
-      ],
-    }
-  );
+  const { amount, orderId } = req.body;
 
   // Lấy returnUrl từ frontend gửi lên, nếu không có thì sử dụng mặc định
   // const returnUrl = req.body?.returnUrl || "http://localhost:3000/vnpay-return";
@@ -63,7 +42,7 @@ const paymentVPN = async (req, res) => {
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
       req.ip,
-    vnp_TxnRef: "12df34523",
+    vnp_TxnRef: orderId,
     vnp_OrderInfo: "Thanh toán đặt vé",
     // vnp_OrderType: ProductCode.Other,
     vnp_ReturnUrl: returnUrl, // Đường dẫn nên là của frontend
@@ -73,13 +52,17 @@ const paymentVPN = async (req, res) => {
   // return res.json({ paymentUrl, order });
   return res.status(200).json({
     success: true,
-    data: { paymentUrl, order },
+    data: { paymentUrl },
   });
 };
 
-const verifyVnp = (req, res) => {
+const verifyVnp = async (req, res) => {
+  const { vnp_TxnRef } = req.query;
+
   try {
     const verify = vnpay.verifyReturnUrl(req.query);
+
+    console.log(vnp_TxnRef);
 
     if (!verify.isVerified) {
       return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
@@ -87,12 +70,37 @@ const verifyVnp = (req, res) => {
     }
     if (!verify.isSuccess) {
       // return res.send("Đơn hàng thanh toán không thành công");
+      await db.OrderedSeat.destroy({
+        where: {
+          orderId: vnp_TxnRef,
+        },
+      });
+
+      await db.OrderedFood.destroy({
+        where: {
+          orderId: vnp_TxnRef,
+        },
+      });
+
+      await db.Order.destroy({
+        where: {
+          id: vnp_TxnRef,
+        },
+      });
+
       return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
     }
   } catch (e) {
     // return res.send("Dữ liệu không hợp lệ");
     return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
   }
+
+  await db.OrderedSeat.update(
+    { status: 1 },
+    {
+      where: { orderId: vnp_TxnRef },
+    }
+  );
 
   return res.send("Xác thực URL trả về thành công");
 };

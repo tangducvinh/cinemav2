@@ -30,6 +30,9 @@ module.exports = {
           key: "id",
         },
       },
+      status: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
