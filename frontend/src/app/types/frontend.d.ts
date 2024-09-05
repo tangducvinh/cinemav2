@@ -103,3 +103,11 @@ export interface ISelectedFoods {
   quantity: number;
   showId: number | undefined;
 }
+
+export interface IDataOrder {
+  amount: number;
+  userId: number;
+  showId: number;
+  listSeats: { seatId: number; showId: number }[];
+  listFoods: { foodId: number; quantity: number }[];
+}

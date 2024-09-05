@@ -15,6 +15,7 @@ import apiShow from "@/apis/show";
 import { useRouter } from "next/navigation";
 import Warning from "../common/Notice";
 import Payment from "./Payment";
+import apisPayment from "@/apis/payment";
 
 interface IProps {
   dataFood: IFood[];
@@ -225,7 +226,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   );
 
   // set status buy
-  const handleStatusBuy = useCallback(() => {
+  const handleStatusBuy = useCallback(async () => {
     if (buyStatus === 1 && selectSeats.length === 0) {
       setShowWarning(true);
 
@@ -250,16 +251,21 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         dataPass.userId = 1;
         dataPass.showId = currentShowId;
         dataPass.listSeats = selectSeats.map((item) => ({
-          id: item.id,
+          seatId: item.id,
           showId: item.showId,
         }));
         dataPass.listFoods = selectedFood.map((item) => ({
-          id: item.id,
+          foodId: item.id,
           quantity: item.quantity,
         }));
 
         console.log(dataPass);
 
+        const response = await apisPayment.payWiteVNPay(dataPass);
+
+        if (response?.paymentUrl) {
+          router.push(response.paymentUrl);
+        }
         //////
         return;
       } else {
@@ -271,7 +277,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
     // update status buy into localStorage
     localStorage.setItem("buyStatus", JSON.stringify(buyStatus + 1));
-  }, [buyStatus, selectSeats, selectedFood]);
+  }, [buyStatus, selectSeats, selectedFood, methodPayment]);
 
   // handle btn back
   const handleBtnBack = useCallback(() => {

@@ -14,7 +14,7 @@ import initPaymentRouter from "./route/payment";
 import connectDB from "./config/connectDB";
 
 const app = express();
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 7777;
 
 app.use(
   cors({

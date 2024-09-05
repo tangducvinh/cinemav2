@@ -1,5 +1,7 @@
+import { IDataOrder } from "@/app/types/frontend";
+
 const apisPayment = {
-    payWiteVNPay: async (data) => {
+    payWiteVNPay: async (data:IDataOrder) => {
       const response = await fetch(
         `http://localhost:7000/api/payment/vnp`,
         {
