@@ -3,7 +3,7 @@ import { VNPay, ignoreLogger } from "vnpay";
 // const hasdcode = 'SHA512'
 
 // export const configVNP = () => {
-export const vnpay = new VNPay({
+const vnpay = new VNPay({
   tmnCode: "PLQOL2A6",
   secureSecret: "K6A4O80Y20FHOCTCIHBM290NXBIPESSM",
   vnpayHost: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
@@ -25,6 +25,8 @@ export const vnpay = new VNPay({
    */
   loggerFn: ignoreLogger, // optional
 });
+
+export default vnpay
 
 // return vnpay;
 // };

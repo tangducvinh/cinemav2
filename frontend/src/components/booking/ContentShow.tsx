@@ -66,6 +66,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const [methodPayment, setMethodPayment] = useState<string>();
   const [currentOrder, setCurrentOrder] = useState<number>();
+  const [textWarning, setTextWarning] = useState<string>("");
 
   // fetch data detail show
   useEffect(() => {
@@ -231,6 +232,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   const handleStatusBuy = useCallback(async () => {
     if (buyStatus === 1) {
       if (selectSeats.length === 0) {
+        setTextWarning("Vui lòng chọn ghế");
         setShowWarning(true);
         return;
       }
@@ -247,7 +249,15 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
       const response = await apisOrder.createOrder(dataPass);
 
-      setCurrentOrder(response.id);
+      if (response.success) {
+        setCurrentOrder(response.data.id);
+      } else {
+        setTextWarning("Ghế đã có người đặt");
+        setShowWarning(response.message);
+        console.log(response);
+
+        return;
+      }
     } else if (buyStatus === 2) {
       let dataPass: any = {};
 
@@ -258,8 +268,6 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       }));
 
       const response = await apisOrder.createOrderFood(dataPass);
-
-      console.log(response);
     } else if (buyStatus === 3) {
       if (methodPayment === "vnpay") {
         let dataPass: any = {};
@@ -314,7 +322,9 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
   return (
     <div className="bg-gray-100">
-      {showWarning && <Warning onClose={handleCloseWaring} />}
+      {showWarning && (
+        <Warning text={textWarning} onClose={handleCloseWaring} />
+      )}
 
       <HeaderBooking currentIndex={buyStatus} />
 
@@ -336,6 +346,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
                 maxRow={dataDetailShow?.room.height}
                 selectSeats={selectSeats}
                 handleSelectSeat={handleSelectSeat}
+                showId={currentShowId}
               />
             </>
           )}

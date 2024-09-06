@@ -1,33 +1,13 @@
-const { VNPay, ignoreLogger } = require("vnpay");
-const db = require("../models");
+// const { VNPay, ignoreLogger } = require("vnpay");
+// const db = require("../models");
+import { Request, Response } from "express";
 
-const vnpay = new VNPay({
-  tmnCode: "PLQOL2A6",
-  secureSecret: "K6A4O80Y20FHOCTCIHBM290NXBIPESSM",
-  vnpayHost: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
-  testMode: true, // tùy chọn, ghi đè vnpayHost thành sandbox nếu là true
-  // hashAlgorithm: hasdcode, // tùy chọn
+import db from "../models";
+import vnpay from "../config/paymentVNP";
+import { VerifyReturnUrl } from "vnpay";
+import { deleteOrderedSeat } from "../services/order";
 
-  /**
-   * Sử dụng enableLog để bật/tắt logger
-   * Nếu enableLog là false, loggerFn sẽ không được sử dụng trong bất kỳ phương thức nào
-   */
-  enableLog: true, // optional
-
-  /**
-   * Hàm `loggerFn` sẽ được gọi để ghi log
-   * Mặc định, loggerFn sẽ ghi log ra console
-   * Bạn có thể ghi đè loggerFn để ghi log ra nơi khác
-   *
-   * `ignoreLogger` là một hàm không làm gì cả
-   */
-  loggerFn: ignoreLogger, // optional
-});
-
-// const OrderedFood = db.Order.hasMany(db.OrderedFood, { as: "orderedFoods" });
-// const OrderedSeat = db.Order.hasMany(db.OrderedSeat, { as: "orderedSeats" });
-
-const paymentVPN = async (req, res) => {
+export const paymentVPN = async (req, res) => {
   const { amount, orderId } = req.body;
 
   // Lấy returnUrl từ frontend gửi lên, nếu không có thì sử dụng mặc định
@@ -56,13 +36,11 @@ const paymentVPN = async (req, res) => {
   });
 };
 
-const verifyVnp = async (req, res) => {
+export const verifyVnp = async (req: any, res: Response) => {
   const { vnp_TxnRef } = req.query;
-
+  let verify: VerifyReturnUrl;
   try {
-    const verify = vnpay.verifyReturnUrl(req.query);
-
-    console.log(vnp_TxnRef);
+    verify = vnpay.verifyReturnUrl(req.query);
 
     if (!verify.isVerified) {
       return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
@@ -70,11 +48,8 @@ const verifyVnp = async (req, res) => {
     }
     if (!verify.isSuccess) {
       // return res.send("Đơn hàng thanh toán không thành công");
-      await db.OrderedSeat.destroy({
-        where: {
-          orderId: vnp_TxnRef,
-        },
-      });
+
+      await deleteOrderedSeat(vnp_TxnRef);
 
       await db.OrderedFood.destroy({
         where: {
@@ -103,9 +78,4 @@ const verifyVnp = async (req, res) => {
   );
 
   return res.send("Xác thực URL trả về thành công");
-};
-
-module.exports = {
-  paymentVPN,
-  verifyVnp,
 };

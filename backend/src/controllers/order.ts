@@ -1,10 +1,32 @@
 import { Request, Response } from "express";
 import db from "../models";
+import { listOrderedSeat } from "../services/seat";
 
 export const createOrder = async (req: Request, res: Response) => {
   const { userId, showId, listSeats } = req.body;
 
   try {
+    const orderedSeats = await listOrderedSeat(showId);
+
+    // check seat ordered yet
+    let check = false;
+    await listSeats.forEach((item) => {
+      if (
+        orderedSeats.some(
+          (orderedSeat) => orderedSeat.dataValues.seatId === item.seatId
+        )
+      ) {
+        check = true;
+      }
+    });
+
+    if (check) {
+      return res.status(200).json({
+        success: false,
+        message: "Ghế đã được đặt",
+      });
+    }
+
     const response = await db.Order.create(
       {
         userId,

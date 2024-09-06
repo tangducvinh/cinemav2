@@ -6,6 +6,7 @@ import clsx from "clsx";
 import apiSeat from "@/apis/seat";
 import { ISeatSelected } from "@/app/types/frontend";
 import Loading from "../common/Loading";
+import { TbInnerShadowBottomLeftFilled } from "react-icons/tb";
 
 const listRows = [
   "A",
@@ -29,6 +30,7 @@ interface IProps {
   maxRow: number;
   selectSeats: ISeatSelected[];
   handleSelectSeat: (x: any) => void;
+  showId: number | undefined;
 }
 
 const MapSeat: React.FC<IProps> = ({
@@ -37,8 +39,12 @@ const MapSeat: React.FC<IProps> = ({
   maxRow,
   selectSeats,
   handleSelectSeat,
+  showId,
 }) => {
   const [dataListSeat, setDateListSeat] = useState<any>([]);
+  const [dataOrderedSeat, setDataOrderedSeat] = useState<{ seatId: number }[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchListSeat = async () => {
@@ -54,8 +60,18 @@ const MapSeat: React.FC<IProps> = ({
       setDateListSeat(newData);
     };
 
+    if (showId) {
+      const fetchListOrderedSeat = async () => {
+        const response = await apiSeat.getListOrderedSeat(showId);
+
+        setDataOrderedSeat(response);
+      };
+
+      fetchListOrderedSeat();
+    }
+
     fetchListSeat();
-  }, [roomId, maxRow]);
+  }, [roomId, maxRow, showId]);
 
   if (dataListSeat.length === 0)
     return (
@@ -83,12 +99,21 @@ const MapSeat: React.FC<IProps> = ({
                   {item?.map((subItem: any) => (
                     <button
                       key={subItem.id}
+                      disabled={dataOrderedSeat.some(
+                        (item) => item.seatId === subItem.id
+                      )}
                       onClick={() => handleSelectSeat(subItem)}
                       className={clsx(
                         "w-[25px] h-[25px] ml-2 mt-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
                         {
                           "bg-main text-white hover:text-white":
                             selectSeats.some((item) => item.id === subItem.id),
+                        },
+                        {
+                          "bg-gray-300 text-normal hover:bg-gray-300 hover:cursor-default":
+                            dataOrderedSeat?.some(
+                              (item) => item.seatId === subItem.id
+                            ),
                         }
                       )}
                     >
