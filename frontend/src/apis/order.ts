@@ -29,6 +29,26 @@ const apisOrder = {
       return result.data;
     }
   },
+  deleteOrderAndOrderedSeat: async (orderId: number) => {
+    const response = await fetch(
+      `http://localhost:7000/api/order/delete-order-and-ordered-seat?orderId=${orderId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    return response.json();
+  },
+  deleteOrderedFood: async (orderId: number) => {
+    const response = await fetch(
+      `http://localhost:7000/api/order/delete-ordered-food?orderId=${orderId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    return response.json();
+  },
 };
 
 export default apisOrder;

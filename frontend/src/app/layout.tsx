@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
-import clsx from "clsx";
-import { cookies } from "next/headers";
 
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import AppProvider from "@/me/AppProvider";
-import { MdOutlineToken } from "react-icons/md";
 
 const inter = Nunito_Sans({ subsets: ["latin"] });
 
@@ -21,21 +17,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
-
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "no-scrollbar")}>
-        <AppProvider initToken={token?.value}>
-          <div className="flex justify-center">
-            <Header />
-          </div>
-          {children}
-          <div className="flex py-[30px] bg-[#333333] justify-center">
-            <Footer />
-          </div>
-        </AppProvider>
+      <body className={inter.className}>
+        <div className="flex justify-center">
+          <Header />
+        </div>
+        {children}
+        <div className="flex py-[30px] bg-[#333333] justify-center">
+          <Footer />
+        </div>
       </body>
     </html>
   );

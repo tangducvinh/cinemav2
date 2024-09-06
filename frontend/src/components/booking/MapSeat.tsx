@@ -42,9 +42,8 @@ const MapSeat: React.FC<IProps> = ({
   showId,
 }) => {
   const [dataListSeat, setDateListSeat] = useState<any>([]);
-  const [dataOrderedSeat, setDataOrderedSeat] = useState<{ seatId: number }[]>(
-    []
-  );
+  const [dataOrderedSeat, setDataOrderedSeat] =
+    useState<{ seatId: number }[]>();
 
   useEffect(() => {
     const fetchListSeat = async () => {
@@ -73,7 +72,7 @@ const MapSeat: React.FC<IProps> = ({
     fetchListSeat();
   }, [roomId, maxRow, showId]);
 
-  if (dataListSeat.length === 0)
+  if (dataListSeat.length === 0 || dataOrderedSeat === undefined)
     return (
       <div className="h-[600px]">
         <Loading />

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import db from "../models";
 import { listOrderedSeat } from "../services/seat";
+import * as services from "../services";
 
 export const createOrder = async (req: Request, res: Response) => {
   const { userId, showId, listSeats } = req.body;
@@ -65,6 +66,38 @@ export const orderFood = async (req: Request, res: Response) => {
     });
   } catch (e) {
     console.log(e);
+    return res.status(500).json(e);
+  }
+};
+
+export const deleteOrderAndOrderedSeat = async (
+  req: Request,
+  res: Response
+) => {
+  const { orderId } = req.query;
+  try {
+    await services.deleteOrderedSeat(orderId);
+    await services.deleteOrder(orderId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Đã xoá đơn đặt và ghế đã đặt thành công",
+    });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+};
+
+export const deleteOrderedFood = async (req: Request, res: Response) => {
+  const { orderId } = req.query;
+  try {
+    await services.deleteOrderedFood(orderId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Đã xoá đơn đặt đồ uống thành công",
+    });
+  } catch (e) {
     return res.status(500).json(e);
   }
 };

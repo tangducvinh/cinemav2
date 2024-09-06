@@ -14,10 +14,10 @@ const Booking = () => {
   }, []);
 
   return (
-    <div className="w-main mx-auto mb-[60px]">
+    <div className="bg-gray-100">
       <HeaderBooking currentIndex={0} />
 
-      <div className="flex">
+      <div className="flex w-main mx-auto pb-20">
         <div className="flex-7">hello</div>
 
         <div className="flex-3">

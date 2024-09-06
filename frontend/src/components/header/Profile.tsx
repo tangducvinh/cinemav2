@@ -10,7 +10,6 @@ import { getCookie } from "cookies-next";
 
 import NavChild from "./NavChild";
 import SignIn from "../login/SignIn";
-import { useAppContext } from "@/me/AppProvider";
 
 const data = [
   {
@@ -34,10 +33,6 @@ const Profile = () => {
   const [showLogin, setShowLogin] = useState<string>("null");
   const [name, setName] = useState<string>("");
   const [showMenu, setShowMenu] = useState<boolean>(false);
-
-  const { token } = useAppContext();
-
-  console.log(token);
 
   useEffect(() => {
     if (getCookie("name")) {

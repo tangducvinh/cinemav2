@@ -43,7 +43,7 @@ export const verifyVnp = async (req: any, res: Response) => {
     verify = vnpay.verifyReturnUrl(req.query);
 
     if (!verify.isVerified) {
-      return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
+      return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
       // return res.send("Xác thực tính toàn vẹn dữ liệu không thành công");
     }
     if (!verify.isSuccess) {
@@ -63,11 +63,11 @@ export const verifyVnp = async (req: any, res: Response) => {
         },
       });
 
-      return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
+      return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
     }
   } catch (e) {
     // return res.send("Dữ liệu không hợp lệ");
-    return res.redirect(`${process.env.URL_CLIENT}/dat-ve-that-bai`);
+    return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
   }
 
   await db.OrderedSeat.update(

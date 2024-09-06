@@ -304,13 +304,17 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
   }, [buyStatus, selectSeats, selectedFood, methodPayment, currentOrder]);
 
   // handle btn back
-  const handleBtnBack = useCallback(() => {
+  const handleBtnBack = useCallback(async () => {
     if (buyStatus === 1) {
       router.push("/booking");
-    } else {
-      setBuyStatus((prev) => prev - 1);
+      return;
+    } else if (buyStatus === 2) {
+      if (currentOrder) await apisOrder.deleteOrderAndOrderedSeat(currentOrder);
+    } else if (buyStatus === 3) {
+      if (currentOrder) await apisOrder.deleteOrderedFood(currentOrder);
     }
-  }, [buyStatus]);
+    setBuyStatus((prev) => prev - 1);
+  }, [buyStatus, currentOrder]);
 
   // handle close warning
   const handleCloseWaring = useCallback(() => {
