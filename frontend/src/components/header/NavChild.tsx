@@ -1,5 +1,6 @@
 import React from "react";
 import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 interface Iprops {
   data: { name: string; icon?: React.ReactElement; value?: string }[];
@@ -12,10 +13,14 @@ interface IItem {
 const NavChild = (props: Iprops) => {
   const { data } = props;
 
+  const router = useRouter();
+
   const handleClick = (value: string | undefined) => {
     if (value === "logout") {
       deleteCookie("name");
       deleteCookie("token");
+    } else if (value === "account") {
+      router.push("/account/profile");
     }
   };
   return (

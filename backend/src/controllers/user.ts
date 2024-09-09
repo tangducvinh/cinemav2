@@ -88,4 +88,24 @@ const signIn = async (req: Request, res: Response) => {
   }
 };
 
+export const getProfileInformation = async (req, res: Response) => {
+  try {
+    const { id } = req.user;
+
+    const user = await db.User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return res.status(200).json({
+      success: user ? true : false,
+      data: user || "no data",
+      message: "pk",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export { signUp, signIn };

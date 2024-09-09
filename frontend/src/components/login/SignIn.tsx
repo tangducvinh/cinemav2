@@ -203,7 +203,9 @@ const SignIn = (props: IProps) => {
         const token = response.data.accessToken;
         // setCookie('token', token)
         setCookie("name", name);
-        console.log(token);
+
+        // save token into localStorage
+        localStorage.setItem("token", JSON.stringify(token));
 
         // set token into cookie client next
         fetch("/api/user", {
