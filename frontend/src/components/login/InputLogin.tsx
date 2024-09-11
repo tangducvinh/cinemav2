@@ -1,14 +1,18 @@
 import { UseFormRegister, Path, FieldErrors } from "react-hook-form";
-import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
+import {
+  IFormSignIn,
+  IFormSignUp,
+  IFormChangePassword,
+} from "@/app/types/frontend";
 import { ErrorMessage } from "@hookform/error-message";
 
 interface IProps {
   label: string;
   type: string;
   placeholder: string;
-  register: UseFormRegister<IFormSignIn | IFormSignUp>;
+  register: UseFormRegister<IFormSignIn | IFormSignUp | IFormChangePassword>;
   required: boolean;
-  name: Path<IFormSignIn | IFormSignUp>;
+  name: Path<IFormSignIn | IFormSignUp | IFormChangePassword>;
   errors: FieldErrors;
   maxLength: number;
   regex: RegExp;

@@ -108,4 +108,45 @@ export const getProfileInformation = async (req, res: Response) => {
   }
 };
 
+export const changePassword = async (req, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const { id } = req.user;
+
+    const user = await db.User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    const checkPassword = await bcrypt.compare(currentPassword, user.password);
+
+    if (!checkPassword) {
+      return res.status(200).json({
+        success: false,
+        message: "Mật khẩu hiện tại không chính xác",
+      });
+    }
+
+    const hashed = bcrypt.hashSync(newPassword, 10);
+
+    await db.User.update(
+      { password: hashed },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return res.status(200).json({
+      success: user ? true : false,
+      message: "Thay đổi mật khẩu thành công",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+};
+
 export { signUp, signIn };

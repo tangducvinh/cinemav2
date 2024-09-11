@@ -13,7 +13,11 @@ import { setCookie } from "cookies-next";
 import apiUser from "../../apis/user";
 import InputLogin from "./InputLogin";
 import InputRadio from "./InputRadio";
-import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
+import {
+  IFormChangePassword,
+  IFormSignIn,
+  IFormSignUp,
+} from "@/app/types/frontend";
 import HeaderLogin from "./HeaderLogin";
 
 interface IDataForm {
@@ -138,7 +142,7 @@ const SignIn = (props: IProps) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IFormSignUp | IFormSignIn>();
+  } = useForm<IFormSignUp | IFormSignIn | IFormChangePassword>();
 
   const [dataForm, setDataForm] = useState<IDataForm[]>(dataSignIn);
   const [accept, setAccept] = useState<boolean>(false);
@@ -167,9 +171,9 @@ const SignIn = (props: IProps) => {
     }
   }, [dateValue]);
 
-  const onSubmit: SubmitHandler<IFormSignUp | IFormSignIn> = async (
-    data: any
-  ) => {
+  const onSubmit: SubmitHandler<
+    IFormSignUp | IFormSignIn | IFormChangePassword
+  > = async (data: any) => {
     if (statusLogin === "signup") {
       // handle signup
       if (data.password === data.passwordAgain) {

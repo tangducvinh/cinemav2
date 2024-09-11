@@ -118,3 +118,9 @@ export interface IDataPayment {
   amount: number;
   orderId: number;
 }
+
+export interface IFormChangePassword {
+  currentPassword: string;
+  newPassword: string;
+  againNewPassword: string;
+}

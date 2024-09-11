@@ -26,6 +26,31 @@ const apiUser = {
 
     return response.json();
   },
+  getProfile: async (token: string | undefined) => {
+    const response = await fetch("http://localhost:7000/api/user/profile", {
+      method: "GET",
+      headers: { token: `Bearer ${token}` },
+      cache: "no-store",
+    });
+
+    return response.json();
+  },
+  changePassword: async (token: string | undefined, data:{currentPassword: string, newPassword: string}) => {
+    const response = await fetch(
+      "http://localhost:7000/api/user/change-password",
+      {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          token: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.json();
+  },
 };
 
 export default apiUser;
