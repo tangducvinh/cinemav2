@@ -25,7 +25,7 @@ const Payment: React.FC<IProps> = ({ methodPayment, onSetMethodPayment }) => {
 
       <form>
         {listMethodPayment.map((item) => (
-          <label className="flex items-center gap-2">
+          <label key={item.title} className="flex items-center gap-2">
             <input
               onChange={(e) => onSetMethodPayment(e.target.value)}
               className="w-[17px] h-[17px]"

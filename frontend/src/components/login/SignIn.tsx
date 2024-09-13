@@ -9,6 +9,7 @@ import moment from "moment";
 import { IoMdClose, IoIosCalendar } from "react-icons/io";
 import { ClipLoader } from "react-spinners";
 import { setCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 import apiUser from "../../apis/user";
 import InputLogin from "./InputLogin";
@@ -207,6 +208,7 @@ const SignIn = (props: IProps) => {
         const token = response.data.accessToken;
         // setCookie('token', token)
         setCookie("name", name);
+        // localStorage.setItem("name", JSON.stringify(name));
 
         // save token into localStorage
         localStorage.setItem("token", JSON.stringify(token));

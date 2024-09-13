@@ -82,7 +82,7 @@ const Profile = async () => {
             change={item.change}
           />
         ) : (
-          <div className="flex items-center gap-6">
+          <div key={item.label} className="flex items-center gap-6">
             <div className="flex items-center opacity-80">
               <input
                 className="w-[18px] h-[18px] text-gray-300"

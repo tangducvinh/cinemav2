@@ -22,6 +22,8 @@ const listRows = [
   "K",
   "L",
   "M",
+  "N",
+  "O",
 ];
 
 interface IProps {
@@ -82,9 +84,9 @@ const MapSeat: React.FC<IProps> = ({
   return (
     <div className="bg-white p-4">
       <div className="flex justify-between">
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
           {listRows.slice(0, maxRow).map((item) => (
-            <p key={item} className="w-full text-center">
+            <p key={item} className="w-full text-center mt-4 h-[25px]">
               {item}
             </p>
           ))}
@@ -113,6 +115,9 @@ const MapSeat: React.FC<IProps> = ({
                             dataOrderedSeat?.some(
                               (item) => item.seatId === subItem.id
                             ),
+                        },
+                        {
+                          invisible: subItem.status === 2,
                         }
                       )}
                     >
@@ -125,9 +130,9 @@ const MapSeat: React.FC<IProps> = ({
           </div>
         )}
 
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse gap-4">
+        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
           {listRows.slice(0, maxRow).map((item) => (
-            <p key={item} className="w-full text-center">
+            <p key={item} className="w-full text-center mt-4 h-[25px]">
               {item}
             </p>
           ))}

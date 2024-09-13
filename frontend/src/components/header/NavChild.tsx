@@ -15,10 +15,17 @@ const NavChild = (props: Iprops) => {
 
   const router = useRouter();
 
-  const handleClick = (value: string | undefined) => {
+  const handleClick = async (value: string | undefined) => {
     if (value === "logout") {
       deleteCookie("name");
-      deleteCookie("token");
+      // localStorage.removeItem('name')
+      localStorage.removeItem("token");
+      await fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     } else if (value === "account") {
       router.push("/account/profile");
     }

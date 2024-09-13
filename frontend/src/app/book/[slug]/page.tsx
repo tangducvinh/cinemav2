@@ -1,3 +1,5 @@
+import type { Metadata, ResolvingMetadata } from "next";
+
 import WatchTrailer from "@/components/book/WatchTrailer";
 import InforMovie from "@/components/book/InforMovie";
 import ShowingMovie from "@/components/book/ShowingMovie";
@@ -16,6 +18,22 @@ export async function generateStaticParams() {
   return movies.map((movie: { slug: string }) => ({
     slug: movie.slug,
   }));
+}
+
+export async function generateMetadata(
+  { params }: IProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug;
+
+  // fetch data
+  const movie = await apiMovie.getDetailMovie(slug);
+
+  return {
+    title: `Đặt vé phim ${movie.name}`,
+    description: movie.overview,
+  };
 }
 
 const Book = async (props: IProps) => {

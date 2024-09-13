@@ -12,7 +12,7 @@ const Warning: React.FC<IProps> = ({ onClose, text }) => {
       <div className="w-[350px] bg-white min-h-[200px] p-10 flex flex-col gap-4 items-center rounded-md">
         <CiWarning className="text-main" size="60" />
         <h4 className="font-bold text-normal text-[20px]">Thông báo</h4>
-        <p className="text-[#333333] text-[16px]">{text}</p>
+        <p className="text-[#333333] text-[16px] text-center">{text}</p>
         <button
           onClick={onClose}
           className="bg-main w-full py-2 text-white font-bold rounded-md hover:cursor hover:opacity-90"

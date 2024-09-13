@@ -33,6 +33,7 @@ const Menu = () => {
     <div className="flex items-center justify-between w-full border-b-2 pb-2 border-gray-400">
       {listItem.map((item) => (
         <Link
+          key={item.title}
           className={`link ${
             pathname === "/account" + item.to
               ? '"relative mx-7 text-forcus relative text-[18px] font-bold"'

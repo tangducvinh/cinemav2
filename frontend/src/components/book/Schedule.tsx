@@ -1,7 +1,9 @@
 import moment from "moment";
 import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 
 import ItemTime from "./ItemTime";
+import Notice from "../common/Notice";
 
 interface IItemShow {
   cinema: { name: string };
@@ -16,14 +18,30 @@ interface IProps {
 
 const Schedule: React.FC<IProps> = ({ data }) => {
   const router = useRouter();
+  const [showWarning, setShowWarning] = useState<boolean>(false);
 
   const handleOnClick = (item: IItemShow) => {
-    router.push(`/booking/${item.movie.slug}`);
-    localStorage.setItem('currentShow', JSON.stringify(item.id))
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.push(`/booking/${item.movie.slug}`);
+      localStorage.setItem("currentShow", JSON.stringify(item.id));
+    } else {
+      setShowWarning(true);
+    }
   };
+
+  const handleCloseWarning = useCallback(() => {
+    setShowWarning(false);
+  }, [showWarning]);
 
   return (
     <div className="mt-8 mb-8">
+      {showWarning && (
+        <Notice
+          text={"Vui lòng thực hiện đăng nhập để có thể đặt vé"}
+          onClose={handleCloseWarning}
+        />
+      )}
       <h4 className="text-[18px] text-normal font-bold">
         {data[0].cinema.name}
       </h4>
