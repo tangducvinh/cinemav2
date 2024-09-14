@@ -12,13 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      // genreId: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: "Genres",
-      //     key: "id",
-      //   },
-      // },
       overview: {
         type: Sequelize.TEXT,
       },

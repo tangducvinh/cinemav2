@@ -7,11 +7,12 @@ import {
   deleteOrderedFood,
   orderFood,
 } from "../controllers/order";
+import { verifyAccessToken } from "../middlewares/verifyToken";
 
 const router = express.Router();
 
 const initOrderRouter = (app: Application) => {
-  router.post("/create", createOrder);
+  router.post("/create", verifyAccessToken, createOrder);
   router.post("/order-food", orderFood);
   router.delete("/delete-order-and-ordered-seat", deleteOrderAndOrderedSeat);
   router.delete("/delete-ordered-food", deleteOrderedFood);

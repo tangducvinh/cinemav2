@@ -1,11 +1,16 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("cinema", "root", null, {
-  host: "localhost",
-  dialect: "mysql",
-  logging: false,
-  timezone: "+07:00",
-});
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.USER_NAME,
+  process.env.PASSWORD,
+  {
+    host: process.env.HOST,
+    dialect: "mysql",
+    logging: false,
+    timezone: "+07:00",
+  }
+);
 
 let connectDB = async () => {
   try {

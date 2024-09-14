@@ -47,48 +47,50 @@ export const createAutoSeats = async (req: Request, res: Response) => {
   //status: 1 normal
   // status: 2 broken
   try {
-    for (let i = 0; i < 14; i++) {
-      for (let j = 0; j < 20; j++) {
-        await db.Seat.create({
-          name: j + 1,
-          roomId: 6,
-          number: j + 1,
-          row: i,
-          column: j,
-          status: 1,
-          ticketPrice: 70000,
-        });
-        // if (j === 2 || j === 3) {
-        //   await db.Seat.create({
-        //     name: 0,
-        //     roomId: 3,
-        //     number: j + 1,
-        //     row: i,
-        //     column: j,
-        //     status: 2,
-        //     ticketPrice: 70000,
-        //   });
-        // } else if (j >= 4) {
-        //   await db.Seat.create({
-        //     name: j - 2 + 1,
-        //     roomId: 3,
-        //     number: j - 2 + 1,
-        //     row: i,
-        //     column: j,
-        //     status: 1,
-        //     ticketPrice: 70000,
-        //   });
-        // } else {
-        //   await db.Seat.create({
-        //     name: j + 1,
-        //     roomId: 3,
-        //     number: j + 1,
-        //     row: i,
-        //     column: j,
-        //     status: 1,
-        //     ticketPrice: 70000,
-        //   });
-        // }
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 29; j++) {
+        if (j === 4 || j === 5 || j === 23 || j === 24) {
+            await db.Seat.create({
+              name: 0,
+              roomId: 1,
+              number: 0,
+              row: i,
+              column: j,
+              status: 2,
+              ticketPrice: 0,
+            });
+        } else if (j <= 3) {
+          await db.Seat.create({
+            name: j + 1,
+            roomId: 1,
+            number: j + 1,
+            row: i,
+            column: j,
+            status: 1,
+            ticketPrice: 70000,
+          });
+        } else if (j <= 22) {
+          await db.Seat.create({
+            name: j + 1 - 2,
+            roomId: 1,
+            number: j + 1 - 2,
+            row: i,
+            column: j,
+            status: 1,
+            ticketPrice: 70000,
+          });
+        } else {
+          await db.Seat.create({
+            name: j + 1 - 4,
+            roomId: 1,
+            number: j + 1 - 4,
+            row: i,
+            column: j,
+            status: 1,
+            ticketPrice: 70000,
+          });
+        }
+    
       }
     }
 

@@ -3,8 +3,9 @@ import db from "../models";
 import { listOrderedSeat } from "../services/seat";
 import * as services from "../services";
 
-export const createOrder = async (req: Request, res: Response) => {
-  const { userId, showId, listSeats } = req.body;
+export const createOrder = async (req, res: Response) => {
+  const { showId, listSeats } = req.body;
+  const { id } = req.user;
 
   try {
     const orderedSeats = await listOrderedSeat(showId);
@@ -30,7 +31,7 @@ export const createOrder = async (req: Request, res: Response) => {
 
     const response = await db.Order.create(
       {
-        userId,
+        userId: id,
         showId,
         orderedSeats: listSeats,
       },
@@ -43,6 +44,8 @@ export const createOrder = async (req: Request, res: Response) => {
         ],
       }
     );
+
+    console.log(response);
 
     return res.status(200).json({
       success: response ? true : false,
