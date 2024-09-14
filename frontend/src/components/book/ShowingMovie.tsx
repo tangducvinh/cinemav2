@@ -11,14 +11,18 @@ const ShowingMovie: React.FC<IProps> = ({ data }) => {
     <div className="mt-8">
       <MenuTitle title="PHIM ĐANG CHIẾU" />
 
-      {data.map((item) => (
-        <MovieItemBig
-          key={item.id}
-          backdrop={item.backdrop}
-          slug={item.slug}
-          name={item.name}
-        />
-      ))}
+      {data
+        .filter((movie, index) => index < 3)
+        .map((item) => (
+          <MovieItemBig
+            key={item.id}
+            backdrop={item.backdrop}
+            slug={item.slug}
+            name={item.name}
+          />
+        ))}
+
+      
     </div>
   );
 };

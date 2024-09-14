@@ -1,13 +1,14 @@
 import { IDataOrder, IDataOrderFood } from "@/app/types/frontend";
 
 const apisOrder = {
-  createOrder: async (data: IDataOrder) => {
+  createOrder: async (data: IDataOrder, token:string) => {
     const response = await fetch(`http://localhost:7000/api/order/create`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        token: `Bearer ${token}`,
       },
     });
 

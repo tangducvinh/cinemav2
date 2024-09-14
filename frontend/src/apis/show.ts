@@ -5,7 +5,7 @@ const apiShow = {
     const response = await fetch(
       `http://localhost:7000/api/show/list-show?date=${data.date}&movieId=${
         data.movieId
-      }${data.cityId ? "&cityId = " + data.cityId : ""}${
+      }${data.cityId ? "&cityId=" + data.cityId : ""}${
         data.cinemaId ? "&cinemaId=" + data.cinemaId : ""
       }`,
       {

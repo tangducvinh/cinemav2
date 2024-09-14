@@ -84,19 +84,19 @@ const MapSeat: React.FC<IProps> = ({
   return (
     <div className="bg-white p-4">
       <div className="flex justify-between">
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
+        <div className="w-[22px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
           {listRows.slice(0, maxRow).map((item) => (
-            <p key={item} className="w-full text-center mt-4 h-[25px]">
+            <p key={item} className="w-full text-center mt-4 h-[22px]">
               {item}
             </p>
           ))}
         </div>
 
         {maxColumn && (
-          <div className="flex-auto flex justify-center">
+          <div className="flex-auto flex justify-center px-4">
             <div className="flex flex-col-reverse">
               {dataListSeat?.map((item: any, index: number) => (
-                <div key={index} className="flex items-center flex-row-reverse">
+                <div key={index} className="flex items-center">
                   {item?.map((subItem: any) => (
                     <button
                       key={subItem.id}
@@ -105,7 +105,7 @@ const MapSeat: React.FC<IProps> = ({
                       )}
                       onClick={() => handleSelectSeat(subItem)}
                       className={clsx(
-                        "w-[25px] h-[25px] ml-2 mt-4 hover:bg-main transition-all hover:text-black rounded-md text-sm border-[1px]",
+                        "w-[22px] h-[22px] ml-2 mt-4 hover:bg-main transition-all hover:text-black rounded-md text-[13px] border-[1px]",
                         {
                           "bg-main text-white hover:text-white":
                             selectSeats.some((item) => item.id === subItem.id),
@@ -130,9 +130,9 @@ const MapSeat: React.FC<IProps> = ({
           </div>
         )}
 
-        <div className="w-[20px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
+        <div className="w-[22px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
           {listRows.slice(0, maxRow).map((item) => (
-            <p key={item} className="w-full text-center mt-4 h-[25px]">
+            <p key={item} className="w-full text-center mt-4 h-[22px]">
               {item}
             </p>
           ))}

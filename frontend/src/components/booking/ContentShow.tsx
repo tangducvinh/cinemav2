@@ -17,6 +17,7 @@ import Warning from "../common/Notice";
 import Payment from "./Payment";
 import apisPayment from "@/apis/payment";
 import apisOrder from "@/apis/order";
+import { RiTokenSwapFill } from "react-icons/ri";
 
 interface IProps {
   dataFood: IFood[];
@@ -239,7 +240,6 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
       let dataPass: any = {};
 
-      dataPass.userId = 1;
       dataPass.showId = currentShowId;
       dataPass.listSeats = selectSeats.map((item) => ({
         seatId: item.id,
@@ -247,16 +247,20 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         status: 0,
       }));
 
-      const response = await apisOrder.createOrder(dataPass);
+      let token = localStorage.getItem("token");
+      if (token) token = JSON.parse(token);
 
-      if (response.success) {
-        setCurrentOrder(response.data.id);
-      } else {
-        setTextWarning("Ghế đã có người đặt");
-        setShowWarning(response.message);
-        console.log(response);
+      if (token) {
+        const response = await apisOrder.createOrder(dataPass, token);
 
-        return;
+        if (response.success) {
+          setCurrentOrder(response.data.id);
+        } else {
+          setTextWarning("Ghế đã có người đặt");
+          setShowWarning(response.message);
+
+          return;
+        }
       }
     } else if (buyStatus === 2) {
       let dataPass: any = {};
@@ -332,7 +336,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
       <HeaderBooking currentIndex={buyStatus} />
 
-      <div className="w-main mx-auto flex gap-3 pb-[70px] min-h-[800px]">
+      <div className="w-main flex mx-auto gap-3 pb-[70px] min-h-[800px]">
         <div className="flex-7">
           {buyStatus === 1 && (
             <>
@@ -371,7 +375,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
           )}
         </div>
 
-        <div className="flex-3">
+        <div className="flex-3 min-w-[400px]">
           <DetailShow
             name={dataDetailShow?.movie.name}
             cinemaName={dataDetailShow?.cinema.name}

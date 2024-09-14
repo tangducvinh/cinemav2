@@ -51,12 +51,16 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
 
       setListCinemas(listCinemas);
     };
+    if (currentCity === 0) {
+      setCurrentCinema(0);
+    }
 
     fetchListCinema();
   }, [currentCity]);
 
   // handle search show follow condition
   const fetchListShow = async (data: IShowSearch) => {
+    console.log(data);
     const response = await apiShow.getListShow(data);
 
     let newArray: number[] = [];
