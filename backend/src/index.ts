@@ -13,7 +13,6 @@ import initFoodRouter from "./route/food";
 import initPaymentRouter from "./route/payment";
 import initOrderRouter from "./route/order";
 import connectDB from "./config/connectDB";
-import { EmptyResultError } from "sequelize";
 
 const app = express();
 const port = process.env.PORT || 7777;
