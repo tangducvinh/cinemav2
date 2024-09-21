@@ -1,4 +1,5 @@
-import { Sequelize } from "sequelize";
+// import { Sequelize } from "sequelize";
+const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
   process.env.DATABASE,
@@ -21,4 +22,5 @@ let connectDB = async () => {
   }
 };
 
-export default connectDB;
+// export default connectDB;
+module.exports = connectDB;
