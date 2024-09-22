@@ -15,4 +15,3 @@ const initOrderRouter = (app) => {
     return app.use("/api/order", router);
 };
 exports.default = initOrderRouter;
-//# sourceMappingURL=order.js.map

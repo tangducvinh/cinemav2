@@ -38,4 +38,3 @@ const deleteOrderedFood = (orderId) => __awaiter(void 0, void 0, void 0, functio
     });
 });
 exports.deleteOrderedFood = deleteOrderedFood;
-//# sourceMappingURL=order.js.map

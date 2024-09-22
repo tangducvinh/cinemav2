@@ -8,4 +8,3 @@ const initBannerRouter = (app) => {
     return app.use("/api/banner", router);
 };
 exports.default = initBannerRouter;
-//# sourceMappingURL=banner.js.map

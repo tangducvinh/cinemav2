@@ -29,4 +29,3 @@ const getListFoods = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getListFoods = getListFoods;
-//# sourceMappingURL=food.js.map

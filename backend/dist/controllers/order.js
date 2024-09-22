@@ -126,4 +126,3 @@ const deleteOrderedFood = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.deleteOrderedFood = deleteOrderedFood;
-//# sourceMappingURL=order.js.map

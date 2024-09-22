@@ -12,4 +12,3 @@ const initShowRouter = (app) => {
     return app.use("/api/show", router);
 };
 exports.default = initShowRouter;
-//# sourceMappingURL=show.js.map

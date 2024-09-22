@@ -29,4 +29,3 @@ const getListBanner = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getListBanner = getListBanner;
-//# sourceMappingURL=banner.js.map

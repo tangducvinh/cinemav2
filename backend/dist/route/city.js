@@ -11,4 +11,3 @@ const initCityRouter = (app) => {
     return app.use("/api/city", router);
 };
 exports.default = initCityRouter;
-//# sourceMappingURL=city.js.map

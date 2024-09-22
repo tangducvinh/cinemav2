@@ -28,4 +28,3 @@ const getListCity = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getListCity = getListCity;
-//# sourceMappingURL=city.js.map

@@ -15,4 +15,3 @@ const initUserRouter = (app) => {
     return app.use("/api/user", router);
 };
 exports.default = initUserRouter;
-//# sourceMappingURL=user.js.map

@@ -28,4 +28,3 @@ const listOrderedSeat = (showId) => __awaiter(void 0, void 0, void 0, function* 
     return response;
 });
 exports.listOrderedSeat = listOrderedSeat;
-//# sourceMappingURL=seat.js.map

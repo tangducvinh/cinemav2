@@ -115,4 +115,3 @@ const createAutoSeats = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.createAutoSeats = createAutoSeats;
-//# sourceMappingURL=seat.js.map

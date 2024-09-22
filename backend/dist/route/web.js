@@ -14,4 +14,3 @@ let initWebRouter = (app) => {
     return app.use("/api", router);
 };
 exports.default = initWebRouter;
-//# sourceMappingURL=web.js.map

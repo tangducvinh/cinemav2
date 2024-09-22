@@ -97,4 +97,3 @@ const getDetailShow = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.getDetailShow = getDetailShow;
-//# sourceMappingURL=show.js.map

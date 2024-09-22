@@ -13,4 +13,3 @@ const initSeatRouter = (app) => {
     return app.use("/api/seat", router);
 };
 exports.default = initSeatRouter;
-//# sourceMappingURL=seat.js.map

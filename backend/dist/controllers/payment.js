@@ -76,4 +76,3 @@ const verifyVnp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.send("Xác thực URL trả về thành công");
 });
 exports.verifyVnp = verifyVnp;
-//# sourceMappingURL=payment.js.map

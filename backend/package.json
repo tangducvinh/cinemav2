@@ -32,5 +32,10 @@
     "sequelize": "^6.37.3",
     "type-fest": "^4.26.1",
     "vnpay": "^1.6.0"
-  }
+  },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ]
 }

@@ -12,4 +12,3 @@ const initMovieRouter = (app) => {
     return app.use("/api/movie", router);
 };
 exports.default = initMovieRouter;
-//# sourceMappingURL=movie.js.map

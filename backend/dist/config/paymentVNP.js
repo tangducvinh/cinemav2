@@ -26,4 +26,3 @@ const vnpay = new vnpay_1.VNPay({
 exports.default = vnpay;
 // return vnpay;
 // };
-//# sourceMappingURL=paymentVNP.js.map

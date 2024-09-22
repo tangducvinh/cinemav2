@@ -73,4 +73,3 @@ const getDetailMovie = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getDetailMovie = getDetailMovie;
-//# sourceMappingURL=movie.js.map

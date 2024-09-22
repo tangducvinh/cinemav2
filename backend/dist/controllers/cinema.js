@@ -34,4 +34,3 @@ const cinemaController = {
     }),
 };
 exports.default = cinemaController;
-//# sourceMappingURL=cinema.js.map

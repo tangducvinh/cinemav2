@@ -31,4 +31,3 @@ const verifyAccessToken = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.verifyAccessToken = verifyAccessToken;
-//# sourceMappingURL=verifyToken.js.map

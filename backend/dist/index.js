@@ -52,4 +52,3 @@ app.use("/", (req, res) => res.json("server on"));
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
 });
-//# sourceMappingURL=index.js.map

@@ -11,4 +11,3 @@ const initFoodRouter = (app) => {
     return app.use("/api/food", router);
 };
 exports.default = initFoodRouter;
-//# sourceMappingURL=food.js.map

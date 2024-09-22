@@ -5,4 +5,3 @@ let getHomePage = (req, res) => {
     return res.send("home");
 };
 exports.getHomePage = getHomePage;
-//# sourceMappingURL=homeController.js.map

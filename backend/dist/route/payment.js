@@ -12,4 +12,3 @@ const initPaymentRouter = (app) => {
     return app.use("/api/payment", router);
 };
 exports.default = initPaymentRouter;
-//# sourceMappingURL=payment.js.map

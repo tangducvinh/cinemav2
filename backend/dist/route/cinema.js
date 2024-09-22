@@ -11,4 +11,3 @@ const initCinemaRouter = (app) => {
     return app.use("/api/cinema", router);
 };
 exports.default = initCinemaRouter;
-//# sourceMappingURL=cinema.js.map

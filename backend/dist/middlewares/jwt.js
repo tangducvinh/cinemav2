@@ -17,4 +17,3 @@ const generateRefreshToken = (uid, role) => {
     });
 };
 exports.generateRefreshToken = generateRefreshToken;
-//# sourceMappingURL=jwt.js.map
