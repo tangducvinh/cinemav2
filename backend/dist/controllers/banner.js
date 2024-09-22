@@ -8,16 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getListBanner = void 0;
 // import db from "../models";
-const models_1 = __importDefault(require("../models"));
+const db = require("../models");
 const getListBanner = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield models_1.default.Banner.findAll();
+        const response = yield db.Banner.findAll();
         return res.status(200).json({
             success: response ? true : false,
             message: response ? "Thành công" : "Thất bại",
