@@ -1,7 +1,6 @@
-import db from "../models";
-import { Request, Response } from "express";
+const db = require("../models");
 
-const getListCity = async (req: Request, res: Response) => {
+const getListCity = async (req, res) => {
   try {
     const response = await db.City.findAll();
 
@@ -15,4 +14,4 @@ const getListCity = async (req: Request, res: Response) => {
   }
 };
 
-export { getListCity };
+module.exports = { getListCity };

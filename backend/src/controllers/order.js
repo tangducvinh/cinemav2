@@ -1,9 +1,12 @@
-import { Request, Response } from "express";
-import db from "../models";
-import { listOrderedSeat } from "../services/seat";
-import * as services from "../services";
+const db = require("../models");
+const { listOrderedSeat } = require("../services/seat");
+const {
+  deleteOrder,
+  deleteOrderedSeat,
+  SVdeleteOrderedFood,
+} = require("../services/order");
 
-export const createOrder = async (req, res: Response) => {
+const createOrder = async (req, res) => {
   const { showId, listSeats } = req.body;
   const { id } = req.user;
 
@@ -57,7 +60,7 @@ export const createOrder = async (req, res: Response) => {
   }
 };
 
-export const orderFood = async (req: Request, res: Response) => {
+const orderFood = async (req, res) => {
   const { listFoods } = req.body;
   try {
     const response = await db.OrderedFood.bulkCreate(listFoods);
@@ -73,14 +76,11 @@ export const orderFood = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteOrderAndOrderedSeat = async (
-  req: Request,
-  res: Response
-) => {
+const deleteOrderAndOrderedSeat = async (req, res) => {
   const { orderId } = req.query;
   try {
-    await services.deleteOrderedSeat(orderId);
-    await services.deleteOrder(orderId);
+    await deleteOrderedSeat(orderId);
+    await deleteOrder(orderId);
 
     return res.status(200).json({
       success: true,
@@ -91,10 +91,10 @@ export const deleteOrderAndOrderedSeat = async (
   }
 };
 
-export const deleteOrderedFood = async (req: Request, res: Response) => {
+const deleteOrderedFood = async (req, res) => {
   const { orderId } = req.query;
   try {
-    await services.deleteOrderedFood(orderId);
+    await SVdeleteOrderedFood(orderId);
 
     return res.status(200).json({
       success: true,
@@ -103,4 +103,11 @@ export const deleteOrderedFood = async (req: Request, res: Response) => {
   } catch (e) {
     return res.status(500).json(e);
   }
+};
+
+module.exports = {
+  createOrder,
+  orderFood,
+  deleteOrderAndOrderedSeat,
+  deleteOrderedFood,
 };

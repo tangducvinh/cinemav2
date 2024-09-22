@@ -1,8 +1,7 @@
-import db from "../models";
-import { Request, Response } from "express";
+const db = require("../models");
 
 const cinemaController = {
-  getListCinema: async (req: Request, res: Response) => {
+  getListCinema: async (req, res) => {
     try {
       const { cityId } = req.query;
       const response = await db.Cinema.findAll({
@@ -22,4 +21,4 @@ const cinemaController = {
   },
 };
 
-export default cinemaController;
+module.exports = { cinemaController };

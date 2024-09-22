@@ -1,7 +1,7 @@
-import db from "../models";
-import { Op } from "sequelize";
+const db = require("../models");
+const { Op } = require("sequelize");
 
-export const listOrderedSeat = async (showId: any) => {
+const listOrderedSeat = async (showId) => {
   const now = new Date();
   const maxTime = new Date(now.getTime() - 7 * 60 * 1000);
 
@@ -15,3 +15,5 @@ export const listOrderedSeat = async (showId: any) => {
 
   return response;
 };
+
+module.exports = { listOrderedSeat };

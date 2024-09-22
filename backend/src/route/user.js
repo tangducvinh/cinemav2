@@ -1,17 +1,14 @@
-import express from "express";
-import { Application } from "express";
-
-import {
+const {
   signUp,
   signIn,
   getProfileInformation,
   changePassword,
-} from "../controllers/user";
-import { verifyAccessToken } from "../middlewares/verifyToken";
+} = require("../controllers/user");
+const { verifyAccessToken } = require("../middlewares/verifyToken");
 
-const router = express.Router();
+const router = require("express").Router();
 
-const initUserRouter = (app: Application) => {
+const initUserRouter = (app) => {
   router.post("/sign-up", signUp);
   router.post("/sign-in", signIn);
   router.get("/profile", verifyAccessToken, getProfileInformation);
@@ -20,4 +17,4 @@ const initUserRouter = (app: Application) => {
   return app.use("/api/user", router);
 };
 
-export default initUserRouter;
+module.exports = initUserRouter;

@@ -1,11 +1,6 @@
-import jwt from "jsonwebtoken";
-import { Response, Request, NextFunction } from "express";
+const jwt = require("jsonwebtoken");
 
-export const verifyAccessToken = async (
-  req,
-  res: Response,
-  next: NextFunction
-) => {
+const verifyAccessToken = async (req, res, next) => {
   const token = req.headers.token;
   if (token) {
     const accessToken = token?.split(" ")[1];
@@ -24,3 +19,5 @@ export const verifyAccessToken = async (
     return res.status(401).json("Bạn chưa đăng nhập");
   }
 };
+
+module.exports = { verifyAccessToken };

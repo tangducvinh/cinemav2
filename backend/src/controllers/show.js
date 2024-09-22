@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import db from "../models";
-import { Op } from "sequelize";
+const db = require("../models");
+const { Op } = require("sequelize");
 
-const getListShow = async (req: Request, res: Response) => {
+const getListShow = async (req, res) => {
   try {
     const { date, cinemaId, movieId, cityId } = req.query;
 
@@ -47,7 +46,7 @@ const getListShow = async (req: Request, res: Response) => {
   }
 };
 
-const getDetailShow = async (req: Request, res: Response) => {
+const getDetailShow = async (req, res) => {
   try {
     const { showId } = req.query;
 
@@ -87,4 +86,4 @@ const getDetailShow = async (req: Request, res: Response) => {
   }
 };
 
-export { getListShow, getDetailShow };
+module.exports = { getListShow, getDetailShow };

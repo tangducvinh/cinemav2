@@ -1,13 +1,6 @@
-import { Request, Response } from "express";
-import db from "../models";
-import { Movie, Movie_Genre, Genre } from "../models";
-// import { Op } from "sequelize";
-import { Op, sql } from "@sequelize/core";
-import { attribute } from "@sequelize/core/types/expression-builders/attribute";
-const { QueryTypes } = require("sequelize");
-import { Sequelize } from "sequelize";
+const db = require("../models");
 
-const getListMovie = async (req: Request, res: Response) => {
+const getListMovie = async (req, res) => {
   const { status } = req.query;
 
   try {
@@ -32,7 +25,7 @@ const getListMovie = async (req: Request, res: Response) => {
   }
 };
 
-const getDetailMovie = async (req: Request, res: Response) => {
+const getDetailMovie = async (req, res) => {
   try {
     const { slug } = req.query;
 
@@ -66,4 +59,4 @@ const getDetailMovie = async (req: Request, res: Response) => {
   }
 };
 
-export { getListMovie, getDetailMovie };
+module.exports = { getListMovie, getDetailMovie };

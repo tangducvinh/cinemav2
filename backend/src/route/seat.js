@@ -1,15 +1,12 @@
-import express from "express";
-import { Application } from "express";
-
-import {
+const {
   createAutoSeats,
   getListOrderedSeat,
   getListSeat,
-} from "../controllers/seat";
+} = require("../controllers/seat");
 
-const router = express.Router();
+const router = require("express").Router();
 
-const initSeatRouter = (app: Application) => {
+const initSeatRouter = (app) => {
   router.get("/list-seat", getListSeat);
   router.get("/list-ordered-seat", getListOrderedSeat);
   router.get("/create-auto-seats", createAutoSeats);
@@ -17,4 +14,4 @@ const initSeatRouter = (app: Application) => {
   return app.use("/api/seat", router);
 };
 
-export default initSeatRouter;
+module.exports = initSeatRouter;

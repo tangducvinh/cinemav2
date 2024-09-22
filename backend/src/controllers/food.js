@@ -1,7 +1,6 @@
-import db from "../models";
-import { Request, Response } from "express";
+const db = require("../models");
 
-const getListFoods = async (req: Request, res: Response) => {
+const getListFoods = async (req, res) => {
   try {
     const response = await db.Food.findAll();
 
@@ -16,4 +15,4 @@ const getListFoods = async (req: Request, res: Response) => {
   }
 };
 
-export { getListFoods };
+module.exports = { getListFoods };

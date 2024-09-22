@@ -1,13 +1,9 @@
-// const { VNPay, ignoreLogger } = require("vnpay");
-// const db = require("../models");
-import { Request, Response } from "express";
+const db = require("../models");
+const vnpay = require("../config/paymentVNP");
+const { VerifyReturnUrl } = require("vnpay");
+const { deleteOrderedSeat } = require("../services/order");
 
-import db from "../models";
-import vnpay from "../config/paymentVNP";
-import { VerifyReturnUrl } from "vnpay";
-import { deleteOrderedSeat } from "../services/order";
-
-export const paymentVPN = async (req, res) => {
+const paymentVPN = async (req, res) => {
   const { amount, orderId } = req.body;
 
   // Lấy returnUrl từ frontend gửi lên, nếu không có thì sử dụng mặc định
@@ -36,9 +32,9 @@ export const paymentVPN = async (req, res) => {
   });
 };
 
-export const verifyVnp = async (req: any, res: Response) => {
+const verifyVnp = async (req, res) => {
   const { vnp_TxnRef } = req.query;
-  let verify: VerifyReturnUrl;
+  let verify;
   try {
     verify = vnpay.verifyReturnUrl(req.query);
 
@@ -78,4 +74,9 @@ export const verifyVnp = async (req: any, res: Response) => {
   );
 
   return res.send("Xác thực URL trả về thành công");
+};
+
+module.exports = {
+  paymentVPN,
+  verifyVnp,
 };

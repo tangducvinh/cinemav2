@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import db from "../models";
-import { Op } from "sequelize";
-import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
+const bcrypt = require("bcrypt");
+const db = require("../models");
+const { Op } = require("sequelize");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../middlewares/jwt");
 
-const signUp = async (req: Request, res: Response) => {
+const signUp = async (req, res) => {
   const { email, phone, birthday, fullName, password, sex } = req.body;
 
   if (!email || !phone || !birthday || !fullName || !password || !sex)
@@ -46,7 +48,7 @@ const signUp = async (req: Request, res: Response) => {
   return res.json({ success: true, message: "Đăng ký thành công" });
 };
 
-const signIn = async (req: Request, res: Response) => {
+const signIn = async (req, res) => {
   try {
     const { email, password, phone } = req.body;
 
@@ -87,8 +89,7 @@ const signIn = async (req: Request, res: Response) => {
     res.status(500).json({ error: e });
   }
 };
-
-export const getProfileInformation = async (req, res: Response) => {
+const getProfileInformation = async (req, res) => {
   try {
     const { id } = req.user;
 
@@ -108,7 +109,7 @@ export const getProfileInformation = async (req, res: Response) => {
   }
 };
 
-export const changePassword = async (req, res: Response) => {
+const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const { id } = req.user;
@@ -149,4 +150,4 @@ export const changePassword = async (req, res: Response) => {
   }
 };
 
-export { signUp, signIn };
+module.exports = { signUp, signIn, getProfileInformation, changePassword };

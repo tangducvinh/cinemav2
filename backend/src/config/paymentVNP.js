@@ -1,4 +1,4 @@
-import { VNPay, ignoreLogger } from "vnpay";
+const { VNPay, ignoreLogger } = require("vnpay");
 
 // const hasdcode = 'SHA512'
 
@@ -26,7 +26,7 @@ const vnpay = new VNPay({
   loggerFn: ignoreLogger, // optional
 });
 
-export default vnpay
+module.exports = vnpay;
 
 // return vnpay;
 // };

@@ -1,17 +1,14 @@
-import express from "express";
-import { Application } from "express";
-
-import {
+const {
   createOrder,
   deleteOrderAndOrderedSeat,
   deleteOrderedFood,
   orderFood,
-} from "../controllers/order";
-import { verifyAccessToken } from "../middlewares/verifyToken";
+} = require("../controllers/order");
+const { verifyAccessToken } = require("../middlewares/verifyToken");
 
-const router = express.Router();
+const router = require("express").Router();
 
-const initOrderRouter = (app: Application) => {
+const initOrderRouter = (app) => {
   router.post("/create", verifyAccessToken, createOrder);
   router.post("/order-food", orderFood);
   router.delete("/delete-order-and-ordered-seat", deleteOrderAndOrderedSeat);
@@ -20,4 +17,4 @@ const initOrderRouter = (app: Application) => {
   return app.use("/api/order", router);
 };
 
-export default initOrderRouter;
+module.exports = initOrderRouter;
