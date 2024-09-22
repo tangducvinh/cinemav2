@@ -25,6 +25,7 @@ const connectDB = require("./src/config/connectDB");
 
 const app = express();
 const port = process.env.PORT || 7777;
+connectDB();
 
 app.use(
   cors({
@@ -52,7 +53,6 @@ initBannerRouter(app);
 
 app.use((req, res) => res.json("server on"));
 
-connectDB();
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
