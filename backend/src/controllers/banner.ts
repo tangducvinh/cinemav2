@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 // import db from "../models";
-import db from "../models";
+const db = require("../models");
 
 const getListBanner = async (req: Request, res: Response) => {
   try {
