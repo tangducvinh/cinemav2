@@ -1,8 +1,8 @@
-// import { Request, Response } from "express";
+import { Request, Response } from "express";
 // import db from "../models";
 const db = require("../models");
 
-const getListBanner = async (req, res) => {
+const getListBanner = async (req:Request, res:Response) => {
   try {
     const response = await db.Banner.findAll();
 
@@ -16,6 +16,4 @@ const getListBanner = async (req, res) => {
   }
 };
 
-module.exports = {
-  getListBanner,
-};
+export { getListBanner };
