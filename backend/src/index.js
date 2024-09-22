@@ -4,11 +4,12 @@ const express = require("express");
 const cors = require("cors");
 // import cookieParser from "cookie-parser";
 const cookieParser = require("cookie-parser");
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 
 // import initBannerRouter from "./route/banner";
 // const initBannerRouter = require("./route/banner");
-import initBannerRouter from "./route/banner";
+// import initBannerRouter from "./route/banner";
+const initBannerRouter = require("./route/banner");
 // import initMovieRouter from "./route/movie";
 // const initMovieRouter = require("./route/movie");
 // import initUserRouter from "./route/user";
@@ -52,7 +53,7 @@ initBannerRouter(app);
 // initPaymentRouter(app);
 // initOrderRouter(app);
 
-app.use("/", (req: Request, res: Response) => res.json("server on"));
+app.use("/", (req, res) => res.json("server on"));
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);

@@ -1,14 +1,14 @@
-import { Application } from "express";
+// import { Application } from "express";
 
 // import { getListBanner } from "../controllers/banner";
 const { getListBanner } = require("../controllers/banner");
 
 const router = require("express").Router();
 
-const initBannerRouter = (app:Application) => {
+const initBannerRouter = (app) => {
   router.get("/", getListBanner);
 
   return app.use("/api/banner", router);
 };
 
-export default initBannerRouter;
+module.exports = initBannerRouter;
