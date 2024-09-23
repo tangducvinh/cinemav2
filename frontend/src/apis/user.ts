@@ -14,15 +14,18 @@ const apiUser = {
     return response.json();
   },
   signIn: async (data: IFormSignIn) => {
-    const response = await fetch(`${process.env.URL_SERVER_API}/user/sign-in`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
+    const response = await fetch(
+      `https://cinemav2-api.vercel.app/api/user/sign-in`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
     return response.json();
   },
