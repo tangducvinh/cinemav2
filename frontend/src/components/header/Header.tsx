@@ -4,8 +4,11 @@ import Link from "next/link";
 
 import NavBar from "./Navbar";
 import Profile from "./Profile";
+import apiMovie from "@/apis/movie";
 
-const Header = () => {
+const Header = async () => {
+  const movies = await apiMovie.getListMovie();
+
   return (
     <header className="w-main flex items-center py-5">
       <div className="flex-2 flex">
@@ -15,7 +18,7 @@ const Header = () => {
       </div>
 
       <div className="flex-auto flex ">
-        <NavBar />
+        <NavBar movies={movies} />
       </div>
 
       <div className="flex-3 flex justify-end">

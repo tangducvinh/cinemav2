@@ -37,6 +37,43 @@ const apiShow = {
       return null;
     }
   },
+  getCinemaByMovieId: async (movieId: number) => {
+    const response = await fetch(
+      `${process.env.URL_SERVER_API}/show/list-cinema?movieId=${movieId}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    return response.json();
+  },
+  getDateFastBooking: async (movieId: number, cinemaId: number) => {
+    const response = await fetch(
+      `${process.env.URL_SERVER_API}/show/date-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    return response.json();
+  },
+  getShowFastBooking: async (
+    movieId: number,
+    cinemaId: number,
+    date: string
+  ) => {
+    const response = await fetch(
+      `${process.env.URL_SERVER_API}/show/show-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}&date=${date}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    return response.json();
+  },
 };
 
 export default apiShow;

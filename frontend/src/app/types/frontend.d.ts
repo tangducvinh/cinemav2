@@ -124,3 +124,13 @@ export interface IFormChangePassword {
   newPassword: string;
   againNewPassword: string;
 }
+
+export interface IShow {
+  id: number;
+  cinemaId: number;
+  cityId: number;
+  roomId: number;
+  movieId: number;
+  timeStart: Date;
+  timeEnd: Date;
+}

@@ -5,12 +5,15 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
 import NavChild from "./NavChild";
+import ContainerMovie from "./ContainerMovie";
+import { IMovie } from "@/app/types/frontend";
 
 // const data = ["Phim", "Góc Điện Ảnh", "Sự kiện", "Rạp/Giá Vé"];
 
 const data = [
   {
     title: "Phim",
+    id: 1,
   },
   {
     title: "Góc Điện Ảnh",
@@ -55,7 +58,11 @@ const data = [
   },
 ];
 
-const NavBar = () => {
+interface IProps {
+  movies: IMovie[];
+}
+
+const NavBar: React.FC<IProps> = ({ movies }) => {
   const [showChild, setShowChild] = useState<number>(-1);
 
   return (
@@ -65,21 +72,41 @@ const NavBar = () => {
         <span className="text-[16px] text-white">Mua vé</span>
       </button>
 
-      {data.map((item, index) => (
-        <div
-          key={item.title}
-          className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
-        >
-          <p onMouseLeave={() => setShowChild(-1)} className="relative">
-            <span onMouseEnter={() => setShowChild(index)}>{item.title}</span>
+      {data.map((item, index) =>
+        item.id === 1 ? (
+          <div
+            key={item.title}
+            onMouseEnter={() => setShowChild(index)}
+            className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
+          >
+            <p onMouseLeave={() => setShowChild(-1)} className="relative">
+              <span>{item.title}</span>
 
-            {showChild === index && item.subTitle && (
-              <NavChild data={item.subTitle || []} />
-            )}
-          </p>
-          <IoIosArrowDown />
-        </div>
-      ))}
+              <span
+                onMouseEnter={() => setShowChild(index)}
+                className="w-[100px] h-[50px] block absolute"
+              ></span>
+
+              {showChild === index && <ContainerMovie movies={movies} />}
+            </p>
+            <IoIosArrowDown />
+          </div>
+        ) : (
+          <div
+            key={item.title}
+            className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
+          >
+            <p onMouseLeave={() => setShowChild(-1)} className="relative">
+              <span onMouseEnter={() => setShowChild(index)}>{item.title}</span>
+
+              {showChild === index && item.subTitle && (
+                <NavChild data={item.subTitle || []} />
+              )}
+            </p>
+            <IoIosArrowDown />
+          </div>
+        )
+      )}
     </nav>
   );
 };

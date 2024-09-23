@@ -4,6 +4,7 @@ import IntroduceText from "@/components/home/IntroduceText";
 import { apisBanner } from "@/apis/banner";
 import apiMovie from "@/apis/movie";
 import type { Metadata } from "next";
+import FastBooking from "@/components/booking/FastBooking";
 
 export const metadata: Metadata = {
   title: "Cinema: Hệ thống rạp chiếu phim",
@@ -19,9 +20,13 @@ export default async function Home() {
 
   return (
     <div className="no-scrollbar">
-      <Slide data={banners.data} />
+      <div className="relative">
+        <Slide data={banners.data} />
 
-      <div className="w-main m-auto my-[50px]">
+        <FastBooking movies={movies} />
+      </div>
+
+      <div className="w-main m-auto my-[50px] mt-[80px]">
         <Navbar movies={movies} />
       </div>
 
