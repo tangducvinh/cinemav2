@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 const initBannerRouter = require("./src/route/banner");
 const initMovieRouter = require("./src/route/movie");
