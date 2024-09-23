@@ -20,7 +20,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.URL_CLIENT,
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })
