@@ -1,7 +1,7 @@
 const apiSeat = {
   getListSeat: async (roomId: number) => {
     const response = await fetch(
-      `http://localhost:7000/api/seat/list-seat?roomId=${roomId}`,
+      `${process.env.URL_SERVER}/seat/list-seat?roomId=${roomId}`,
       {
         method: "GET",
       }
@@ -15,7 +15,7 @@ const apiSeat = {
   },
   getListOrderedSeat: async (showId: number) => {
     const response = await fetch(
-      `http://localhost:7000/api/seat/list-ordered-seat?showId=${showId}`,
+      `${process.env.URL_SERVER}/seat/list-ordered-seat?showId=${showId}`,
       {
         method: "GET",
       }

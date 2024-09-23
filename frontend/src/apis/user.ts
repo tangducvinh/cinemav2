@@ -2,7 +2,7 @@ import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
 
 const apiUser = {
   signUp: async (data: IFormSignUp) => {
-    const response = await fetch(`http://localhost:7000/api/user/sign-up`, {
+    const response = await fetch(`${process.env.URL_SERVER}/user/sign-up`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -14,7 +14,7 @@ const apiUser = {
     return response.json();
   },
   signIn: async (data: IFormSignIn) => {
-    const response = await fetch(`http://localhost:7000/api/user/sign-in`, {
+    const response = await fetch(`${process.env.URL_SERVER}/user/sign-in`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -27,7 +27,7 @@ const apiUser = {
     return response.json();
   },
   getProfile: async (token: string | undefined) => {
-    const response = await fetch("http://localhost:7000/api/user/profile", {
+    const response = await fetch("${process.env.URL_SERVER}/user/profile", {
       method: "GET",
       headers: { token: `Bearer ${token}` },
       cache: "no-store",
@@ -35,9 +35,12 @@ const apiUser = {
 
     return response.json();
   },
-  changePassword: async (token: string | undefined, data:{currentPassword: string, newPassword: string}) => {
+  changePassword: async (
+    token: string | undefined,
+    data: { currentPassword: string; newPassword: string }
+  ) => {
     const response = await fetch(
-      "http://localhost:7000/api/user/change-password",
+      "${process.env.URL_SERVER}/user/change-password",
       {
         method: "PUT",
         body: JSON.stringify(data),

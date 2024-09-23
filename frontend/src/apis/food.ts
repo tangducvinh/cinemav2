@@ -1,6 +1,6 @@
 const apiFood = {
   getListFood: async () => {
-    const response = await fetch(`http://localhost:7000/api/food/list-food`, {
+    const response = await fetch(`${process.env.URL_SERVER}/food/list-food`, {
       method: "GET",
     });
 

@@ -1,8 +1,8 @@
 import { IDataOrder, IDataOrderFood } from "@/app/types/frontend";
 
 const apisOrder = {
-  createOrder: async (data: IDataOrder, token:string) => {
-    const response = await fetch(`http://localhost:7000/api/order/create`, {
+  createOrder: async (data: IDataOrder, token: string) => {
+    const response = await fetch(`${process.env.URL_SERVER}/order/create`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -15,7 +15,7 @@ const apisOrder = {
     return response.json();
   },
   createOrderFood: async (data: IDataOrderFood) => {
-    const response = await fetch(`http://localhost:7000/api/order/order-food`, {
+    const response = await fetch(`${process.env.URL_SERVER}/order/order-food`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -32,7 +32,7 @@ const apisOrder = {
   },
   deleteOrderAndOrderedSeat: async (orderId: number) => {
     const response = await fetch(
-      `http://localhost:7000/api/order/delete-order-and-ordered-seat?orderId=${orderId}`,
+      `${process.env.URL_SERVER}/order/delete-order-and-ordered-seat?orderId=${orderId}`,
       {
         method: "DELETE",
       }
@@ -42,7 +42,7 @@ const apisOrder = {
   },
   deleteOrderedFood: async (orderId: number) => {
     const response = await fetch(
-      `http://localhost:7000/api/order/delete-ordered-food?orderId=${orderId}`,
+      `${process.env.URL_SERVER}/order/delete-ordered-food?orderId=${orderId}`,
       {
         method: "DELETE",
       }

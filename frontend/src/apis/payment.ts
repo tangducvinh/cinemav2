@@ -2,7 +2,7 @@ import { IDataPayment } from "@/app/types/frontend";
 
 const apisPayment = {
   payWithVNPay: async (data: IDataPayment) => {
-    const response = await fetch(`http://localhost:7000/api/payment/vnp`, {
+    const response = await fetch(`${process.env.URL_SERVER}/payment/vnp`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
