@@ -2,6 +2,7 @@ const db = require("../models");
 const vnpay = require("../config/paymentVNP");
 const { VerifyReturnUrl } = require("vnpay");
 const { deleteOrderedSeat } = require("../services/order");
+require("dotenv").config();
 
 const paymentVPN = async (req, res) => {
   const { amount, orderId } = req.body;
