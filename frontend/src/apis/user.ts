@@ -1,4 +1,5 @@
 import { IFormSignIn, IFormSignUp } from "@/app/types/frontend";
+import axios from "axios";
 
 const apiUser = {
   signUp: async (data: IFormSignUp) => {
@@ -14,20 +15,25 @@ const apiUser = {
     return response.json();
   },
   signIn: async (data: IFormSignIn) => {
-    const response = await fetch(
-      `https://cinemav2-api.vercel.app/api/user/sign-in`,
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${process.env.URL_SERVER_API}/user/sign-in`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    // const response = await axios({
+    //   method: "post",
+    //   url: `${process.env.URL_SERVER_API}/user/sign-in`,
+    //   data,
+    //   withCredentials: true,
+    // });
 
     return response.json();
+    // return response;
   },
   getProfile: async (token: string | undefined) => {
     const response = await fetch(`${process.env.URL_SERVER_API}/user/profile`, {
