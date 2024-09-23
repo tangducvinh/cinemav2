@@ -1,7 +1,7 @@
 const apiCinema = {
   getListCinema: async (cityId: number) => {
     const response = await fetch(
-      `${process.env.URL_SERVER}/cinema?cityId=${cityId}`,
+      `${process.env.URL_SERVER_API}/cinema?cityId=${cityId}`,
       {
         method: "GET",
         cache: "no-store",

@@ -1,6 +1,6 @@
 const apiCity = {
   getListCity: async () => {
-    const response = await fetch(`${process.env.URL_SERVER}/city`, {
+    const response = await fetch(`${process.env.URL_SERVER_API}/city`, {
       method: "GET",
     });
 

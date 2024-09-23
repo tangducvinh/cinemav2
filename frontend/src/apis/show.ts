@@ -3,7 +3,7 @@ import { IShowSearch } from "@/app/types/frontend";
 const apiShow = {
   getListShow: async (data: IShowSearch) => {
     const response = await fetch(
-      `${process.env.URL_SERVER}/show/list-show?date=${data.date}&movieId=${
+      `${process.env.URL_SERVER_API}/show/list-show?date=${data.date}&movieId=${
         data.movieId
       }${data.cityId ? "&cityId=" + data.cityId : ""}${
         data.cinemaId ? "&cinemaId=" + data.cinemaId : ""
@@ -22,7 +22,7 @@ const apiShow = {
   },
   getDetailShow: async (showId: number) => {
     const response = await fetch(
-      `${process.env.URL_SERVER}/show/detail-show?showId=${showId}`,
+      `${process.env.URL_SERVER_API}/show/detail-show?showId=${showId}`,
       {
         method: "GET",
         cache: "no-store",

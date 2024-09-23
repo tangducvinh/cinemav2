@@ -1,7 +1,7 @@
 const apiMovie = {
   getListMovie: async (status?: string) => {
     const response = await fetch(
-      `${process.env.URL_SERVER}/movie${status ? "?status=" + status : ""}`,
+      `${process.env.URL_SERVER_API}/movie${status ? "?status=" + status : ""}`,
       {
         method: "GET",
         cache: "no-store",
@@ -15,7 +15,7 @@ const apiMovie = {
   },
   getDetailMovie: async (slug: string) => {
     const response = await fetch(
-      `${process.env.URL_SERVER}/movie/detail-movie?slug=${slug}`,
+      `${process.env.URL_SERVER_API}/movie/detail-movie?slug=${slug}`,
       {
         method: "GET",
         cache: "no-store",

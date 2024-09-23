@@ -2,7 +2,7 @@ import { IDataOrder, IDataOrderFood } from "@/app/types/frontend";
 
 const apisOrder = {
   createOrder: async (data: IDataOrder, token: string) => {
-    const response = await fetch(`${process.env.URL_SERVER}/order/create`, {
+    const response = await fetch(`${process.env.URL_SERVER_API}/order/create`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -15,14 +15,17 @@ const apisOrder = {
     return response.json();
   },
   createOrderFood: async (data: IDataOrderFood) => {
-    const response = await fetch(`${process.env.URL_SERVER}/order/order-food`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.URL_SERVER_API}/order/order-food`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const result = await response.json();
 
