@@ -4,6 +4,7 @@ const {
   getCinemaByMovieId,
   getDateFastBooking,
   getShowFastBooking,
+  generateShow,
 } = require("../controllers/show");
 
 const router = require("express").Router();
@@ -14,6 +15,8 @@ const initShowRouter = (app) => {
   router.get("/list-cinema", getCinemaByMovieId);
   router.get("/date-fast-booking", getDateFastBooking);
   router.get("/show-fast-booking", getShowFastBooking);
+
+  router.get("/generate-show", generateShow)
 
   return app.use("/api/show", router);
 };

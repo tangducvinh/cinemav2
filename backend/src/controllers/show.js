@@ -187,10 +187,52 @@ const getShowFastBooking = async (req, res) => {
   }
 };
 
+// generate show in 2 year
+
+const generateShow = async(req, res) => {
+
+  try {
+    const { movieId, cinemaId, cityId, roomId, timeStart, timeEnd } = req.query
+
+    for (let i = 1; i < 700; i++) {
+      let now = new Date()
+      now.setDate(now.getDate() + i)
+
+      console.log(moment(now).format('yyyy/MM/DD'))
+
+      await db.Show.create({
+        movieId,
+        cinemaId,
+        cityId,
+        roomId, 
+        timeStart: `${moment(now).format('yyyy/MM/DD')} ${timeStart}`,
+        timeEnd: `${moment(now).format('yyyy/MM/DD')} ${timeEnd}`,
+      })
+    }
+
+    return res.json('success')
+
+
+  } catch(e) {
+    return res.status(500).json(e)
+  }
+
+  await db.Show.destroy({
+    where: {
+      movieId: 2,
+      roomId: 3
+    }
+  })
+ 
+
+  return res.json('ok')
+}
+
 module.exports = {
   getListShow,
   getDetailShow,
   getCinemaByMovieId,
   getDateFastBooking,
   getShowFastBooking,
+  generateShow
 };
