@@ -4,7 +4,9 @@ const { VerifyReturnUrl } = require("vnpay");
 const { deleteOrderedSeat } = require("../services/order");
 const sendMail = require("../config/sendmail");
 require("dotenv").config();
-const getDetailOrder = require('../controllers/order')
+const moment = require("moment");
+const convertArrayToString = require("../ultis/convertArrayToString");
+const convertDateToString = require("../ultis/convertDateToString");
 
 const paymentVPN = async (req, res) => {
   const { amount, orderId, email } = req.body;
@@ -87,6 +89,91 @@ const verifyVnp = async (req, res) => {
     }
   );
 
+  res.redirect(`${process.env.URL_CLIENT}/booking-success`);
+
+  const response = await db.Order.findOne({
+    where: { id: vnp_TxnRef },
+    include: [
+      {
+        model: db.OrderedSeat,
+        as: "orderedSeats",
+        include: [
+          { model: db.Seat, as: "seat", attributes: ["number", "row"] },
+        ],
+        attributes: ["seatId"],
+      },
+      {
+        model: db.OrderedFood,
+        as: "orderedFoods",
+        include: [{ model: db.Food, as: "food", attributes: ["name"] }],
+        attributes: ["foodId"],
+      },
+      {
+        model: db.Show,
+        as: "show",
+        include: [
+          { model: db.Movie, as: "movie", attributes: ["name"] },
+          {
+            model: db.Cinema,
+            as: "cinema",
+            include: ["city"],
+            attributes: ["name", "address"],
+          },
+          {
+            model: db.Room,
+            as: "room",
+            attributes: ["name"],
+          },
+        ],
+        attributes: ["id", "timeStart"],
+      },
+    ],
+    attributes: ["showId", "id"],
+  });
+
+  const listRows = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+  ];
+
+  const name = response.dataValues.show.movie.name;
+  const seats = response.orderedSeats.map(
+    (item) => `${listRows[item.seat.row]}${item.seat.number}`
+  );
+  const timeStart = moment(response.dataValues.show.timeStart);
+  const cinemaName = response.dataValues.show.cinema.name;
+  const cinemaAddress = response.dataValues.show.cinema.address;
+  const city = response.dataValues.show.cinema.city.name;
+  const food = response.orderedFoods.map((item) => item.food.name);
+  const room = response.dataValues.show.room.name;
+
+  // console.log({
+  //   name,
+  //   hour: moment(timeStart).format("HH:mm"),
+  //   seats: convertArrayToString(seats),
+  //   cinemaName,
+  //   cinemaAddress,
+  //   city,
+  //   food: convertArrayToString(food),
+  //   room,
+  //   date: `${convertDateToString(
+  //     Number(new Date(timeStart).getDay())
+  //   )}: ${moment(timeStart).format("DD/MM/yyyy")}`,
+  // });
+
   const html = ` <div style="width: 320px; background-color: white">
       <img
         style="width: 100px; height: 100px; display: block; margin: 0 auto"
@@ -111,13 +198,21 @@ const verifyVnp = async (req, res) => {
           font-size: 16px;
         "
       >
-        Lật Mặt 6: Tấm Vé Định Mệnh
+        ${name}
       </p>
 
-      <p style="text-align: center; color: gray">Vé 2D 22h (2) (Ghế: C3, C2)</p>
+      <p style="text-align: center; color: gray">Vé 2D ${moment(
+        timeStart
+      ).format("HH:mm")} (${seats.length}) (Ghế: ${convertArrayToString(
+    seats
+  )})</p>
 
       <p style="text-align: center; color: gray">
-        <strong>Rạp 5</strong>: Tôn Đức Thắng, Liên Chiểu, Đà Nẵng
+        (${"Thức ăn"}: ${convertArrayToString(food)})
+      </p>
+
+      <p style="text-align: center; color: gray">
+        <strong>${room}</strong>: ${cinemaAddress}, ${cinemaName}, ${city}
       </p>
 
       <table
@@ -156,7 +251,9 @@ const verifyVnp = async (req, res) => {
               border-collapse: collapse;
             "
           >
-            Thứ ba: 09/05/2024
+          ${convertDateToString(
+            Number(new Date(timeStart).getDay())
+          )}: ${moment(timeStart).format("DD/MM/yyyy")}
           </td>
           <td
             style="
@@ -166,7 +263,7 @@ const verifyVnp = async (req, res) => {
               border-collapse: collapse;
             "
           >
-            22:14
+            ${moment(timeStart).format("HH:mm")}
           </td>
           <td
             style="
@@ -176,7 +273,7 @@ const verifyVnp = async (req, res) => {
               border-collapse: collapse;
             "
           >
-            Rap 5
+            ${room}
           </td>
         </tr>
       </table>
@@ -205,34 +302,7 @@ const verifyVnp = async (req, res) => {
   const subject = "Chúc mừng bạn đã đặt vé thành công!";
   await sendMail(email, html, subject);
 
-  const order = await db.Order.findOne({
-    where: { id: vnp_TxnRef },
-    include: [
-      {
-        model: db.OrderedSeat,
-        as: "orderedSeats",
-        include: [{model: db.Seat, as: 'seat', attributes: ['number', 'row']}],
-        attributes: ['seatId']
-      },
-      {
-        model: db.OrderedFood,
-        as: "orderedFoods",
-        include: [{model: db.Food, as: 'food', attributes: ['name']}],
-        attributes: ['foodId']
-      },
-      {
-        model: db.Show,
-        as: "show",
-        include: [{model: db.Movie, as: 'movie', attributes: ['name']}, {model: db.Cinema, as: 'cinema', include: ['city'], attributes: ['name', 'address']}],
-        attributes: ['id']
-      },
-    ],
-    attributes: ['showId']
-  });
-
-  console.log(order)
-
-  return res.redirect(`${process.env.URL_CLIENT}/booking-success`);
+  return;
 };
 
 module.exports = {

@@ -5,6 +5,9 @@ const {
   deleteOrderedSeat,
   SVdeleteOrderedFood,
 } = require("../services/order");
+const moment = require("moment");
+const convertArrayToString = require("../ultis/convertArrayToString");
+const convertDateToString = require("../ultis/convertDateToString");
 
 const createOrder = async (req, res) => {
   const { showId, listSeats } = req.body;
@@ -69,23 +72,84 @@ const getDetailOrder = async (req, res) => {
         {
           model: db.OrderedSeat,
           as: "orderedSeats",
-          include: [{model: db.Seat, as: 'seat', attributes: ['number', 'row']}],
-          attributes: ['seatId']
+          include: [
+            { model: db.Seat, as: "seat", attributes: ["number", "row"] },
+          ],
+          attributes: ["seatId"],
         },
         {
           model: db.OrderedFood,
           as: "orderedFoods",
-          include: [{model: db.Food, as: 'food', attributes: ['name']}],
-          attributes: ['foodId']
+          include: [{ model: db.Food, as: "food", attributes: ["name"] }],
+          attributes: ["foodId"],
         },
         {
           model: db.Show,
           as: "show",
-          include: [{model: db.Movie, as: 'movie', attributes: ['name']}, {model: db.Cinema, as: 'cinema', include: ['city'], attributes: ['name', 'address']}],
-          attributes: ['id']
+          include: [
+            { model: db.Movie, as: "movie", attributes: ["name"] },
+            {
+              model: db.Cinema,
+              as: "cinema",
+              include: ["city"],
+              attributes: ["name", "address"],
+            },
+            {
+              model: db.Room,
+              as: "room",
+              attributes: ["name"],
+            },
+          ],
+          attributes: ["id", "timeStart"],
         },
       ],
-      attributes: ['showId']
+      attributes: ["showId", "id"],
+    });
+
+    console.log(response);
+
+    const listRows = [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+    ];
+
+    const name = response.dataValues.show.movie.name;
+    // // const
+    const seats = response.orderedSeats.map(
+      (item) => `${listRows[item.seat.row]}${item.seat.number}`
+    );
+    const timeStart = moment(response.dataValues.show.timeStart);
+    const cinemaName = response.dataValues.show.cinema.name;
+    const cinemaAddress = response.dataValues.show.cinema.address;
+    const city = response.dataValues.show.cinema.city.name;
+    const food = response.orderedFoods.map((item) => item.food.name);
+    const room = response.dataValues.show.room.name;
+
+    console.log({
+      name,
+      hour: moment(timeStart).format("HH:mm"),
+      seats: convertArrayToString(seats),
+      cinemaName,
+      cinemaAddress,
+      city,
+      food: convertArrayToString(food),
+      room,
+      date: `${convertDateToString(
+        Number(new Date(timeStart).getDay())
+      )}: ${moment(timeStart).format("DD/MM/yyyy")}`,
     });
 
     return res.status(200).json({
