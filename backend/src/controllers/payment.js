@@ -4,6 +4,7 @@ const { VerifyReturnUrl } = require("vnpay");
 const { deleteOrderedSeat } = require("../services/order");
 const sendMail = require("../config/sendmail");
 require("dotenv").config();
+const getDetailOrder = require('../controllers/order')
 
 const paymentVPN = async (req, res) => {
   const { amount, orderId, email } = req.body;
@@ -203,6 +204,33 @@ const verifyVnp = async (req, res) => {
     </div>`;
   const subject = "Chúc mừng bạn đã đặt vé thành công!";
   await sendMail(email, html, subject);
+
+  const order = await db.Order.findOne({
+    where: { id: vnp_TxnRef },
+    include: [
+      {
+        model: db.OrderedSeat,
+        as: "orderedSeats",
+        include: [{model: db.Seat, as: 'seat', attributes: ['number', 'row']}],
+        attributes: ['seatId']
+      },
+      {
+        model: db.OrderedFood,
+        as: "orderedFoods",
+        include: [{model: db.Food, as: 'food', attributes: ['name']}],
+        attributes: ['foodId']
+      },
+      {
+        model: db.Show,
+        as: "show",
+        include: [{model: db.Movie, as: 'movie', attributes: ['name']}, {model: db.Cinema, as: 'cinema', include: ['city'], attributes: ['name', 'address']}],
+        attributes: ['id']
+      },
+    ],
+    attributes: ['showId']
+  });
+
+  console.log(order)
 
   return res.redirect(`${process.env.URL_CLIENT}/booking-success`);
 };

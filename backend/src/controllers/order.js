@@ -65,24 +65,27 @@ const getDetailOrder = async (req, res) => {
   try {
     const response = await db.Order.findOne({
       where: { id: orderId },
-      // include: ["orderedSeats", "orderedFoods"],
       include: [
         {
           model: db.OrderedSeat,
           as: "orderedSeats",
-          include: ["seat"],
+          include: [{model: db.Seat, as: 'seat', attributes: ['number', 'row']}],
+          attributes: ['seatId']
         },
         {
           model: db.OrderedFood,
           as: "orderedFoods",
-          include: ["food"],
+          include: [{model: db.Food, as: 'food', attributes: ['name']}],
+          attributes: ['foodId']
         },
         {
           model: db.Show,
           as: "show",
-          include: ["movie"],
+          include: [{model: db.Movie, as: 'movie', attributes: ['name']}, {model: db.Cinema, as: 'cinema', include: ['city'], attributes: ['name', 'address']}],
+          attributes: ['id']
         },
       ],
+      attributes: ['showId']
     });
 
     return res.status(200).json({
