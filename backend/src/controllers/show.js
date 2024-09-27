@@ -115,8 +115,18 @@ const getDateFastBooking = async (req, res) => {
   try {
     const { movieId, cinemaId } = req.query;
 
+    let now = new Date();
+    console.log(now.setDate(now.getDate() + 7));
+
     const response = await db.Show.findAll({
-      where: { cinemaId, movieId, timeStart: { [Op.gte]: new Date() } },
+      where: {
+        cinemaId,
+        movieId,
+        [Op.and]: [
+          { [Op.gte]: new Date() },
+          { [Op.lte]: now.setDate(now.getDate() + 7) },
+        ],
+      },
       attributes: ["timeStart"],
     });
 
@@ -126,6 +136,7 @@ const getDateFastBooking = async (req, res) => {
       data: response ? response : "no data",
     });
   } catch (e) {
+    console.log(e);
     return res.status(500).json(e);
   }
 };
