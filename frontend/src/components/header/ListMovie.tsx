@@ -22,11 +22,7 @@ const ListMovie: React.FC<IProps> = ({ data }) => {
           .filter((x, index) => index < 4)
           .map((item) => (
             <MovieItem
-<<<<<<< HEAD
-            key={item.id}
-=======
               key={item.id}
->>>>>>> 9528a38544b5e24fa721a59c26fceeac992ea8c8
               hiddenTrailer={true}
               name={item.name}
               poster={item.poster}

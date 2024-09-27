@@ -1,5 +1,11 @@
+import EmptyPage from "@/components/common/EmptyPage";
+
 const Gift = () => {
-  return <div>gift</div>;
+  return (
+    <div>
+      <EmptyPage />
+    </div>
+  );
 };
 
 export default Gift;

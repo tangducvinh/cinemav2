@@ -1,5 +1,11 @@
+import EmptyPage from "@/components/common/EmptyPage";
+
 const History = () => {
-  return <div>history</div>;
+  return (
+    <div>
+      <EmptyPage />
+    </div>
+  );
 };
 
 export default History;

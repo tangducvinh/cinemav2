@@ -1,3 +1,4 @@
+const sendMail = require("../config/sendmail");
 const {
   signUp,
   signIn,

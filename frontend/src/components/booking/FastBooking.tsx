@@ -18,11 +18,12 @@ interface IProps {
 const FastBooking: React.FC<IProps> = ({ movies }) => {
   const router = useRouter();
 
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentMovie, setCurrentMovie] = useState<number>(0);
   const [cinemas, setCinemas] = useState<ICinema[]>([]);
   const [currentCinema, setCurrentCinema] = useState<number>(0);
   const [dates, setDates] = useState<{ timeStart: Date }[]>([]);
-  const [currentDate, setCurrentDate] = useState<string>();
+  const [currentDate, setCurrentDate] = useState<string>("0");
   const [shows, setShows] = useState<IShow[]>([]);
   const [currentShow, setCurrentShow] = useState<number>();
 
@@ -35,7 +36,9 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
         setCinemas(cinemas.data);
       }
     };
-    if (currentMovie) fetchListCinema(currentMovie);
+    if (currentMovie && currentIndex === 1) {
+      fetchListCinema(currentMovie);
+    }
   }, [currentMovie]);
 
   useEffect(() => {
@@ -58,11 +61,12 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
 
       setDates(newData);
     };
-    if (currentCinema) fetchDate(currentMovie, currentCinema);
-  }, [currentCinema, currentMovie]);
+    if (currentCinema && currentMovie && currentIndex === 2) {
+      fetchDate(currentMovie, currentCinema);
+    }
+  }, [currentCinema]);
 
   useEffect(() => {
-    console.log(currentDate);
     const fetchShow = async (
       movieId: number,
       cinemaId: number,
@@ -75,7 +79,18 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
       }
     };
 
-    if (currentDate) fetchShow(currentMovie, currentCinema, currentDate);
+    if (
+      currentDate !== "0" &&
+      currentCinema &&
+      currentMovie &&
+      currentIndex === 3
+    ) {
+      fetchShow(currentMovie, currentCinema, currentDate);
+    }
+
+    if (currentDate === "0") {
+      setCurrentShow(0);
+    }
   }, [currentDate]);
 
   const handleBooking = () => {
@@ -98,6 +113,52 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
     setShowWarning(false);
   }, [showWarning]);
 
+  // handle choose movie
+  const handleChooseMovie = (e: any) => {
+    setCurrentMovie(Number(e.target.value));
+    if (Number(e.target.value) === 0) {
+      setCurrentIndex(0);
+    } else {
+      setCurrentIndex(1);
+    }
+
+    setCurrentCinema(0);
+    setCurrentDate("0");
+    setCurrentShow(0);
+  };
+
+  // handle choose cinema
+  const handleChooseCinema = (e: any) => {
+    setCurrentCinema(Number(e.target.value));
+
+    if (Number(e.target.value) === 0) {
+      setCurrentIndex(1);
+    } else {
+      setCurrentIndex(2);
+    }
+
+    setCurrentDate("0");
+    setCurrentShow(0);
+  };
+
+  // handle choose date
+  const handleChooseDate = (e: any) => {
+    setCurrentDate(e.target.value);
+
+    if (e.target.value === "0") {
+      setCurrentIndex(2);
+    } else {
+      setCurrentIndex(3);
+    }
+
+    setCurrentShow(0);
+  };
+
+  // handle choose show
+  const handleChooseShow = (e: any) => {
+    setCurrentShow(Number(e.target.value));
+  };
+
   return (
     <div className="flex items-center w-[1252px] mx-auto h-[56px] left-[50%] translate-x-[-50%] bg-white rounded-md absolute shadow-md top-[95%] z-10">
       {showWarning && (
@@ -113,7 +174,8 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
         </div>
         <select
           id="countries"
-          onChange={(e) => setCurrentMovie(Number(e.target.value))}
+          onChange={(e) => handleChooseMovie(e)}
+          value={currentMovie}
           className="hover:cursor-pointer outline-none text-gray-900 w-full p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={0}>Chọn Phim</option>
@@ -132,8 +194,10 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           2
         </div>
         <select
-          onChange={(e) => setCurrentCinema(Number(e.target.value))}
+          onChange={(e) => handleChooseCinema(e)}
           id="countries"
+          value={currentCinema}
+          disabled={!(currentIndex >= 1)}
           className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={0}>Chọn Rạp</option>
@@ -150,15 +214,18 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           3
         </div>
         <select
-          onChange={(e) =>
-            setCurrentDate(moment(e.target.value).format("yyyy/MM/DD"))
-          }
+          onChange={(e) => handleChooseDate(e)}
+          value={currentDate}
+          disabled={!(currentIndex >= 2)}
           id="countries"
           className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
-          <option value={0}>Chọn Ngày</option>
+          <option value={"0"}>Chọn Ngày</option>
           {dates?.map((item: { timeStart: any }) => (
-            <option key={item.timeStart} value={item.timeStart}>
+            <option
+              key={item.timeStart}
+              value={moment(item.timeStart).format("yyyy/MM/DD")}
+            >
               {`${convertDay(new Date(item.timeStart).getDay())}, ${moment(
                 item.timeStart
               ).format("DD/MM/yyyy")}`}
@@ -172,7 +239,9 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           4
         </div>
         <select
-          onChange={(e) => setCurrentShow(Number(e.target.value))}
+          onChange={(e) => handleChooseShow(e)}
+          disabled={!(currentIndex >= 3)}
+          value={currentShow}
           id="countries"
           className="hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >

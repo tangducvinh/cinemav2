@@ -116,18 +116,21 @@ const getDateFastBooking = async (req, res) => {
     const { movieId, cinemaId } = req.query;
 
     let now = new Date();
-    console.log(now.setDate(now.getDate() + 7));
+    // console.log(now);
+    // console.log(new Date(now.setDate(now.getDate() + 7)));
 
     const response = await db.Show.findAll({
       where: {
         cinemaId,
         movieId,
-        [Op.and]: [
-          { [Op.gte]: new Date() },
-          { [Op.lte]: now.setDate(now.getDate() + 7) },
-        ],
+        timeStart: {
+          [Op.between]: [new Date(), new Date(now.setDate(now.getDate() + 7))],
+        },
       },
       attributes: ["timeStart"],
+      order: [
+        ["timeStart", "asc"],
+      ],
     });
 
     return res.status(200).json({
@@ -200,44 +203,40 @@ const getShowFastBooking = async (req, res) => {
 
 // generate show in 2 year
 
-const generateShow = async(req, res) => {
-
+const generateShow = async (req, res) => {
   try {
-    const { movieId, cinemaId, cityId, roomId, timeStart, timeEnd } = req.query
+    const { movieId, cinemaId, cityId, roomId, timeStart, timeEnd } = req.query;
 
     for (let i = 1; i < 700; i++) {
-      let now = new Date()
-      now.setDate(now.getDate() + i)
+      let now = new Date();
+      now.setDate(now.getDate() + i);
 
-      console.log(moment(now).format('yyyy/MM/DD'))
+      console.log(moment(now).format("yyyy/MM/DD"));
 
       await db.Show.create({
         movieId,
         cinemaId,
         cityId,
-        roomId, 
-        timeStart: `${moment(now).format('yyyy/MM/DD')} ${timeStart}`,
-        timeEnd: `${moment(now).format('yyyy/MM/DD')} ${timeEnd}`,
-      })
+        roomId,
+        timeStart: `${moment(now).format("yyyy/MM/DD")} ${timeStart}`,
+        timeEnd: `${moment(now).format("yyyy/MM/DD")} ${timeEnd}`,
+      });
     }
 
-    return res.json('success')
-
-
-  } catch(e) {
-    return res.status(500).json(e)
+    return res.json("success");
+  } catch (e) {
+    return res.status(500).json(e);
   }
 
   await db.Show.destroy({
     where: {
       movieId: 2,
-      roomId: 3
-    }
-  })
- 
+      roomId: 3,
+    },
+  });
 
-  return res.json('ok')
-}
+  return res.json("ok");
+};
 
 module.exports = {
   getListShow,
@@ -245,5 +244,5 @@ module.exports = {
   getCinemaByMovieId,
   getDateFastBooking,
   getShowFastBooking,
-  generateShow
+  generateShow,
 };

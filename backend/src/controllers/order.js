@@ -60,6 +60,42 @@ const createOrder = async (req, res) => {
   }
 };
 
+const getDetailOrder = async (req, res) => {
+  const { orderId } = req.query;
+  try {
+    const response = await db.Order.findOne({
+      where: { id: orderId },
+      // include: ["orderedSeats", "orderedFoods"],
+      include: [
+        {
+          model: db.OrderedSeat,
+          as: "orderedSeats",
+          include: ["seat"],
+        },
+        {
+          model: db.OrderedFood,
+          as: "orderedFoods",
+          include: ["food"],
+        },
+        {
+          model: db.Show,
+          as: "show",
+          include: ["movie"],
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      success: response ? true : false,
+      message: response ? "Thành công" : "Thất bại",
+      data: response ? response : "no data",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+};
+
 const orderFood = async (req, res) => {
   const { listFoods } = req.body;
   try {
@@ -110,4 +146,5 @@ module.exports = {
   orderFood,
   deleteOrderAndOrderedSeat,
   deleteOrderedFood,
+  getDetailOrder,
 };

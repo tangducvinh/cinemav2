@@ -1,5 +1,11 @@
+import EmptyPage from "@/components/common/EmptyPage";
+
 const Transaction = () => {
-  return <div>trnsaction</div>;
+  return (
+    <div>
+      <EmptyPage />
+    </div>
+  );
 };
 
 export default Transaction;

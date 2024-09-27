@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "mysql2": "^3.10.3",
+    "nodemailer": "^6.9.15",
     "pre-commit": "^1.2.2",
     "rimraf": "^6.0.1",
     "sequelize": "^6.37.3",

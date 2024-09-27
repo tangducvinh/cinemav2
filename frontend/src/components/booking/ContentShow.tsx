@@ -288,8 +288,12 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
 
         dataPass.amount = total;
         dataPass.orderId = currentOrder;
+        let token = localStorage.getItem("token");
+        if (token) token = JSON?.parse(token);
 
-        const response = await apisPayment.payWithVNPay(dataPass);
+        console.log({ token });
+        let response;
+        if (token) response = await apisPayment.payWithVNPay(dataPass, token);
 
         if (response?.paymentUrl) {
           router.push(response.paymentUrl);

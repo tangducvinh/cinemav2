@@ -1,92 +1,12 @@
-const db = require("../models");
-const vnpay = require("../config/paymentVNP");
-const { VerifyReturnUrl } = require("vnpay");
-const { deleteOrderedSeat } = require("../services/order");
-const sendMail = require("../config/sendmail");
-require("dotenv").config();
-
-const paymentVPN = async (req, res) => {
-  const { amount, orderId, email } = req.body;
-  const { id } = req.user;
-
-  console.log({ id });
-  const user = await db.User.findOne({ where: id, attributes: ["email"] });
-
-  // Lấy returnUrl từ frontend gửi lên, nếu không có thì sử dụng mặc định
-  // const returnUrl = req.body?.returnUrl || "http://localhost:3000/vnpay-return";
-  const returnUrl = `${process.env.URL_SERVER}/api/payment/verify-vnp?email=${user.dataValues.email}`;
-  // const returnUrl = `${process.env.URL_SERVER}/api/payment/verify-vnp`;
-
-  // Tạo URL thanh toán
-  const paymentUrl = vnpay.buildPaymentUrl({
-    vnp_Amount: amount,
-    vnp_IpAddr:
-      req.headers["x-forwarded-for"] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.ip,
-    vnp_TxnRef: orderId,
-    vnp_OrderInfo: "Thanh toán đặt vé",
-    vnp_OrderType: "this is email",
-    vnp_ReturnUrl: returnUrl, // Đường dẫn nên là của frontend
-    // vnp_Locale: VnpLocale.VN,
-  });
-
-  // return res.json({ paymentUrl, order });
-  return res.status(200).json({
-    success: true,
-    data: { paymentUrl },
-  });
-};
-
-const verifyVnp = async (req, res) => {
-  const { vnp_TxnRef, email } = req.query;
-
-  console.log({ vnp_TxnRef });
-  let verify;
-  try {
-    verify = vnpay.verifyReturnUrl(req.query);
-
-    // if (!verify.isVerified) {
-    //   console.log("hello 1");
-    //   return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
-    //   // return res.send("Xác thực tính toàn vẹn dữ liệu không thành công");
-    // }
-    if (!verify.isSuccess) {
-      // return res.send("Đơn hàng thanh toán không thành công");
-
-      await deleteOrderedSeat(vnp_TxnRef);
-
-      await db.OrderedFood.destroy({
-        where: {
-          orderId: vnp_TxnRef,
-        },
-      });
-
-      await db.Order.destroy({
-        where: {
-          id: vnp_TxnRef,
-        },
-      });
-
-      console.log("hello 2");
-
-      return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
-    }
-  } catch (e) {
-    // return res.send("Dữ liệu không hợp lệ");
-    console.log(e);
-    return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
-  }
-
-  await db.OrderedSeat.update(
-    { status: 1 },
-    {
-      where: { orderId: vnp_TxnRef },
-    }
-  );
-
-  const html = ` <div style="width: 320px; background-color: white">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="width: 320px; background-color: white">
       <img
         style="width: 100px; height: 100px; display: block; margin: 0 auto"
         src="https://png.pngtree.com/png-vector/20190228/ourmid/pngtree-check-mark-icon-design-template-vector-isolated-png-image_711429.jpg"
@@ -200,14 +120,6 @@ const verifyVnp = async (req, res) => {
       >
         Mã vé: 98972
       </p>
-    </div>`;
-  const subject = "Chúc mừng bạn đã đặt vé thành công!";
-  await sendMail(email, html, subject);
-
-  return res.redirect(`${process.env.URL_CLIENT}/booking-success`);
-};
-
-module.exports = {
-  paymentVPN,
-  verifyVnp,
-};
+    </div>
+  </body>
+</html>
