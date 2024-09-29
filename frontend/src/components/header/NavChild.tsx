@@ -26,6 +26,7 @@ const NavChild = (props: Iprops) => {
           "Content-Type": "application/json",
         },
       });
+      router.push('/')
     } else if (value === "account") {
       router.push("/account/profile");
     }

@@ -17,7 +17,7 @@ export const PUT = async (request: Request) => {
   return Response.json("success", {
     status: 200,
     headers: {
-      "Set-Cookie": `token=''; Path=/; HttpOnly`,
+      "Set-Cookie": `token=; Path=/; HttpOnly`,
       // "Set-Cookie": `token=delete`,
     },
   });
