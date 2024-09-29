@@ -10,7 +10,7 @@ interface IProps {
 const MovieContainer = (props: IProps) => {
   const { data } = props;
 
-  if (data.length === 0) return <Loading />;
+  if (data?.length === 0) return <Loading />;
 
   return (
     <div className="grid grid-cols-4 gap-8">
