@@ -6,6 +6,8 @@ import ShowingMovie from "@/components/book/ShowingMovie";
 import ContentMovie from "@/components/book/ContentMovie";
 import apiMovie from "@/apis/movie";
 import Show from "@/components/book/Show";
+import ButtonWatchMore from "@/components/common/ButtonWatchMore";
+import NotFound from "@/app/not-found";
 
 interface IProps {
   params: { slug: string };
@@ -31,8 +33,8 @@ export async function generateMetadata(
   const movie = await apiMovie.getDetailMovie(slug);
 
   return {
-    title: `Đặt vé phim ${movie.name}`,
-    description: movie.overview,
+    title: `Đặt vé phim ${movie?.name}`,
+    description: movie?.overview,
   };
 }
 
@@ -46,11 +48,13 @@ const Book = async (props: IProps) => {
     moviesShowingData,
   ]);
 
+  if (!movie) return <NotFound />;
+
   return (
     <>
       <WatchTrailer backdrop={movie.backdrop} keyVideo={movie.video} />
 
-      <div className="flex mx-auto w-main gap-6">
+      <div className="flex mx-auto w-main gap-6 mb-10">
         <div className="flex-7">
           <InforMovie data={movie} />
 
@@ -60,6 +64,10 @@ const Book = async (props: IProps) => {
         </div>
         <div className="flex-3">
           <ShowingMovie data={moviesShowing} />
+
+          <div className="flex justify-end mt-4">
+            <ButtonWatchMore />
+          </div>
         </div>
       </div>
     </>

@@ -3,17 +3,22 @@ const db = require("../models");
 const getListMovie = async (req, res) => {
   const { status } = req.query;
 
+  const query = {};
+  if (status) query.status = status;
+
   try {
-    let response;
-    if (status) {
-      response = await db.Movie.findAll({
-        where: {
-          status,
+    const response = await db.Movie.findAll({
+      where: query,
+      include: [
+        {
+          model: db.Genre,
+          as: "genres",
+          attributes: ["name"],
         },
-      });
-    } else {
-      response = await db.Movie.findAll();
-    }
+      ],
+      nest: false,
+      raw: true,
+    });
 
     return res.json({
       success: response ? true : false,
@@ -21,6 +26,7 @@ const getListMovie = async (req, res) => {
       data: response ? response : "no data",
     });
   } catch (e) {
+    console.log(e);
     res.status(500).json(e);
   }
 };

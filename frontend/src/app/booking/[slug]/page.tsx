@@ -29,8 +29,8 @@ export async function generateMetadata(
   const movie = await apiMovie.getDetailMovie(slug);
 
   return {
-    title: `Đặt vé phim ${movie.name}`,
-    description: movie.overview,
+    title: `Đặt vé phim ${movie?.name}`,
+    description: movie?.overview,
   };
 }
 

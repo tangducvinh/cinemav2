@@ -5,6 +5,7 @@ import { apisBanner } from "@/apis/banner";
 import apiMovie from "@/apis/movie";
 import type { Metadata } from "next";
 import FastBooking from "@/components/booking/FastBooking";
+import ButtonWatchMore from "@/components/common/ButtonWatchMore";
 
 export const metadata: Metadata = {
   title: "Cinema: Hệ thống rạp chiếu phim",
@@ -28,6 +29,10 @@ export default async function Home() {
 
       <div className="w-main m-auto my-[50px] mt-[80px]">
         <Navbar movies={movies} />
+
+        <div className="flex justify-center mt-9">
+          <ButtonWatchMore />
+        </div>
       </div>
 
       <div className="w-main mx-auto my-[50px]">
