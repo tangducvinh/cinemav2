@@ -14,12 +14,11 @@ export const POST = async (request: Request) => {
 };
 
 export const PUT = async (request: Request) => {
-  const accessToken = "12";
-
-  return Response.json({
+  return Response.json("success", {
     status: 200,
     headers: {
-      "Set-Cookie": `token=${accessToken}; Path=/; HttpOnly`,
+      "Set-Cookie": `token=''; Path=/; HttpOnly`,
+      // "Set-Cookie": `token=delete`,
     },
   });
 };
