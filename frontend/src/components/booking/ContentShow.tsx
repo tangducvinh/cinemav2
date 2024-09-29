@@ -76,7 +76,6 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         const response = await apiShow.getDetailShow(Number(currentShowId));
 
         setDataDetailShow(response);
-        console.log(response);
       };
       fetchDataDetailShow();
     }

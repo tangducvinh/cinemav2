@@ -8,14 +8,13 @@ interface IProps {
 }
 
 const MovieDescription: React.FC<IProps> = ({ data }) => {
-  console.log(data);
   return (
     <div className="my-10">
       <MenuTitle title={"PHIM ĐANG CHIẾU"} />
 
       <ul>
         {data
-          .filter((x, index) => index < 5)
+          ?.filter((x, index) => index < 5)
           .map((item: any, number) => (
             <li key={number}>
               <p className="text-[16px] text-[#363636} font-bold mt-6">

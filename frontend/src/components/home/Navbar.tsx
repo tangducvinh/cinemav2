@@ -67,7 +67,7 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
       </div>
 
       <MovieContainer
-        data={movies.filter((item) => item.status === currentStatus)}
+        data={movies?.filter((item) => item.status === currentStatus)}
       />
     </>
   );

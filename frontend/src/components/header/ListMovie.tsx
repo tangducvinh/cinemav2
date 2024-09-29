@@ -19,7 +19,7 @@ const ListMovie: React.FC<IProps> = ({ data }) => {
 
       <div className="grid grid-cols-4 gap-6 mt-3">
         {data
-          .filter((x, index) => index < 4)
+          ?.filter((x, index) => index < 4)
           .map((item) => (
             <MovieItem
               key={item.id}

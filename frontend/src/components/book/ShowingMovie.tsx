@@ -12,7 +12,7 @@ const ShowingMovie: React.FC<IProps> = ({ data }) => {
       <MenuTitle title="PHIM ĐANG CHIẾU" />
 
       {data
-        .filter((movie, index) => index < 3)
+        ?.filter((movie, index) => index < 3)
         .map((item) => (
           <MovieItemBig
             key={item.id}

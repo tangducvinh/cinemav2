@@ -16,8 +16,6 @@ const getListMovie = async (req, res) => {
           attributes: ["name"],
         },
       ],
-      nest: false,
-      raw: true,
     });
 
     return res.json({
