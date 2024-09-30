@@ -32,12 +32,12 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
   );
 
   // delete data localStorage of booking page
-  // useEffect(() => {
-  //   localStorage.setItem("selectedFood", "");
-  //   localStorage.setItem("buyStatus", "");
-  //   localStorage.setItem("seatSelected", "");
-  //   localStorage.setItem("currentShow", "");
-  // }, []);
+  useEffect(() => {
+    localStorage.setItem("selectedFood", "");
+    localStorage.setItem("buyStatus", "");
+    // localStorage.setItem("seatSelected", "");
+    // localStorage.setItem("currentShow", "");
+  }, []);
 
   return (
     <>
