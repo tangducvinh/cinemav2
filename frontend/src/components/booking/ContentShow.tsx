@@ -240,7 +240,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       let dataPass: any = {};
 
       dataPass.showId = currentShowId;
-      dataPass.listSeats = selectSeats.map((item) => ({
+      dataPass.listSeats = selectSeats?.map((item) => ({
         seatId: item.id,
         showId: item.showId,
         status: 0,
@@ -264,7 +264,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
     } else if (buyStatus === 2) {
       let dataPass: any = {};
 
-      dataPass.listFoods = selectedFood.map((item) => ({
+      dataPass.listFoods = selectedFood?.map((item) => ({
         foodId: item.id,
         quantity: item.quantity,
         orderId: currentOrder,

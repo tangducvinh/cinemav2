@@ -45,7 +45,7 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
         <MenuTitle title={"PHIM"} />
 
         <ul className="flex items-center gap-8">
-          {titleList.map((item) => (
+          {titleList?.map((item) => (
             <li
               key={item.value}
               onClick={() => setCurrentStatus(item.value)}

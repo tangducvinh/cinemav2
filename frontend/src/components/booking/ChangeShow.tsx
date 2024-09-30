@@ -58,7 +58,7 @@ const ChangeShow: React.FC<IProps> = ({
       <h4 className="text-normal font-semibold text-[18px]">Đổi xuất chiếu</h4>
 
       <div className="flex items-center gap-4">
-        {dataListShow.map((item) => (
+        {dataListShow?.map((item) => (
           <ItemTime
             key={item.id}
             onClick={() => handleOnClick(item)}

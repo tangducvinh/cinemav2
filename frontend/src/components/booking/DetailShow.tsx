@@ -82,7 +82,7 @@ const DetailShow: React.FC<IProps> = ({
               <p>
                 Ghế:{" "}
                 <span className="font-bold">
-                  {convertArrayToString(selectSeats.map((item) => item.name))}
+                  {convertArrayToString(selectSeats?.map((item) => item.name))}
                 </span>
               </p>
             </div>
@@ -101,7 +101,7 @@ const DetailShow: React.FC<IProps> = ({
 
         {selectedFood?.some((item) => item.quantity !== 0) && (
           <div className=" text-normal pt-5 pb-3 text-[16px] mt-4 border-t-gray-400 border-dashed border-t-2">
-            {selectedFood.map(
+            {selectedFood?.map(
               (item) =>
                 item.quantity !== 0 && (
                   <div

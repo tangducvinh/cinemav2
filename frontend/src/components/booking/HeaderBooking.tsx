@@ -17,7 +17,7 @@ const HeaderBooking: React.FC<IProps> = ({ currentIndex }) => {
   return (
     <div className="h-[74px] mt-2 w-full bg-white flex justify-center">
       <ul className="mx-auto flex items-center">
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <p
             key={index}
             className={clsx(

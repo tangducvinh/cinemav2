@@ -85,7 +85,7 @@ const MapSeat: React.FC<IProps> = ({
     <div className="bg-white p-4">
       <div className="flex justify-between">
         <div className="w-[22px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
-          {listRows.slice(0, maxRow).map((item) => (
+          {listRows.slice(0, maxRow)?.map((item) => (
             <p key={item} className="w-full text-center mt-4 h-[22px]">
               {item}
             </p>
@@ -131,7 +131,7 @@ const MapSeat: React.FC<IProps> = ({
         )}
 
         <div className="w-[22px] text-[#777777] text-[18px] px-2 flex flex-col-reverse">
-          {listRows.slice(0, maxRow).map((item) => (
+          {listRows.slice(0, maxRow)?.map((item) => (
             <p key={item} className="w-full text-center mt-4 h-[22px]">
               {item}
             </p>
