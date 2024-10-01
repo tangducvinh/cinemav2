@@ -128,9 +128,7 @@ const getDateFastBooking = async (req, res) => {
         },
       },
       attributes: ["timeStart"],
-      order: [
-        ["timeStart", "asc"],
-      ],
+      order: [["timeStart", "asc"]],
     });
 
     return res.status(200).json({
@@ -228,12 +226,12 @@ const generateShow = async (req, res) => {
     return res.status(500).json(e);
   }
 
-  await db.Show.destroy({
-    where: {
-      movieId: 2,
-      roomId: 3,
-    },
-  });
+  // await db.Show.destroy({
+  //   where: {
+  //     movieId: 2,
+  //     roomId: 3,
+  //   },
+  // });
 
   return res.json("ok");
 };

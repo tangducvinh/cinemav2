@@ -1,10 +1,21 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 
 const getListMovie = async (req, res) => {
-  const { status } = req.query;
+  const { status, genre, year } = req.query;
 
   const query = {};
   if (status) query.status = status;
+  if (genre) query["$genres.slug$"] = genre;
+  if (year)
+    query.release = {
+      [Op.between]: [
+        new Date(`${year}/1/1 00:00:00`),
+        new Date(`${year}/12/31`),
+      ],
+    };
+
+  console.log(query);
 
   try {
     const response = await db.Movie.findAll({
@@ -13,7 +24,7 @@ const getListMovie = async (req, res) => {
         {
           model: db.Genre,
           as: "genres",
-          attributes: ["name"],
+          attributes: ["name", "slug"],
         },
       ],
     });

@@ -134,3 +134,9 @@ export interface IShow {
   timeStart: Date;
   timeEnd: Date;
 }
+
+export interface IGenre {
+  id: number;
+  name: string;
+  slug: string;
+}

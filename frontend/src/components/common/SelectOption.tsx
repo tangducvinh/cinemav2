@@ -1,21 +1,34 @@
 import internal from "stream";
+import clsx from "clsx";
 
 interface IProps {
   title: string;
   data: { id: number; name: string; value: string }[];
   onChange?: (x: string) => void;
+  widthFull?: boolean;
 }
 
-const SelectOption: React.FC<IProps> = ({ title, data, onChange }) => {
+const SelectOption: React.FC<IProps> = ({
+  title,
+  data,
+  onChange,
+  widthFull,
+}) => {
   return (
     <select
-      //   onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => {
+        onChange && onChange(e.target.value);
+      }}
       id="countries"
-      className="border hover:cursor-pointer border-gray-300 outline-none text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[170px]"
+      className={clsx(
+        "border text-gray-600 hover:cursor-pointer border-gray-300 outline-none px-2 py-[5px] text-[14px] rounded-sm focus:ring-blue-500 focus:border-blue-500 block",
+        { "w-[170px]": !widthFull },
+        { "w-full": widthFull }
+      )}
     >
-      <option value={0}>{title}</option>
+      <option value={"0"}>{title}</option>
       {data?.map((item) => (
-        <option key={item.id} value={item.id}>
+        <option key={item.id} value={item.value}>
           {item.name}
         </option>
       ))}

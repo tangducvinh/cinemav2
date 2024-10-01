@@ -6,21 +6,6 @@ import { FaStar } from "react-icons/fa6";
 import ButtonChoose from "./ButtonChoose";
 import { IDetailMovie } from "@/app/types/frontend";
 
-const dataKind = [
-  {
-    title: "Hài",
-    link: "kkk",
-  },
-  {
-    title: "Kinh Dị",
-    link: "kkk",
-  },
-  {
-    title: "Gật Gân",
-    link: "kkk",
-  },
-];
-
 interface IProps {
   data: IDetailMovie;
 }
@@ -65,7 +50,7 @@ const InforMovie: React.FC<IProps> = ({ data }) => {
 
         <div className="flex mt-2 gap-1 items-center">
           <p className="w-[80px] text-[15px] text-[#777777]">Thể loại:</p>
-          {data.genres.map((item) => (
+          {data?.genres?.map((item) => (
             <ButtonChoose
               key={item.name}
               title={item.name}
@@ -76,7 +61,7 @@ const InforMovie: React.FC<IProps> = ({ data }) => {
 
         <div className="flex mt-2 gap-1 items-center">
           <p className="w-[80px] text-[15px] text-[#777777]">Đạo diễn:</p>
-          {data.directors.map((item) => (
+          {data?.directors?.map((item) => (
             <ButtonChoose
               key={item.name}
               title={item.name}
@@ -87,7 +72,7 @@ const InforMovie: React.FC<IProps> = ({ data }) => {
 
         <div className="flex mt-2 gap-1 items-center">
           <p className="w-[80px] text-[15px] text-[#777777]">Diễn viên:</p>
-          {data.actors.map((item) => (
+          {data?.actors?.map((item) => (
             <ButtonChoose
               key={item.name}
               title={item.name}

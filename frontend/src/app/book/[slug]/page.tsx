@@ -40,8 +40,8 @@ export async function generateMetadata(
 
 const Book = async (props: IProps) => {
   const { params } = props;
-  const movieData = await apiMovie.getDetailMovie(params.slug);
-  const moviesShowingData = await apiMovie.getListMovie("showing");
+  const movieData = apiMovie.getDetailMovie(params.slug);
+  const moviesShowingData = apiMovie.getListMovie("showing");
 
   const [movie, moviesShowing] = await Promise.all([
     movieData,

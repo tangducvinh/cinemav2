@@ -13,6 +13,7 @@ const initSeatRouter = require("./src/route/seat");
 const initFoodRouter = require("./src/route/food");
 const initPaymentRouter = require("./src/route/payment");
 const initOrderRouter = require("./src/route/order");
+const initGenreRouter = require("./src/route/genre");
 const connectDB = require("./src/config/connectDB");
 
 const app = express();
@@ -41,6 +42,7 @@ initSeatRouter(app);
 initFoodRouter(app);
 initPaymentRouter(app);
 initOrderRouter(app);
+initGenreRouter(app);
 
 app.use("/", (req, res) => res.json("server on"));
 

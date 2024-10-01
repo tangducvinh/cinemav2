@@ -21,8 +21,6 @@ const ShowingMovie: React.FC<IProps> = ({ data }) => {
             name={item.name}
           />
         ))}
-
-      
     </div>
   );
 };
