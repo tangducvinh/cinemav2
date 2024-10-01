@@ -21,6 +21,7 @@ const data = [
       {
         name: "Thể loại phim",
         value: "",
+        link: "/cinematic",
       },
       {
         name: "Diễn viên",

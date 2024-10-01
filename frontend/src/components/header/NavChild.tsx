@@ -3,7 +3,12 @@ import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 interface Iprops {
-  data: { name: string; icon?: React.ReactElement; value?: string }[];
+  data: {
+    name: string;
+    icon?: React.ReactElement;
+    value?: string;
+    link?: string;
+  }[];
 }
 
 interface IItem {
@@ -12,10 +17,9 @@ interface IItem {
 
 const NavChild = (props: Iprops) => {
   const { data } = props;
-
   const router = useRouter();
 
-  const handleClick = async (value: string | undefined) => {
+  const handleClick = async (value: string | undefined, link?: string) => {
     if (value === "logout") {
       deleteCookie("name");
       // localStorage.removeItem('name')
@@ -26,9 +30,13 @@ const NavChild = (props: Iprops) => {
           "Content-Type": "application/json",
         },
       });
-      router.push('/')
+      router.push("/");
     } else if (value === "account") {
       router.push("/account/profile");
+    }
+
+    if (link) {
+      router.push(link);
     }
   };
   return (
@@ -37,7 +45,7 @@ const NavChild = (props: Iprops) => {
         data.map((item, index) => (
           <li
             key={index}
-            onClick={() => handleClick(item.value)}
+            onClick={() => handleClick(item.value, item.link)}
             className="py-2 relative text-normal transition-all text-center hover:bg-[#FFF1E6] hover:text-main hover:cursor-pointer hover:border-l-4 border-main"
           >
             <i className="absolute left-[30px] top-[50%] translate-y-[-50%]">

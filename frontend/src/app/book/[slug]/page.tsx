@@ -11,7 +11,6 @@ import NotFound from "@/app/not-found";
 
 interface IProps {
   params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateStaticParams() {

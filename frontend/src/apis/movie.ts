@@ -8,6 +8,10 @@ const apiMovie = {
       }
     );
 
+    // const response = await fetch(
+    //   `${process.env.URL_SERVER_API}/movie?` + new URLSearchParams(data)
+    // );
+
     const result = await response.json();
     if (result?.success) {
       return result.data;
@@ -23,6 +27,20 @@ const apiMovie = {
     );
 
     return response.json();
+  },
+  getListMovie2: async (data: any) => {
+    const response = await fetch(
+      `${process.env.URL_SERVER_API}/movie?` + new URLSearchParams(data),
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    const result = await response.json();
+    if (result?.success) {
+      return result.data;
+    }
   },
 };
 

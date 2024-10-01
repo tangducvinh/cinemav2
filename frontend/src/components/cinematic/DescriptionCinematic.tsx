@@ -10,11 +10,13 @@ const data = [
 const DescriptionCinematic = () => {
   return (
     <div className="mt-10">
-      <MenuTitle size={"sm"} title={"GALAXY CINEMA"} />
+      <MenuTitle title={"GALAXY CINEMA"} />
 
       <ul className="mt-6">
-        {data.map((item) => (
-          <li className="text-[14px] text-normal mt-3">{item}</li>
+        {data.map((item, index) => (
+          <li key={index} className="text-[14px] text-normal mt-3">
+            {item}
+          </li>
         ))}
       </ul>
     </div>

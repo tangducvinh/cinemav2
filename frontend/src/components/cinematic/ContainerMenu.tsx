@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import SelectOption from "../common/SelectOption";
 import { IGenre } from "@/app/types/frontend";
 
@@ -29,7 +31,9 @@ const ContainerMenu: React.FC<IProps> = ({ genres }) => {
       value: string;
     }[]
   >([]);
-  const [currentGenre, setCurrentGenre] = useState<string | null>();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // handle generate years
   useEffect(() => {
@@ -40,16 +44,40 @@ const ContainerMenu: React.FC<IProps> = ({ genres }) => {
     setYears(years.reverse());
   }, []);
 
-  const handleChangeGenre = useCallback(
-    (value: string) => {
-      setCurrentGenre(value);
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value === "0") {
+        params.delete(name);
+      } else {
+        params.set(name, value);
+      }
 
-      // here to set url
+      return params.toString();
     },
-    [currentGenre]
+    [searchParams]
   );
 
-  console.log({ currentGenre });
+  const handleChangeGenre = useCallback(
+    (value: string) => {
+      router.push(pathname + "?" + createQueryString("genre", value));
+    },
+    [searchParams, pathname]
+  );
+
+  const handleChangeYear = useCallback(
+    (value: string) => {
+      router.push(pathname + "?" + createQueryString("year", value));
+    },
+    [searchParams, pathname]
+  );
+
+  const handleChangeStatus = useCallback(
+    (value: string) => {
+      router.push(pathname + "?" + createQueryString("status", value));
+    },
+    [searchParams, pathname]
+  );
 
   return (
     <div className="mt-4 flex gap-3 items-center border-b-2 border-forcus pb-4">
@@ -67,14 +95,14 @@ const ContainerMenu: React.FC<IProps> = ({ genres }) => {
         title={"Năm"}
         data={years}
         //   onChange={() => {}}
-        onChange={handleChangeGenre}
+        onChange={handleChangeYear}
       />
 
       <SelectOption
         title={"Đang Chiếu/ Sắp"}
         data={status}
         //   onChange={() => {}}
-        onChange={handleChangeGenre}
+        onChange={handleChangeStatus}
       />
     </div>
   );
