@@ -57,7 +57,7 @@ export async function generateMetadata(
 }
 
 const Movie = async ({ params }: { params: { status: string } }) => {
-  const movies = await apiMovie.getListMovie(params.status);
+  const movies = await apiMovie.getListMovie({ status: params.status });
 
   return (
     <div className="w-main mx-auto mt-10">
@@ -86,9 +86,9 @@ const Movie = async ({ params }: { params: { status: string } }) => {
         </ul>
       </div>
 
-      <MovieContainer data={movies} />
+      <MovieContainer data={movies.rows} />
 
-      <MovieDescription data={movies} />
+      <MovieDescription data={movies.rows} />
     </div>
   );
 };

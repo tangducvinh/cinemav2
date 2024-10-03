@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const initBannerRouter = require("./src/route/banner");
+const initActorRouter = require("./src/route/actor");
 const initMovieRouter = require("./src/route/movie");
 const initUserRouter = require("./src/route/user");
 const initShowRouter = require("./src/route/show");
@@ -43,6 +44,7 @@ initFoodRouter(app);
 initPaymentRouter(app);
 initOrderRouter(app);
 initGenreRouter(app);
+initActorRouter(app);
 
 app.use("/", (req, res) => res.json("server on"));
 

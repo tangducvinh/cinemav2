@@ -2,7 +2,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 
 const getListMovie = async (req, res) => {
-  const { status, genre, year } = req.query;
+  const { status, genre, year, page, limit } = req.query;
 
   const query = {};
   if (status) query.status = status;
@@ -15,10 +15,15 @@ const getListMovie = async (req, res) => {
       ],
     };
 
-  console.log(query);
+  const queries = {};
+  const pages = page || 1;
+  const limits = +limit || 10;
+
+  queries.limit = limits;
+  queries.offset = (pages - 1) * limits;
 
   try {
-    const response = await db.Movie.findAll({
+    const response = await db.Movie.findAndCountAll({
       where: query,
       include: [
         {
@@ -27,6 +32,7 @@ const getListMovie = async (req, res) => {
           attributes: ["name", "slug"],
         },
       ],
+      ...queries,
     });
 
     return res.json({

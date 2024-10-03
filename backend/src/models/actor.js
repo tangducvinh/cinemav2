@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Actor.belongsTo(models.Country, {
+        foreignKey: "countryId",
+        targetKey: "id",
+        as: "country",
+      });
     }
   }
   Actor.init(
@@ -17,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       slug: DataTypes.STRING,
       avatar: DataTypes.STRING,
       birthday: DataTypes.DATE,
-      nation: DataTypes.TEXT,
+      countryId: DataTypes.INTEGER,
       description: DataTypes.STRING,
     },
     {
