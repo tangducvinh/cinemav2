@@ -17,6 +17,8 @@ export default async function Home() {
   const bannerData = await apisBanner.getListBanner();
   const moviesData = await apiMovie.getListMovie();
 
+  console.log({ moviesData });
+
   const [banners, movies] = await Promise.all([bannerData, moviesData]);
 
   return (
@@ -24,11 +26,11 @@ export default async function Home() {
       <div className="relative">
         <Slide data={banners.data} />
 
-        <FastBooking movies={movies?.rows} />
+        <FastBooking movies={movies?.rows || []} />
       </div>
 
       <div className="w-main m-auto my-[50px] mt-[80px]">
-        <Navbar movies={movies?.rows} />
+        <Navbar movies={movies?.rows || []} />
 
         <div className="flex justify-center mt-9">
           <ButtonWatchMore />
