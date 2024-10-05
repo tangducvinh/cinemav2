@@ -39,7 +39,7 @@ const apiMovie = {
 
     const result = await response.json();
     if (result?.success) {
-      return result.data;
+      return result?.data;
     }
   },
 };
