@@ -16,7 +16,7 @@ interface IProps {
 export async function generateStaticParams() {
   const movies = await apiMovie.getListMovie();
 
-  return movies?.rows.map((movie: { slug: string }) => ({
+  return movies?.rows?.map((movie: { slug: string }) => ({
     slug: movie.slug,
   }));
 }
