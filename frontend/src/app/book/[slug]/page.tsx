@@ -16,7 +16,7 @@ interface IProps {
 export async function generateStaticParams() {
   const movies = await apiMovie.getListMovie();
 
-  return movies.rows.map((movie: { slug: string }) => ({
+  return movies?.rows.map((movie: { slug: string }) => ({
     slug: movie.slug,
   }));
 }
@@ -62,7 +62,7 @@ const Book = async (props: IProps) => {
           <Show movieId={movie.id} />
         </div>
         <div className="flex-3">
-          <ShowingMovie data={moviesShowing.rows} />
+          <ShowingMovie data={moviesShowing?.rows} />
 
           <div className="flex justify-end mt-4">
             <ButtonWatchMore />

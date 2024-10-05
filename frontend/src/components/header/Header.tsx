@@ -18,7 +18,7 @@ const Header = async () => {
       </div>
 
       <div className="flex-auto flex ">
-        <NavBar movies={movies.rows} />
+        <NavBar movies={movies?.rows} />
       </div>
 
       <div className="flex-3 flex justify-end">

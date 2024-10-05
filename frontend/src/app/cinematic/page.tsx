@@ -21,8 +21,8 @@ const Cinematic = async ({
     <div className="w-main mx-auto mt-10">
       <ContentCinematic
         genres={genres.data}
-        movies={movies.rows}
-        moviesShowing={moviesShowing.rows}
+        movies={movies?.rows}
+        moviesShowing={moviesShowing?.rows}
       />
     </div>
   );
