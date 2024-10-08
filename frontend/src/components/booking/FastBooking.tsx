@@ -176,7 +176,7 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           id="countries"
           onChange={(e) => handleChooseMovie(e)}
           value={currentMovie}
-          className="hover:cursor-pointer outline-none text-gray-900 w-full p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
+          className="hover:cursor-pointer outline-none text-gray-900 w-full p-2 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={0}>Chọn Phim</option>
           {movies
@@ -198,7 +198,7 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           id="countries"
           value={currentCinema}
           disabled={!(currentIndex >= 1)}
-          className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
+          className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={0}>Chọn Rạp</option>
           {cinemas?.map((item: any) => (
@@ -218,7 +218,7 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           value={currentDate}
           disabled={!(currentIndex >= 2)}
           id="countries"
-          className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
+          className=" hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={"0"}>Chọn Ngày</option>
           {dates?.map((item: { timeStart: any }) => (
@@ -243,7 +243,7 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
           disabled={!(currentIndex >= 3)}
           value={currentShow}
           id="countries"
-          className="hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[16px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
+          className="hover:cursor-pointer outline-none w-full text-gray-900 p-2 text-[14px] rounded-md focus:ring-blue-500 focus:border-blue-500 block"
         >
           <option value={0}>Chọn Suất</option>
           {shows?.map((item: IShow) => (
@@ -257,7 +257,7 @@ const FastBooking: React.FC<IProps> = ({ movies }) => {
       <button
         onClick={handleBooking}
         className={clsx(
-          "w-[210px]  h-full text-normal text-[18px]",
+          "w-[210px]  h-full text-normal text-[16px]",
           { "bg-main": currentShow },
           { "bg-[#F8AC6E]": !currentShow }
         )}

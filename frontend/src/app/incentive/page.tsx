@@ -1,27 +1,26 @@
-import apiGenre from "@/apis/genre";
-import apiMovie from "@/apis/movie";
-
 import MenuTitle from "@/components/home/MenuTitle";
-import ContainerMenu from "@/components/cinematic/ContainerMenu";
-import ItemMovieCinematic from "@/components/cinematic/ItemMovieCinematic";
 
 const Cinematic = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const moviesData = apiMovie.getListMovie(searchParams);
-  const genresData = apiGenre.getListGenres();
+  // const moviesData = apiMovie.getListMovie(searchParams);
+  // const genresData = apiGenre.getListGenres();
 
-  const [genres, movies] = await Promise.all([genresData, moviesData]);
+  // const [genres, movies] = await Promise.all([genresData, moviesData]);
 
   return (
     <div>
-      <MenuTitle title={"PHIM ĐIỆN ẢNH"} />
+      <MenuTitle title={"Ưu đãi"} />
 
-      <ContainerMenu genres={genres.data} />
+      {/* <ContainerMenu genres={genres.data} /> */}
 
-      {movies?.length === 0 ? (
+      <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
+        Không có bài viết nào
+      </div>
+
+      {/* {movies?.length === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
           Không có bài viết nào
         </div>
@@ -37,7 +36,7 @@ const Cinematic = async ({
             />
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };

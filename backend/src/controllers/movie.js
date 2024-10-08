@@ -6,14 +6,16 @@ const getListMovie = async (req, res) => {
 
   const query = {};
   if (status) query.status = status;
-  if (genre) query["$genres.slug$"] = genre;
+  // if (genre) query["$genres.slug$"] = genre;
   if (year)
     query.release = {
       [Op.between]: [
         new Date(`${year}/1/1 00:00:00`),
-        new Date(`${year}/12/31`),
+        new Date(`${year}/12/31 23:59:59`),
       ],
     };
+
+  console.log(query);
 
   const queries = {};
   const pages = page || 1;
@@ -21,19 +23,45 @@ const getListMovie = async (req, res) => {
 
   queries.limit = limits;
   queries.offset = (pages - 1) * limits;
+  // queries.raw = true;
+  // queries.nest = true;
 
   try {
-    const response = await db.Movie.findAndCountAll({
-      where: query,
-      include: [
-        {
-          model: db.Genre,
-          as: "genres",
-          attributes: ["name", "slug"],
-        },
-      ],
-      ...queries,
-    });
+    let response;
+    if (genre) {
+      response = await db.Movie.findAndCountAll({
+        where: query,
+        include: [
+          {
+            model: db.Genre,
+            as: "genres",
+            attributes: ["name", "slug"],
+            through: {
+              attributes: [],
+            },
+            where: {
+              slug: genre,
+            },
+          },
+        ],
+        ...queries,
+      });
+    } else {
+      response = await db.Movie.findAndCountAll({
+        where: query,
+        include: [
+          {
+            model: db.Genre,
+            as: "genres",
+            attributes: ["name", "slug"],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+        ...queries,
+      });
+    }
 
     return res.json({
       success: response ? true : false,

@@ -46,7 +46,7 @@ const NavChild = (props: Iprops) => {
           <li
             key={index}
             onClick={() => handleClick(item.value, item.link)}
-            className="py-2 relative text-normal transition-all text-center hover:bg-[#FFF1E6] hover:text-main hover:cursor-pointer hover:border-l-4 border-main"
+            className="py-2 relative text-normal transition-all text-center hover:bg-[#FFF1E6] hover:text-main hover:cursor-pointer hover:border-l-4 border-main text-[14px]"
           >
             <i className="absolute left-[30px] top-[50%] translate-y-[-50%]">
               {item.icon}

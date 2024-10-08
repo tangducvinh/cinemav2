@@ -21,8 +21,12 @@ module.exports = {
       birthday: {
         type: Sequelize.DATE,
       },
-      nation: {
-        type: Sequelize.TEXT,
+      countryIdd: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Countries",
+          key: "id",
+        },
       },
       description: {
         type: Sequelize.STRING,

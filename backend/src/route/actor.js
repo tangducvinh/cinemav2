@@ -1,9 +1,10 @@
 const router = require("express").Router();
 
-const { getListActor } = require("../controllers/actor");
+const { getListActor, getDetailActor } = require("../controllers/actor");
 
 const initActorRouter = (app) => {
   router.get("/", getListActor);
+  router.get('/detail-actor', getDetailActor)
 
   return app.use("/api/actor", router);
 };

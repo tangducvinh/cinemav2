@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const initRoutes = require("./src/route");
 
 const initBannerRouter = require("./src/route/banner");
 const initActorRouter = require("./src/route/actor");
@@ -45,6 +46,7 @@ initPaymentRouter(app);
 initOrderRouter(app);
 initGenreRouter(app);
 initActorRouter(app);
+initRoutes(app);
 
 app.use("/", (req, res) => res.json("server on"));
 

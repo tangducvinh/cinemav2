@@ -140,3 +140,20 @@ export interface IGenre {
   name: string;
   slug: string;
 }
+
+export interface ICountry {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface IActor {
+  id: number;
+  name: string;
+  slug: string;
+  avatar: string;
+  birthday: string;
+  description: string;
+  country: { name: string };
+  movies: { name: string; slug: string; backdrop: string }[];
+}

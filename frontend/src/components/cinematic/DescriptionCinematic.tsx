@@ -9,7 +9,7 @@ const data = [
 
 const DescriptionCinematic = () => {
   return (
-    <div className="mt-10">
+    <div className="mt-10 w-main mx-auto pb-[50px]">
       <MenuTitle title={"GALAXY CINEMA"} />
 
       <ul className="mt-6">

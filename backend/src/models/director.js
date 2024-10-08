@@ -9,6 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Director.belongsTo(models.Country, {
+        foreignKey: "countryIdd",
+        targetKey: "id",
+        as: "country",
+      });
+      Director.belongsToMany(models.Movie, {
+        through: models.Movie_Director,
+        as: "movies",
+      });
     }
   }
   Director.init(
@@ -17,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       slug: DataTypes.STRING,
       avatar: DataTypes.STRING,
       birthday: DataTypes.DATE,
-      nation: DataTypes.TEXT,
+      countryIdd: DataTypes.INTEGER,
       description: DataTypes.STRING,
     },
     {

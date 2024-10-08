@@ -26,19 +26,22 @@ const data = [
       {
         name: "Diễn viên",
         value: "",
+        link: "/actor",
       },
       {
         name: "Đạo diễn",
         value: "",
+        link: "/director",
       },
       {
         name: "Bình luận phim",
         value: "",
+        link: "/comment-movie",
       },
-      {
-        name: "Blog Điện ảnh",
-        value: "",
-      },
+      // {
+      //   name: "Blog Điện ảnh",
+      //   value: "",
+      // },
     ],
   },
   {
@@ -47,11 +50,12 @@ const data = [
       {
         name: "Ưu Đãi",
         value: "",
+        link: "incentive",
       },
-      {
-        name: "Phim Hay Tháng",
-        value: "",
-      },
+      // {
+      //   name: "Phim Hay Tháng",
+      //   value: "",
+      // },
     ],
   },
   {
@@ -81,7 +85,7 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
             className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
           >
             <p onMouseLeave={() => setShowChild(-1)} className="relative">
-              <span>{item.title}</span>
+              <span className="text-[14px]">{item.title}</span>
 
               <span
                 onMouseEnter={() => setShowChild(index)}
@@ -98,7 +102,12 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
             className="flex items-center gap-1 hover:text-main transition-all cursor-pointer"
           >
             <p onMouseLeave={() => setShowChild(-1)} className="relative">
-              <span onMouseEnter={() => setShowChild(index)}>{item.title}</span>
+              <span
+                onMouseEnter={() => setShowChild(index)}
+                className="text-[14px]"
+              >
+                {item.title}
+              </span>
 
               {showChild === index && item.subTitle && (
                 <NavChild data={item.subTitle || []} />

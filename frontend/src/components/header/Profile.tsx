@@ -71,7 +71,7 @@ const Profile = () => {
       ) : (
         <button
           onClick={() => setShowLogin("signin")}
-          className="text-[#777777] hover:text-main transition-all cursor-pointer"
+          className="text-[#777777] hover:text-main transition-all cursor-pointer text-[14px]"
         >
           Đăng nhập
         </button>

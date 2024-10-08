@@ -10,14 +10,14 @@ const Header = async () => {
   const movies = await apiMovie.getListMovie();
 
   return (
-    <header className="w-main flex items-center py-5">
+    <header className="w-main flex items-center py-5 ">
       <div className="flex-2 flex">
         <Link href={"/"} className="w-[75px] h-[75px]">
           <Image className="w-full h-full" src={logo} alt="logo"></Image>
         </Link>
       </div>
 
-      <div className="flex-auto flex ">
+      <div className="flex-auto flex">
         <NavBar movies={movies?.rows || []} />
       </div>
 
