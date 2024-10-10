@@ -1,4 +1,5 @@
 import { IDataOrder, IDataOrderFood } from "@/app/types/frontend";
+import http from "@/lib/http";
 
 const apisOrder = {
   createOrder: async (data: IDataOrder, token: string) => {
@@ -14,6 +15,10 @@ const apisOrder = {
 
     return response.json();
   },
+
+  // createOrder: (data: IDataOrder, token: string) =>
+  //   http.post("/order/create", data, { headers: { token: `Bearer ${token}` } }),
+
   createOrderFood: async (data: IDataOrderFood) => {
     const response = await fetch(
       `${process.env.URL_SERVER_API}/order/order-food`,

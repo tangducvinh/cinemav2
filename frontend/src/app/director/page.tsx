@@ -24,7 +24,7 @@ const Director = async ({
     <div>
       <MenuTitle title={"ĐẠO DIỄN"} />
 
-      <ContainerMenuActor countries={countries} />
+      <ContainerMenuActor countries={countries?.data} />
 
       {directors?.length === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
@@ -32,7 +32,7 @@ const Director = async ({
         </div>
       ) : (
         <ul className="mt-8">
-          {directors?.rows.map((item: any) => (
+          {directors?.data?.rows.map((item: any) => (
             <ItemMovieCinematic
               key={item.id}
               backdrop={

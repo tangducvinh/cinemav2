@@ -1,11 +1,7 @@
-const apiGenre = {
-  getListGenres: async () => {
-    const response = await fetch(`${process.env.URL_SERVER_API}/genre`, {
-      method: "GET",
-    });
+import http from "@/lib/http";
 
-    return response.json();
-  },
+const apiGenre = {
+  getListGenres: () => http.get("/genre"),
 };
 
 export default apiGenre;

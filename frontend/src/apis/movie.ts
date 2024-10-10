@@ -1,29 +1,21 @@
+import http from "@/lib/http";
+
 const apiMovie = {
-  getDetailMovie: async (slug: string) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/movie/detail-movie?slug=${slug}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+  // getDetailMovie: async (slug: string) => {
+  //   const response = await fetch(
+  //     `${process.env.URL_SERVER_API}/movie/detail-movie?slug=${slug}`,
+  //     {
+  //       method: "GET",
+  //       cache: "no-store",
+  //     }
+  //   );
 
-    return response.json();
-  },
-  getListMovie: async (data?: any) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/movie?` + new URLSearchParams(data),
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+  //   return response.json();
+  // },
+  getDetailMovie: (slug: string) =>
+    http.get(`/movie/detail-movie?slug=${slug}`),
 
-    const result = await response.json();
-    if (result?.success) {
-      return result?.data;
-    }
-  },
+  getListMovie: (data?: any) => http.get("/movie" + new URLSearchParams(data)),
 };
 
 export default apiMovie;

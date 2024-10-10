@@ -21,13 +21,13 @@ const Cinematic = async ({
 
       <ContainerMenu genres={genres.data} />
 
-      {movies?.length === 0 ? (
+      {movies?.data?.length === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
           Không có bài viết nào
         </div>
       ) : (
         <ul className="mt-8">
-          {movies?.rows.map((item: any) => (
+          {movies?.data?.rows.map((item: any) => (
             <ItemMovieCinematic
               key={item.id}
               backdrop={item.backdrop}

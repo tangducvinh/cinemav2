@@ -38,9 +38,9 @@ export default async function RootLayout(
         <div className="flex-7">{children}</div>
 
         <div className="flex-3">
-          <BoxFastBooking movies={movies.rows} />
+          <BoxFastBooking movies={movies?.data?.rows} />
 
-          <ShowingMovie data={moviesShowing.rows} />
+          <ShowingMovie data={moviesShowing?.data?.rows} />
 
           <div className="flex justify-end mt-4">
             <ButtonWatchMore />

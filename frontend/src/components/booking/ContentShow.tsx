@@ -6,7 +6,7 @@ import HeaderBooking from "./HeaderBooking";
 import ChangeShow from "@/components/booking/ChangeShow";
 import DetailShow from "@/components/booking/DetailShow";
 import MapSeat from "@/components/booking/MapSeat";
-import { IDataOrder, ISeatSelected } from "@/app/types/frontend";
+import { ISeatSelected } from "@/app/types/frontend";
 import ComboFood from "./ComboFood";
 import { IFood } from "@/app/types/frontend";
 import { ISelectedFood, ISelectedFoods } from "@/app/types/frontend";
@@ -17,7 +17,6 @@ import Warning from "../common/Notice";
 import Payment from "./Payment";
 import apisPayment from "@/apis/payment";
 import apisOrder from "@/apis/order";
-import { RiTokenSwapFill } from "react-icons/ri";
 
 interface IProps {
   dataFood: IFood[];
@@ -247,7 +246,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       }));
 
       let token = localStorage.getItem("token");
-      if (token) token = JSON.parse(token);
+      if (token) token = JSON?.parse(token);
 
       if (token) {
         const response = await apisOrder.createOrder(dataPass, token);

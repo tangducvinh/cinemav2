@@ -1,33 +1,10 @@
+import http from "@/lib/http";
+
 const apiActor = {
-  getListActor: async (data?: any) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/actor?` + new URLSearchParams(data),
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+  getListActor: (data?: any) => http.get(`/actor?` + new URLSearchParams(data)),
 
-    const result = await response.json();
-    if (result?.success) {
-      return result?.data;
-    }
-  },
-  getDetailActor: async (data?: any) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/actor/detail-actor?` +
-        new URLSearchParams(data),
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    const result = await response.json();
-    if (result?.success) {
-      return result?.data;
-    }
-  },
+  getDetailActor: (data?: any) =>
+    http.get(`/actor/detail-actor?` + new URLSearchParams(data)),
 };
 
 export default apiActor;

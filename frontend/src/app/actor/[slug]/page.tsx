@@ -12,13 +12,13 @@ const DetailActor: React.FC<IProps> = async ({ params }) => {
 
   return (
     <div>
-      <InforActor actor={actor} />
+      <InforActor actor={actor?.data} />
 
       <div className="mt-10">
         <MenuTitle title={"PHIM ĐÃ THAM GIA"} />
 
         <ul className="grid grid-cols-2 mt-4">
-          {actor?.movies.map((item: any) => (
+          {actor?.data?.movies.map((item: any) => (
             <ItemMovieCinematic
               key={item.id}
               backdrop={item.backdrop}

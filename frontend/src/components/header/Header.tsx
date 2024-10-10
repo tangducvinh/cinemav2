@@ -6,6 +6,8 @@ import NavBar from "./Navbar";
 import Profile from "./Profile";
 import apiMovie from "@/apis/movie";
 
+import { apisBanner } from "@/apis/banner";
+
 const Header = async () => {
   const movies = await apiMovie.getListMovie();
 
@@ -18,7 +20,7 @@ const Header = async () => {
       </div>
 
       <div className="flex-auto flex">
-        <NavBar movies={movies?.rows || []} />
+        <NavBar movies={movies?.data?.rows || []} />
       </div>
 
       <div className="flex-3 flex justify-end">

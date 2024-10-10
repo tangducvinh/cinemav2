@@ -49,7 +49,9 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
     const fetchListCinema = async () => {
       const listCinemas = await apiCinema.getListCinema(currentCity);
 
-      setListCinemas(listCinemas);
+      if (listCinemas.success) {
+        setListCinemas(listCinemas?.data);
+      }
     };
     if (currentCity === 0) {
       setCurrentCinema(0);

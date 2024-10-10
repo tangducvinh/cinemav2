@@ -86,9 +86,9 @@ const Movie = async ({ params }: { params: { status: string } }) => {
         </ul>
       </div>
 
-      <MovieContainer data={movies?.rows || []} />
+      <MovieContainer data={movies?.data?.rows || []} />
 
-      <MovieDescription data={movies?.rows || []} />
+      <MovieDescription data={movies?.data?.rows || []} />
     </div>
   );
 };

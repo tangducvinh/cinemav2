@@ -13,9 +13,7 @@ interface IProps {
 export async function generateStaticParams() {
   const movies = await apiMovie.getListMovie();
 
-  console.log({ movies });
-
-  return movies?.rows?.map((movie: { slug: string }) => ({
+  return movies?.data?.rows?.map((movie: { slug: string }) => ({
     slug: movie.slug,
   }));
 }
@@ -39,7 +37,7 @@ export async function generateMetadata(
 const BookingShow = async () => {
   const comboFoods = await apiFood.getListFood();
 
-  return <ContentShow dataFood={comboFoods} />;
+  return <ContentShow dataFood={comboFoods?.data} />;
 };
 
 export default BookingShow;

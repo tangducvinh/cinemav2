@@ -22,7 +22,6 @@ export default async function RootLayout(
     searchParams: { [key: string]: string | string[] | undefined };
   }
 ) {
-  // const genresData = apiGenre.getListGenres();
   const moviesData = apiMovie.getListMovie(searchParams);
 
   const moviesShowingData = apiMovie.getListMovie({ status: "showing" });
@@ -38,9 +37,9 @@ export default async function RootLayout(
         <div className="flex-7">{children}</div>
 
         <div className="flex-3">
-          <BoxFastBooking movies={movies.rows} />
+          <BoxFastBooking movies={movies?.data?.rows} />
 
-          <ShowingMovie data={moviesShowing.rows} />
+          <ShowingMovie data={moviesShowing?.data?.rows} />
 
           <div className="flex justify-end mt-4">
             <ButtonWatchMore />

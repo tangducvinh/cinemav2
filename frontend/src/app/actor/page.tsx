@@ -19,7 +19,7 @@ const Actor = async ({
     <div>
       <MenuTitle title={"Diễn Viên"} />
 
-      <ContainerMenuActor countries={countries} />
+      <ContainerMenuActor countries={countries?.data} />
 
       {actors?.length === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
@@ -27,7 +27,7 @@ const Actor = async ({
         </div>
       ) : (
         <ul className="mt-8">
-          {actors?.rows.map((item: any) => (
+          {actors?.data?.rows?.map((item: any) => (
             <ItemMovieCinematic
               key={item.id}
               backdrop={item.avatar}

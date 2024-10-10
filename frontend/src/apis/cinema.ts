@@ -1,19 +1,7 @@
+import http from "@/lib/http";
+
 const apiCinema = {
-  getListCinema: async (cityId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/cinema?cityId=${cityId}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    }
-  },
+  getListCinema: (cityId: number) => http.get(`/cinema?cityId=${cityId}`),
 };
 
 export default apiCinema;
