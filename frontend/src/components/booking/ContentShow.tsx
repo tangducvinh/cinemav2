@@ -74,7 +74,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       const fetchDataDetailShow = async () => {
         const response = await apiShow.getDetailShow(Number(currentShowId));
 
-        setDataDetailShow(response);
+        setDataDetailShow(response?.data);
       };
       fetchDataDetailShow();
     }
@@ -293,8 +293,8 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         let response;
         if (token) response = await apisPayment.payWithVNPay(dataPass, token);
 
-        if (response?.paymentUrl) {
-          router.push(response.paymentUrl);
+        if (response?.data?.paymentUrl) {
+          router.push(response?.data?.paymentUrl);
         }
         //////
         return;

@@ -1,32 +1,10 @@
+import http from "@/lib/http";
+
 const apiSeat = {
-  getListSeat: async (roomId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/seat/list-seat?roomId=${roomId}`,
-      {
-        method: "GET",
-      }
-    );
+  getListSeat: (roomId: number) => http.get(`/seat/list-seat?roomId=${roomId}`),
 
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    }
-  },
-  getListOrderedSeat: async (showId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/seat/list-ordered-seat?showId=${showId}`,
-      {
-        method: "GET",
-      }
-    );
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    }
-  },
+  getListOrderedSeat: (showId: number) =>
+    http.get(`/seat/list-ordered-seat?showId=${showId}`),
 };
 
 export default apiSeat;

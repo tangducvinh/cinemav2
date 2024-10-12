@@ -37,10 +37,10 @@ const ChangeShow: React.FC<IProps> = ({
         cinemaId,
         movieId,
         date: moment(timeStart).format("yyyy/MM/DD").toString(),
-        cityId: 0,
+        // cityId: 0,
       });
 
-      setDataListShow(response);
+      setDataListShow(response?.data);
     };
 
     fetchListShow();

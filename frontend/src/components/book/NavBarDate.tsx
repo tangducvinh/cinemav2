@@ -62,12 +62,11 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
 
   // handle search show follow condition
   const fetchListShow = async (data: IShowSearch) => {
-    console.log(data);
     const response = await apiShow.getListShow(data);
 
     let newArray: number[] = [];
 
-    response.forEach((item: { cinemaId: number }) => {
+    response?.data.forEach((item: { cinemaId: number }) => {
       if (!newArray?.some((check) => check === item.cinemaId)) {
         newArray.push(item.cinemaId);
       }
@@ -75,7 +74,7 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
 
     let newData: [][] = [];
     newArray.forEach((item) => {
-      let a = response.filter(
+      let a = response?.data.filter(
         (value: { cinemaId: number }) => value.cinemaId === item
       );
       newData.push(a);
@@ -90,9 +89,12 @@ const NavBarDate: React.FC<IProps> = ({ listCities, movieId }) => {
         moment(dataDate[dateChoose]?.date).format("yyyy/MM/DD") ||
         moment(new Date()).format("yyyy/MM/DD"),
       movieId,
-      cityId: currentCity,
-      cinemaId: currentCinema,
+      // cityId: currentCity,
+      // cinemaId: currentCinema,
     };
+
+    if (currentCity !== 0) data.cityId = currentCity;
+    if (currentCinema !== 0) data.cinemaId = currentCinema;
 
     fetchListShow(data);
   }, [dateChoose, movieId, currentCity, currentCinema]);

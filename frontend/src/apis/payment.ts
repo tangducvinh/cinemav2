@@ -1,23 +1,9 @@
 import { IDataPayment } from "@/app/types/frontend";
+import http from "@/lib/http";
 
 const apisPayment = {
-  payWithVNPay: async (data: IDataPayment, token: string) => {
-    const response = await fetch(`${process.env.URL_SERVER_API}/payment/vnp`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        token: `Bearer ${token}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    }
-  },
+  payWithVNPay: (data: IDataPayment, token: string) =>
+    http.post("/payment/vnp", data, { headers: { token: `Bearer ${token}` } }),
 };
 
 export default apisPayment;

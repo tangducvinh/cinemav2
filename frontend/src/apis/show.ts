@@ -1,79 +1,18 @@
 import { IShowSearch } from "@/app/types/frontend";
+import http from "@/lib/http";
 
 const apiShow = {
-  getListShow: async (data: IShowSearch) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/show/list-show?date=${data.date}&movieId=${
-        data.movieId
-      }${data.cityId ? "&cityId=" + data.cityId : ""}${
-        data.cinemaId ? "&cinemaId=" + data.cinemaId : ""
-      }`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+  getListShow: (data: any) =>
+    http.get("/show/list-show?" + new URLSearchParams(data)),
 
-    const result = await response.json();
+  getDetailShow: (showId: number) =>
+    http.get(`/show/detail-show?showId=${showId}`),
+  
+  getCinemaByMovieId: (movieId: number) => http.get(`/show/list-cinema?movieId=${movieId}`),
 
-    if (result.success) {
-      return result.data;
-    }
-  },
-  getDetailShow: async (showId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/show/detail-show?showId=${showId}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    const result = await response.json();
-
-    if (result.success) {
-      return result.data;
-    } else {
-      return null;
-    }
-  },
-  getCinemaByMovieId: async (movieId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/show/list-cinema?movieId=${movieId}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    return response.json();
-  },
-  getDateFastBooking: async (movieId: number, cinemaId: number) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/show/date-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    return response.json();
-  },
-  getShowFastBooking: async (
-    movieId: number,
-    cinemaId: number,
-    date: string
-  ) => {
-    const response = await fetch(
-      `${process.env.URL_SERVER_API}/show/show-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}&date=${date}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-
-    return response.json();
-  },
+  getDateFastBooking: (movieId: number, cinemaId: number) => http.get(`/show/date-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}`) ,
+ 
+  getShowFastBooking: (movieId: number, cinemaId: number, date: string) => http.get(`/show/show-fast-booking?movieId=${movieId}&cinemaId=${cinemaId}&date=${date}`)
 };
 
 export default apiShow;

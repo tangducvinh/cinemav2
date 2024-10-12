@@ -54,7 +54,9 @@ const MapSeat: React.FC<IProps> = ({
       const newData = [];
 
       for (let i = 0; i < maxRow; i++) {
-        const rows = response.filter((item: { row: number }) => item.row === i);
+        const rows = response?.data.filter(
+          (item: { row: number }) => item.row === i
+        );
         newData.push(rows);
       }
 
@@ -65,7 +67,7 @@ const MapSeat: React.FC<IProps> = ({
       const fetchListOrderedSeat = async () => {
         const response = await apiSeat.getListOrderedSeat(showId);
 
-        setDataOrderedSeat(response);
+        setDataOrderedSeat(response?.data);
       };
 
       fetchListOrderedSeat();

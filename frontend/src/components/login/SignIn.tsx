@@ -234,10 +234,10 @@ const SignIn = (props: IProps) => {
   };
 
   return (
-    <section className="w-screen flex items-center justify-center h-screen inset-0 z-40 fixed bg-bg-overlay">
+    <section className="w-screen h-screen flex items-center inset-0 overflow-auto z-40 fixed bg-bg-overlay">
       <div
         onClick={() => setShowCalendar(false)}
-        className="w-main-lg bg-white px-[24px] py-[40px] rounded-md relative"
+        className="w-main-lg bg-white px-[24px] rounded-md relative py-[40px] mx-auto my-auto"
       >
         <HeaderLogin onCloseLogin={onCloseLogin} />
 
