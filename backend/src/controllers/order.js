@@ -1,10 +1,11 @@
 const db = require("../models");
 const { listOrderedSeat } = require("../services/seat");
-const {
-  deleteOrder,
-  deleteOrderedSeat,
-  SVdeleteOrderedFood,
-} = require("../services/order");
+// const {
+//   deleteOrder,
+//   deleteOrderedSeat,
+//   deleteOrderedFood,
+// } = require("../services/order");
+const serviceOrder = require("../services/order");
 const moment = require("moment");
 const convertArrayToString = require("../ultis/convertArrayToString");
 const convertDateToString = require("../ultis/convertDateToString");
@@ -182,8 +183,8 @@ const orderFood = async (req, res) => {
 const deleteOrderAndOrderedSeat = async (req, res) => {
   const { orderId } = req.query;
   try {
-    await deleteOrderedSeat(orderId);
-    await deleteOrder(orderId);
+    await serviceOrder.deleteOrderedSeat(orderId);
+    await serviceOrder.deleteOrder(orderId);
 
     return res.status(200).json({
       success: true,
@@ -196,14 +197,16 @@ const deleteOrderAndOrderedSeat = async (req, res) => {
 
 const deleteOrderedFood = async (req, res) => {
   const { orderId } = req.query;
+  console.log({ orderId });
   try {
-    await SVdeleteOrderedFood(orderId);
+    await serviceOrder.deleteOrderedFood(orderId);
 
     return res.status(200).json({
       success: true,
       message: "Đã xoá đơn đặt đồ uống thành công",
     });
   } catch (e) {
+    console.log(e);
     return res.status(500).json(e);
   }
 };

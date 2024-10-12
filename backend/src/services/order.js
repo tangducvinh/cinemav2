@@ -1,5 +1,5 @@
 const db = require("../models");
-const SVdeleteOrderedSeat = async (orderId) => {
+const deleteOrderedSeat = async (orderId) => {
   await db.OrderedSeat.destroy({
     where: {
       orderId: orderId,
@@ -21,4 +21,4 @@ const deleteOrderedFood = async (orderId) => {
   });
 };
 
-module.exports = { deleteOrder, SVdeleteOrderedSeat, deleteOrderedFood };
+module.exports = { deleteOrder, deleteOrderedSeat, deleteOrderedFood };
