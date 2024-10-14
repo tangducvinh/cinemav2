@@ -35,9 +35,11 @@ const Profile = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("hello1");
     if (getCookie("name")) {
       const name = getCookie("name")?.toString() || "";
+
+      // let token = localStorage.getItem("token");
+      // if (token)
       setName(name);
     } else {
       setName("");

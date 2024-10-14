@@ -6,7 +6,6 @@ import clsx from "clsx";
 import apiSeat from "@/apis/seat";
 import { ISeatSelected } from "@/app/types/frontend";
 import Loading from "../common/Loading";
-import { TbInnerShadowBottomLeftFilled } from "react-icons/tb";
 
 const listRows = [
   "A",

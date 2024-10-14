@@ -4,11 +4,11 @@ const listMethodPayment = [
     icon: "https://cdn.galaxycine.vn/media/2021/12/2/download_1638460623615.png",
     value: "vnpay",
   },
-  {
-    title: "Zalopay",
-    icon: "https://cdn.galaxycine.vn/media/2024/7/10/zalopay_1720600308412.png",
-    value: "zalopay",
-  },
+  // {
+  //   title: "Zalopay",
+  //   icon: "https://cdn.galaxycine.vn/media/2024/7/10/zalopay_1720600308412.png",
+  //   value: "zalopay",
+  // },
 ];
 
 interface IProps {

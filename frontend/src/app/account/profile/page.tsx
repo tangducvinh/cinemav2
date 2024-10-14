@@ -61,11 +61,11 @@ const Profile = async () => {
   const dataRes = await apiUser.getProfile(token?.value);
 
   if (dataRes.success) {
-    data[0].value = dataRes.data.fullName;
-    data[1].value = dataRes.data.birthday;
-    data[2].value = dataRes.data.email;
-    data[3].value = dataRes.data.phone;
-    data[4].value = dataRes.data.sex;
+    data[0].value = dataRes?.data.fullName;
+    data[1].value = dataRes?.data.birthday;
+    data[2].value = dataRes?.data.email;
+    data[3].value = dataRes?.data.phone;
+    data[4].value = dataRes?.data.sex;
   }
 
   return (

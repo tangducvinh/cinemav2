@@ -18,7 +18,6 @@ export const PUT = async (request: Request) => {
     status: 200,
     headers: {
       "Set-Cookie": `token=; Path=/; HttpOnly`,
-      // "Set-Cookie": `token=delete`,
     },
   });
 };

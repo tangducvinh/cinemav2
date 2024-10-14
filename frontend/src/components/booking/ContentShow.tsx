@@ -246,7 +246,8 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       }));
 
       let token = localStorage.getItem("token");
-      if (token) token = JSON?.parse(token);
+
+      if (token) token = JSON?.parse(token) || "";
 
       if (token) {
         const response = await apisOrder.createOrder(dataPass, token);
@@ -269,7 +270,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         orderId: currentOrder,
       }));
 
-      const response = await apisOrder.createOrderFood(dataPass);
+      await apisOrder.createOrderFood(dataPass);
     } else if (buyStatus === 3) {
       if (methodPayment === "vnpay") {
         let dataPass: any = {};
@@ -289,14 +290,12 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         let token = localStorage.getItem("token");
         if (token) token = JSON?.parse(token);
 
-        console.log({ token });
         let response;
         if (token) response = await apisPayment.payWithVNPay(dataPass, token);
 
         if (response?.data?.paymentUrl) {
           router.push(response?.data?.paymentUrl);
         }
-        //////
         return;
       } else {
         return;

@@ -20,7 +20,6 @@ const connectDB = require("./src/config/connectDB");
 
 const app = express();
 const port = process.env.PORT || 7777;
-connectDB();
 
 app.use(
   cors({
@@ -33,6 +32,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+connectDB();
 
 initBannerRouter(app);
 initMovieRouter(app);

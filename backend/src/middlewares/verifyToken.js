@@ -5,6 +5,7 @@ const verifyAccessToken = async (req, res, next) => {
   if (token) {
     const accessToken = token?.split(" ")[1];
     jwt.verify(
+      // JSON.parse(accessToken),
       accessToken,
       process.env.SECRET_KEY_ACCESS_TOKEN,
       (err, decode) => {

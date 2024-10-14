@@ -5,6 +5,7 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../middlewares/jwt");
+const jwt = require("jsonwebtoken");
 
 const signUp = async (req, res) => {
   const { email, phone, birthday, fullName, password, sex } = req.body;
@@ -150,4 +151,65 @@ const changePassword = async (req, res) => {
   }
 };
 
-module.exports = { signUp, signIn, getProfileInformation, changePassword };
+const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    console.log(refreshToken);
+    if (!refreshToken) {
+      return res.status(401).json({
+        success: false,
+        mes: "You are not authenticated",
+      });
+    }
+    jwt.verify(
+      refreshToken,
+      process.env.SECRET_KEY_REFRESH_TOKEN,
+      (err, decode) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            mes: "Refresh token invalid",
+          });
+        }
+
+        const newAccessToken = generateAccessToken(decode.id, decode.role);
+        const newRefreshToken = generateRefreshToken(decode.id, decode.role);
+
+        res.cookie("refreshToken", newRefreshToken, {
+          httpOnly: true,
+        });
+
+        console.log(newAccessToken)
+
+        return res.status(200).json({
+          success: true,
+          accessToken: newAccessToken,
+        });
+      }
+    );
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("refreshToken");
+
+    return res.status(200).json({
+      success: true,
+      mes: "Logout thành công",
+    });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+};
+
+module.exports = {
+  signUp,
+  signIn,
+  getProfileInformation,
+  changePassword,
+  refreshToken,
+  logout,
+};

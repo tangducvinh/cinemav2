@@ -24,6 +24,10 @@ const NavChild = (props: Iprops) => {
       deleteCookie("name");
       // localStorage.removeItem('name')
       localStorage.removeItem("token");
+      await fetch(`${process.env.URL_SERVER_API}/user/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
       await fetch("/api/user", {
         method: "PUT",
         headers: {

@@ -35,7 +35,7 @@ const NavBar: React.FC<IProps> = ({ movies }) => {
   useEffect(() => {
     localStorage.setItem("selectedFood", "");
     localStorage.setItem("buyStatus", "");
-    // localStorage.setItem("seatSelected", "");
+    localStorage.setItem("seatSelected", "");
     // localStorage.setItem("currentShow", "");
   }, []);
 
