@@ -52,7 +52,7 @@ const request = async <Response>(
         );
 
         const result = await response.json();
-        if (result.success) {
+        if (result?.success) {
           // refresh token success
           localStorage.setItem("token", result.accessToken);
 
