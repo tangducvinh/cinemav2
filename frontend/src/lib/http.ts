@@ -62,6 +62,7 @@ const request = async <Response>(
               ...baseHeaders,
               token: `Bearer ${result.accessToken}`,
             },
+            cache: "no-cache",
             body,
             method,
           });
@@ -99,6 +100,7 @@ const request = async <Response>(
       ...baseHeaders,
       ...options?.headers,
     },
+    cache: "no-cache",
     body,
     method,
   });
