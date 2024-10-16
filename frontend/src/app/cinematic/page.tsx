@@ -5,6 +5,8 @@ import MenuTitle from "@/components/home/MenuTitle";
 import ContainerMenu from "@/components/cinematic/ContainerMenu";
 import ItemMovieCinematic from "@/components/cinematic/ItemMovieCinematic";
 
+import Pagination from "@/components/common/Pagination";
+
 const Cinematic = async ({
   searchParams,
 }: {
@@ -21,22 +23,28 @@ const Cinematic = async ({
 
       <ContainerMenu genres={genres.data} />
 
-      {movies?.data?.length === 0 ? (
+      {movies?.data?.count === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
           Không có bài viết nào
         </div>
       ) : (
-        <ul className="mt-8">
-          {movies?.data?.rows.map((item: any) => (
-            <ItemMovieCinematic
-              key={item.id}
-              backdrop={item.backdrop}
-              name={item.name}
-              overview={item.overview}
-              slug={`/cinematic/${item.slug}`}
-            />
-          ))}
-        </ul>
+        <div>
+          <ul className="mt-8">
+            {movies?.data?.rows.map((item: any) => (
+              <ItemMovieCinematic
+                key={item.id}
+                backdrop={item.backdrop}
+                name={item.name}
+                overview={item.overview}
+                slug={`/cinematic/${item.slug}`}
+              />
+            ))}
+          </ul>
+
+          {movies?.data?.count > 10 && (
+            <Pagination total={movies?.data?.count} />
+          )}
+        </div>
       )}
     </div>
   );

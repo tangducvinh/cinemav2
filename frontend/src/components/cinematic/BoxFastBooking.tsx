@@ -134,7 +134,7 @@ const BoxFastBooking: React.FC<IProps> = ({ movies }) => {
       <div className="bg-[#F8F8F8] p-4 border-gray-300 border flex flex-col gap-6">
         <SelectOption
           title={"Chọn phim"}
-          data={movies.map((item) => ({
+          data={movies?.map((item) => ({
             id: 1,
             name: item.name,
             value: item.id.toString(),
@@ -145,7 +145,7 @@ const BoxFastBooking: React.FC<IProps> = ({ movies }) => {
 
         <SelectOption
           title={"Chọn rạp"}
-          data={cinemas.map((item) => ({
+          data={cinemas?.map((item) => ({
             id: item.cinema.id,
             name: item.cinema.name,
             value: item.cinema.id?.toString(),
@@ -158,7 +158,7 @@ const BoxFastBooking: React.FC<IProps> = ({ movies }) => {
 
         <SelectOption
           title={"Chọn ngày"}
-          data={listDates.map((item) => ({
+          data={listDates?.map((item) => ({
             id: Number(item.timeStart),
             name: moment(item.timeStart).format("DD/MM/yyyy"),
             value: moment(item.timeStart).format("yyyy/MM/DD"),
@@ -172,7 +172,7 @@ const BoxFastBooking: React.FC<IProps> = ({ movies }) => {
         <div>
           {shows.length !== 1 && (
             <ul className="flex gap-4 items-center flex-wrap">
-              {shows.map((item) => (
+              {shows?.map((item) => (
                 <li
                   key={item.id}
                   onClick={() => handleChooseShow(item.id, item.movie.slug)}

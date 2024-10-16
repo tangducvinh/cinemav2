@@ -24,7 +24,7 @@ export default async function RootLayout(
 ) {
   const moviesData = apiMovie.getListMovie(searchParams);
 
-  const moviesShowingData = apiMovie.getListMovie({ status: "showing" });
+  const moviesShowingData = apiMovie.getListMovie({ "status": "showing" });
 
   const [movies, moviesShowing] = await Promise.all([
     moviesData,

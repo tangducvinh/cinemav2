@@ -4,6 +4,7 @@ import ContainerMenuActor from "@/components/actor/ContainerMenuActor";
 import apiCountry from "@/apis/country";
 import apiActor from "@/apis/actor";
 import ItemMovieCinematic from "@/components/cinematic/ItemMovieCinematic";
+import Pagination from "@/components/common/Pagination";
 
 const Actor = async ({
   searchParams,
@@ -21,22 +22,31 @@ const Actor = async ({
 
       <ContainerMenuActor countries={countries?.data} />
 
-      {actors?.length === 0 ? (
+      {actors?.data?.rows?.length === 0 ? (
         <div className="text-normal flex items-center justify-center w-full min-h-[300px]">
           Không có bài viết nào
         </div>
       ) : (
-        <ul className="mt-8">
-          {actors?.data?.rows?.map((item: any) => (
-            <ItemMovieCinematic
-              key={item.id}
-              backdrop={item.avatar}
-              name={item.name}
-              overview={item.description}
-              slug={`/actor/${item.slug}`}
-            />
-          ))}
-        </ul>
+        <>
+          <ul className="mt-8">
+            {actors?.data?.rows?.map((item: any) => (
+              <ItemMovieCinematic
+                key={item.id}
+                backdrop={
+                  item.avatar ||
+                  "https://www.galaxycine.vn/_next/static/media/not_found.f844bf41.jpg"
+                }
+                name={item.name}
+                overview={item.description}
+                slug={`/actor/${item.slug}`}
+              />
+            ))}
+          </ul>
+
+          {actors?.data?.count > 10 && (
+            <Pagination total={actors?.data?.count} />
+          )}
+        </>
       )}
     </div>
   );

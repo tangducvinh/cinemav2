@@ -15,7 +15,9 @@ const apiMovie = {
   getDetailMovie: (slug: string) =>
     http.get(`/movie/detail-movie?slug=${slug}`),
 
-  getListMovie: (data?: any) => http.get("/movie" + new URLSearchParams(data)),
+  getListMovie: (data?: any) => {
+    return http.get("/movie?" + new URLSearchParams(data));
+  },
 };
 
 export default apiMovie;

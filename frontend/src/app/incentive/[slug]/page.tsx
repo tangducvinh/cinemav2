@@ -9,8 +9,6 @@ interface IProps {
 const DetailMovie: React.FC<IProps> = async ({ params }) => {
   const movie = await apiMovie.getDetailMovie(params.slug);
 
-  console.log(movie);
-
   return (
     <div>
       <InforDetailMovie movie={movie} />

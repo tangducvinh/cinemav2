@@ -56,7 +56,7 @@ const ContainerMenuActor: React.FC<IProps> = ({ countries }) => {
     <div className="mt-4 flex gap-3 items-center border-b-2 border-forcus pb-4">
       <SelectOption
         title={"Quốc gia"}
-        data={countries.map((item) => ({
+        data={countries?.map((item) => ({
           id: item.id,
           name: item.name,
           value: item.slug,

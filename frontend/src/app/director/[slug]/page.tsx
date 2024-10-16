@@ -10,8 +10,6 @@ interface IProps {
 const DetailActor: React.FC<IProps> = async ({ params }) => {
   const director = await apiDirector.getDetailDirector({ slug: params.slug });
 
-  console.log({ director });
-
   return (
     <div>
       <InforActor actor={director?.data} />

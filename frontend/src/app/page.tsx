@@ -17,8 +17,6 @@ export default async function Home() {
   const bannerData = await apisBanner.getListBanner();
   const moviesData = await apiMovie.getListMovie();
 
-  console.log({ moviesData });
-
   const [banners, movies] = await Promise.all([bannerData, moviesData]);
 
   return (

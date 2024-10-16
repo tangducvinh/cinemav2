@@ -2,7 +2,24 @@ const db = require("../models");
 
 const getListDirector = async (req, res) => {
   try {
-    const response = await db.Director.findAndCountAll();
+    const { country, limit, page } = req.query;
+
+    const query = {};
+    if (country) query["$country.slug$"] = country;
+
+    // pagination
+    const queries = {};
+    const pages = page || 1;
+    const limits = +limit || 10;
+
+    queries.limit = limits;
+    queries.offset = (pages - 1) * limits;
+
+    const response = await db.Director.findAndCountAll({
+      where: query,
+      include: ["country"],
+      ...queries,
+    });
 
     return res.status(200).json({
       success: response ? true : false,

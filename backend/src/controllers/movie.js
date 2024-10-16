@@ -15,8 +15,6 @@ const getListMovie = async (req, res) => {
       ],
     };
 
-  console.log(query);
-
   const queries = {};
   const pages = page || 1;
   const limits = +limit || 10;
