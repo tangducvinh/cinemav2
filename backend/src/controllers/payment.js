@@ -45,7 +45,6 @@ const paymentVPN = async (req, res) => {
 const verifyVnp = async (req, res) => {
   const { vnp_TxnRef, email } = req.query;
 
-  console.log({ vnp_TxnRef });
   let verify;
   try {
     verify = vnpay.verifyReturnUrl(req.query);
@@ -72,13 +71,10 @@ const verifyVnp = async (req, res) => {
         },
       });
 
-      console.log("hello 2");
-
       return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
     }
   } catch (e) {
     // return res.send("Dữ liệu không hợp lệ");
-    console.log(e);
     return res.redirect(`${process.env.URL_CLIENT}/booking-failed`);
   }
 
