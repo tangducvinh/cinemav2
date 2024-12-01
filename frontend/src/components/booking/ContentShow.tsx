@@ -97,7 +97,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
       //get data seats selected from localStorage
       const data = localStorage.getItem("seatSelected");
       if (data) {
-        let newData = JSON?.parse(data);
+        let newData = JSON?.parse(data) || "";
         newData = newData.filter(
           (item: { showId: number }) => item.showId === currentShowId
         );
@@ -288,7 +288,7 @@ const ContentShow: React.FC<IProps> = ({ dataFood }) => {
         dataPass.amount = total;
         dataPass.orderId = currentOrder;
         let token = localStorage.getItem("token");
-        if (token) token = JSON?.parse(token);
+        if (token) token = JSON?.parse(token) || "";
 
         let response;
         if (token) response = await apisPayment.payWithVNPay(dataPass, token);

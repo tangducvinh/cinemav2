@@ -22,7 +22,7 @@ const Schedule: React.FC<IProps> = ({ data }) => {
 
   const handleOnClick = (item: IItemShow) => {
     let token = localStorage.getItem("token");
-    if (token) token =JSON.parse(token)
+    if (token) token = JSON?.parse(token);
     if (token) {
       router.push(`/booking/${item.movie.slug}`);
       localStorage.setItem("currentShow", JSON.stringify(item.id));
